@@ -1,0 +1,18 @@
+/* ============================================
+   STUDYBUDDY - Global Styles
+   ============================================ */
+
+/* Import theme system */
+@import '../styles/index.css';
+
+/* Tailwind */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Base styles */
+body {
+  color: var(--color-text);
+  background: var(--color-bg);
+  font-family: var(--font-body);
+}

@@ -1,0 +1,1094 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>StudyBuddy - Glassmorphism Theme</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      min-height: 100vh;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+      background-attachment: fixed;
+      color: white;
+      line-height: 1.6;
+      position: relative;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background:
+        radial-gradient(circle at 20% 20%, rgba(255,255,255,0.15) 0%, transparent 40%),
+        radial-gradient(circle at 80% 80%, rgba(255,255,255,0.1) 0%, transparent 40%),
+        radial-gradient(circle at 40% 60%, rgba(147, 51, 234, 0.3) 0%, transparent 50%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* Glass Effect */
+    .glass {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    }
+
+    .glass-strong {
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(30px);
+      -webkit-backdrop-filter: blur(30px);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+    }
+
+    .glass-dark {
+      background: rgba(0, 0, 0, 0.2);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    /* Layout */
+    .app-container {
+      display: flex;
+      min-height: 100vh;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      width: 280px;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      position: fixed;
+      height: 100vh;
+      background: rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(30px);
+      border-right: 1px solid rgba(255, 255, 255, 0.15);
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 40px;
+    }
+
+    .logo-icon {
+      width: 48px;
+      height: 48px;
+      background: linear-gradient(135deg, rgba(255,255,255,0.3), rgba(255,255,255,0.1));
+      backdrop-filter: blur(10px);
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 20px;
+    }
+
+    .logo-text {
+      font-size: 22px;
+      font-weight: 700;
+    }
+
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 14px 18px;
+      border-radius: 14px;
+      color: rgba(255,255,255,0.8);
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 15px;
+      margin-bottom: 8px;
+      transition: all 0.3s ease;
+      border: 1px solid transparent;
+    }
+
+    .nav-item:hover {
+      background: rgba(255,255,255,0.1);
+      border-color: rgba(255,255,255,0.2);
+      color: white;
+    }
+
+    .nav-item.active {
+      background: rgba(255,255,255,0.2);
+      border-color: rgba(255,255,255,0.3);
+      color: white;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    }
+
+    .nav-item svg {
+      width: 22px;
+      height: 22px;
+      opacity: 0.8;
+    }
+
+    .nav-item.active svg {
+      opacity: 1;
+    }
+
+    .nav-badge {
+      margin-left: auto;
+      background: rgba(255,255,255,0.2);
+      font-size: 12px;
+      font-weight: 600;
+      padding: 4px 10px;
+      border-radius: 20px;
+    }
+
+    .sidebar-cta {
+      margin-top: auto;
+      padding: 20px;
+      border-radius: 16px;
+      background: linear-gradient(135deg, rgba(255,255,255,0.15), rgba(255,255,255,0.05));
+      border: 1px solid rgba(255,255,255,0.2);
+    }
+
+    .sidebar-cta h4 {
+      font-size: 15px;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .sidebar-cta p {
+      font-size: 13px;
+      opacity: 0.8;
+      margin-bottom: 16px;
+    }
+
+    .btn-glass {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 12px 24px;
+      border-radius: 12px;
+      font-weight: 600;
+      font-size: 14px;
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .btn-glass-white {
+      background: rgba(255,255,255,0.2);
+      color: white;
+      border: 1px solid rgba(255,255,255,0.3);
+    }
+
+    .btn-glass-white:hover {
+      background: rgba(255,255,255,0.3);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+    }
+
+    .btn-glass-solid {
+      background: white;
+      color: #764ba2;
+    }
+
+    .btn-glass-solid:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(255,255,255,0.3);
+    }
+
+    /* Main Content */
+    .main-content {
+      flex: 1;
+      margin-left: 280px;
+    }
+
+    /* Header */
+    .header {
+      padding: 20px 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(255,255,255,0.05);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .search-box {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: rgba(255,255,255,0.1);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 14px;
+      padding: 12px 18px;
+      width: 350px;
+      transition: all 0.3s ease;
+    }
+
+    .search-box:focus-within {
+      background: rgba(255,255,255,0.15);
+      border-color: rgba(255,255,255,0.4);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    }
+
+    .search-box input {
+      border: none;
+      background: none;
+      outline: none;
+      font-family: inherit;
+      font-size: 14px;
+      color: white;
+      width: 100%;
+    }
+
+    .search-box input::placeholder {
+      color: rgba(255,255,255,0.6);
+    }
+
+    .search-box svg {
+      opacity: 0.6;
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .icon-btn {
+      width: 48px;
+      height: 48px;
+      border-radius: 14px;
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.2);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      transition: all 0.3s ease;
+    }
+
+    .icon-btn:hover {
+      background: rgba(255,255,255,0.2);
+      transform: translateY(-2px);
+    }
+
+    .icon-btn.has-notif {
+      position: relative;
+    }
+
+    .icon-btn.has-notif::after {
+      content: '';
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      width: 10px;
+      height: 10px;
+      background: #ff6b6b;
+      border-radius: 50%;
+      border: 2px solid rgba(255,255,255,0.2);
+    }
+
+    .user-menu {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 8px 16px 8px 8px;
+      border-radius: 14px;
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.2);
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .user-menu:hover {
+      background: rgba(255,255,255,0.15);
+    }
+
+    .user-avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, #f093fb, #f5576c);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      font-size: 13px;
+    }
+
+    .user-name {
+      font-weight: 500;
+      font-size: 14px;
+    }
+
+    /* Dashboard Content */
+    .dashboard {
+      padding: 32px;
+    }
+
+    /* Welcome Hero */
+    .welcome-hero {
+      background: linear-gradient(135deg, rgba(255,255,255,0.15), rgba(255,255,255,0.05));
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 24px;
+      padding: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 28px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .welcome-hero::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -20%;
+      width: 400px;
+      height: 400px;
+      background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+
+    .welcome-content {
+      position: relative;
+      z-index: 1;
+    }
+
+    .welcome-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255,255,255,0.2);
+      backdrop-filter: blur(10px);
+      font-size: 12px;
+      font-weight: 600;
+      padding: 8px 16px;
+      border-radius: 30px;
+      margin-bottom: 16px;
+      border: 1px solid rgba(255,255,255,0.3);
+    }
+
+    .welcome-title {
+      font-size: 36px;
+      font-weight: 700;
+      margin-bottom: 12px;
+      text-shadow: 0 2px 20px rgba(0,0,0,0.1);
+    }
+
+    .welcome-subtitle {
+      font-size: 16px;
+      opacity: 0.9;
+      max-width: 450px;
+      line-height: 1.7;
+    }
+
+    .welcome-illustration {
+      width: 200px;
+      height: 160px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .welcome-illustration-orbs {
+      position: relative;
+      width: 100%;
+      height: 100%;
+    }
+
+    .orb {
+      position: absolute;
+      border-radius: 50%;
+      background: linear-gradient(135deg, rgba(255,255,255,0.3), rgba(255,255,255,0.1));
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255,255,255,0.3);
+      animation: float 6s ease-in-out infinite;
+    }
+
+    .orb-1 { width: 100px; height: 100px; top: 30px; left: 50px; animation-delay: 0s; }
+    .orb-2 { width: 60px; height: 60px; top: 0; left: 0; animation-delay: 1s; }
+    .orb-3 { width: 40px; height: 40px; bottom: 20px; right: 0; animation-delay: 2s; }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-15px); }
+    }
+
+    /* Bento Grid */
+    .bento-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+    }
+
+    .card {
+      background: rgba(255,255,255,0.1);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 20px;
+      padding: 24px;
+      transition: all 0.3s ease;
+    }
+
+    .card:hover {
+      background: rgba(255,255,255,0.15);
+      transform: translateY(-4px);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+    }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
+    }
+
+    .card-title {
+      font-size: 15px;
+      font-weight: 600;
+    }
+
+    .card-action {
+      color: rgba(255,255,255,0.8);
+      font-size: 13px;
+      font-weight: 500;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .card-action:hover {
+      color: white;
+    }
+
+    /* Stats Cards */
+    .stat-card {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .stat-icon {
+      width: 52px;
+      height: 52px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 16px;
+      background: rgba(255,255,255,0.15);
+      border: 1px solid rgba(255,255,255,0.2);
+    }
+
+    .stat-value {
+      font-size: 36px;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .stat-label {
+      font-size: 13px;
+      opacity: 0.8;
+    }
+
+    .stat-trend {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      font-weight: 600;
+      margin-top: 12px;
+      padding: 6px 12px;
+      border-radius: 20px;
+      background: rgba(255,255,255,0.15);
+    }
+
+    /* Progress Card */
+    .progress-card {
+      grid-column: span 2;
+    }
+
+    .progress-ring-container {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+    }
+
+    .progress-ring {
+      position: relative;
+      width: 150px;
+      height: 150px;
+    }
+
+    .progress-ring svg {
+      transform: rotate(-90deg);
+    }
+
+    .progress-ring-bg {
+      fill: none;
+      stroke: rgba(255,255,255,0.2);
+      stroke-width: 12;
+    }
+
+    .progress-ring-fill {
+      fill: none;
+      stroke: url(#gradient);
+      stroke-width: 12;
+      stroke-linecap: round;
+      stroke-dasharray: 408;
+      stroke-dashoffset: 102;
+    }
+
+    .progress-ring-text {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+    }
+
+    .progress-ring-value {
+      font-size: 36px;
+      font-weight: 700;
+    }
+
+    .progress-ring-label {
+      font-size: 12px;
+      opacity: 0.8;
+    }
+
+    .progress-details {
+      flex: 1;
+    }
+
+    .progress-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .progress-item:last-child {
+      border-bottom: none;
+    }
+
+    .progress-item-label {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 14px;
+    }
+
+    .progress-item-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+    }
+
+    .progress-item-value {
+      font-weight: 600;
+      font-size: 14px;
+    }
+
+    /* Chart Card */
+    .chart-card {
+      grid-column: span 2;
+    }
+
+    .chart-container {
+      height: 180px;
+      position: relative;
+      overflow: hidden;
+      border-radius: 12px;
+    }
+
+    .chart-placeholder {
+      width: 100%;
+      height: 100%;
+      background: rgba(255,255,255,0.05);
+      border-radius: 12px;
+    }
+
+    /* Activities Card */
+    .activities-card {
+      grid-column: span 2;
+    }
+
+    .activity-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      padding: 16px;
+      margin-bottom: 12px;
+      border-radius: 14px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      transition: all 0.2s ease;
+    }
+
+    .activity-item:hover {
+      background: rgba(255,255,255,0.1);
+    }
+
+    .activity-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      background: rgba(255,255,255,0.15);
+    }
+
+    .activity-content {
+      flex: 1;
+    }
+
+    .activity-title {
+      font-weight: 600;
+      font-size: 14px;
+      margin-bottom: 4px;
+    }
+
+    .activity-meta {
+      font-size: 12px;
+      opacity: 0.7;
+    }
+
+    .activity-tag {
+      display: inline-block;
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: 600;
+      background: rgba(255,255,255,0.2);
+    }
+
+    /* Messages Card */
+    .messages-card {
+      grid-column: span 2;
+      grid-row: span 2;
+    }
+
+    .message-item {
+      display: flex;
+      gap: 14px;
+      padding: 16px;
+      border-radius: 14px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      margin-bottom: 8px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .message-item:hover {
+      background: rgba(255,255,255,0.1);
+    }
+
+    .message-avatar {
+      width: 48px;
+      height: 48px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      font-size: 14px;
+      flex-shrink: 0;
+    }
+
+    .message-content {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .message-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 4px;
+    }
+
+    .message-sender {
+      font-weight: 600;
+      font-size: 14px;
+    }
+
+    .message-time {
+      font-size: 11px;
+      opacity: 0.6;
+    }
+
+    .message-preview {
+      font-size: 13px;
+      opacity: 0.8;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .message-unread {
+      width: 10px;
+      height: 10px;
+      background: #f093fb;
+      border-radius: 50%;
+      flex-shrink: 0;
+      margin-top: 6px;
+    }
+
+    /* Back Link */
+    .back-link {
+      position: fixed;
+      top: 24px;
+      left: 304px;
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 20px;
+      background: rgba(255,255,255,0.15);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255,255,255,0.3);
+      border-radius: 14px;
+      color: white;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 13px;
+      transition: all 0.3s ease;
+    }
+
+    .back-link:hover {
+      background: rgba(255,255,255,0.25);
+      transform: translateY(-2px);
+    }
+  </style>
+</head>
+<body>
+  <a href="index.html" class="back-link">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M19 12H5M12 19l-7-7 7-7"/>
+    </svg>
+    Back to Themes
+  </a>
+
+  <div class="app-container">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="logo">
+        <div class="logo-icon">S</div>
+        <span class="logo-text">StudyBuddy</span>
+      </div>
+
+      <nav>
+        <a href="#" class="nav-item active">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+            <polyline points="9 22 9 12 15 12 15 22"/>
+          </svg>
+          Dashboard
+        </a>
+        <a href="#" class="nav-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 14l9-5-9-5-9 5 9 5z"/>
+            <path d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055"/>
+          </svg>
+          Universities
+          <span class="nav-badge">12</span>
+        </a>
+        <a href="#" class="nav-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+          </svg>
+          AI Counsellor
+        </a>
+        <a href="#" class="nav-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="4" width="18" height="18" rx="2"/>
+            <line x1="16" y1="2" x2="16" y2="6"/>
+            <line x1="8" y1="2" x2="8" y2="6"/>
+          </svg>
+          Applications
+        </a>
+        <a href="#" class="nav-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+            <circle cx="12" cy="7" r="4"/>
+          </svg>
+          Profile
+        </a>
+      </nav>
+
+      <div class="sidebar-cta">
+        <h4>Need Guidance?</h4>
+        <p>Chat with our AI counsellor for personalized advice.</p>
+        <button class="btn-glass btn-glass-solid" style="width: 100%;">Start Chat</button>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <!-- Header -->
+      <header class="header">
+        <div class="search-box">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="11" cy="11" r="8"/>
+            <path d="M21 21l-4.35-4.35"/>
+          </svg>
+          <input type="text" placeholder="Search universities, documents...">
+        </div>
+
+        <div class="header-actions">
+          <button class="icon-btn has-notif">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/>
+              <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
+            </svg>
+          </button>
+          <div class="user-menu">
+            <div class="user-avatar">JD</div>
+            <span class="user-name">John Doe</span>
+          </div>
+        </div>
+      </header>
+
+      <!-- Dashboard Content -->
+      <div class="dashboard">
+        <!-- Welcome Hero -->
+        <div class="welcome-hero">
+          <div class="welcome-content">
+            <div class="welcome-badge">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+              </svg>
+              Stage 3: Finalizing
+            </div>
+            <h1 class="welcome-title">Welcome back, John!</h1>
+            <p class="welcome-subtitle">You're making excellent progress. 3 universities shortlisted, 1 application deadline approaching in 5 days.</p>
+          </div>
+          <div class="welcome-illustration">
+            <div class="welcome-illustration-orbs">
+              <div class="orb orb-1"></div>
+              <div class="orb orb-2"></div>
+              <div class="orb orb-3"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bento Grid -->
+        <div class="bento-grid">
+          <!-- Stat Cards -->
+          <div class="card stat-card">
+            <div class="stat-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 14l9-5-9-5-9 5 9 5z"/>
+              </svg>
+            </div>
+            <div class="stat-value">12</div>
+            <div class="stat-label">Universities Explored</div>
+            <div class="stat-trend">+3 this week</div>
+          </div>
+
+          <div class="card stat-card">
+            <div class="stat-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                <polyline points="22 4 12 14.01 9 11.01"/>
+              </svg>
+            </div>
+            <div class="stat-value">3</div>
+            <div class="stat-label">Shortlisted</div>
+            <div class="stat-trend">+1 this week</div>
+          </div>
+
+          <div class="card stat-card">
+            <div class="stat-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="3" y="4" width="18" height="18" rx="2"/>
+                <line x1="16" y1="2" x2="16" y2="6"/>
+                <line x1="8" y1="2" x2="8" y2="6"/>
+              </svg>
+            </div>
+            <div class="stat-value">5</div>
+            <div class="stat-label">Days to Deadline</div>
+            <div class="stat-trend">Urgent</div>
+          </div>
+
+          <div class="card stat-card">
+            <div class="stat-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                <polyline points="14 2 14 8 20 8"/>
+              </svg>
+            </div>
+            <div class="stat-value">8</div>
+            <div class="stat-label">Tasks Completed</div>
+            <div class="stat-trend">67% done</div>
+          </div>
+
+          <!-- Progress Card -->
+          <div class="card progress-card">
+            <div class="card-header">
+              <h3 class="card-title">Application Progress</h3>
+              <a href="#" class="card-action">View Details</a>
+            </div>
+            <div class="progress-ring-container">
+              <div class="progress-ring">
+                <svg width="150" height="150" viewBox="0 0 150 150">
+                  <defs>
+                    <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                      <stop offset="0%" stop-color="#f093fb"/>
+                      <stop offset="100%" stop-color="#f5576c"/>
+                    </linearGradient>
+                  </defs>
+                  <circle cx="75" cy="75" r="65" class="progress-ring-bg"/>
+                  <circle cx="75" cy="75" r="65" class="progress-ring-fill"/>
+                </svg>
+                <div class="progress-ring-text">
+                  <div class="progress-ring-value">75%</div>
+                  <div class="progress-ring-label">Complete</div>
+                </div>
+              </div>
+              <div class="progress-details">
+                <div class="progress-item">
+                  <span class="progress-item-label">
+                    <span class="progress-item-dot" style="background: #f093fb;"></span>
+                    Profile Complete
+                  </span>
+                  <span class="progress-item-value">100%</span>
+                </div>
+                <div class="progress-item">
+                  <span class="progress-item-label">
+                    <span class="progress-item-dot" style="background: #667eea;"></span>
+                    Documents Ready
+                  </span>
+                  <span class="progress-item-value">80%</span>
+                </div>
+                <div class="progress-item">
+                  <span class="progress-item-label">
+                    <span class="progress-item-dot" style="background: #764ba2;"></span>
+                    Applications Sent
+                  </span>
+                  <span class="progress-item-value">45%</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Chart Card -->
+          <div class="card chart-card">
+            <div class="card-header">
+              <h3 class="card-title">Activity Overview</h3>
+              <a href="#" class="card-action">Last 7 days</a>
+            </div>
+            <div class="chart-container">
+              <div class="chart-placeholder">
+                <svg width="100%" height="100%" viewBox="0 0 400 180" preserveAspectRatio="none">
+                  <defs>
+                    <linearGradient id="chartGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                      <stop offset="0%" stop-color="rgba(255,255,255,0.3)"/>
+                      <stop offset="100%" stop-color="rgba(255,255,255,0)"/>
+                    </linearGradient>
+                  </defs>
+                  <path d="M0,160 Q50,140 100,120 T200,80 T300,100 T400,60 V180 H0 Z" fill="url(#chartGradient)"/>
+                  <path d="M0,160 Q50,140 100,120 T200,80 T300,100 T400,60" fill="none" stroke="rgba(255,255,255,0.6)" stroke-width="3" stroke-linecap="round"/>
+                </svg>
+              </div>
+            </div>
+          </div>
+
+          <!-- Activities Card -->
+          <div class="card activities-card">
+            <div class="card-header">
+              <h3 class="card-title">Upcoming Activities</h3>
+              <a href="#" class="card-action">View All</a>
+            </div>
+            <div class="activity-item">
+              <div class="activity-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                </svg>
+              </div>
+              <div class="activity-content">
+                <div class="activity-title">Submit MIT Application</div>
+                <div class="activity-meta">Due Feb 2, 2026 at 11:59 PM</div>
+              </div>
+              <span class="activity-tag">5 days</span>
+            </div>
+            <div class="activity-item">
+              <div class="activity-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+                </svg>
+              </div>
+              <div class="activity-content">
+                <div class="activity-title">AI Counsellor Session</div>
+                <div class="activity-meta">Today at 3:00 PM</div>
+              </div>
+              <span class="activity-tag">Today</span>
+            </div>
+          </div>
+
+          <!-- Messages Card -->
+          <div class="card messages-card">
+            <div class="card-header">
+              <h3 class="card-title">Recent Messages</h3>
+              <a href="#" class="card-action">View All</a>
+            </div>
+            <div class="message-item">
+              <div class="message-avatar">AI</div>
+              <div class="message-content">
+                <div class="message-header">
+                  <span class="message-sender">AI Counsellor</span>
+                  <span class="message-time">2 min ago</span>
+                </div>
+                <p class="message-preview">Great progress! I've reviewed your SOP and have some suggestions...</p>
+              </div>
+              <div class="message-unread"></div>
+            </div>
+            <div class="message-item">
+              <div class="message-avatar" style="background: linear-gradient(135deg, #10b981, #34d399);">SS</div>
+              <div class="message-content">
+                <div class="message-header">
+                  <span class="message-sender">Stanford Support</span>
+                  <span class="message-time">1 hour ago</span>
+                </div>
+                <p class="message-preview">Your application has been received. Thank you for applying!</p>
+              </div>
+            </div>
+            <div class="message-item">
+              <div class="message-avatar" style="background: linear-gradient(135deg, #f59e0b, #fbbf24);">MA</div>
+              <div class="message-content">
+                <div class="message-header">
+                  <span class="message-sender">MIT Admissions</span>
+                  <span class="message-time">Yesterday</span>
+                </div>
+                <p class="message-preview">Reminder: Application deadline approaching in 5 days.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</body>
+</html>

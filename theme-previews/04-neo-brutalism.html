@@ -1,0 +1,1034 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>StudyBuddy - Neo-Brutalism Theme</title>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --black: #000000;
+      --white: #fffef0;
+      --yellow: #fde047;
+      --pink: #f472b6;
+      --blue: #60a5fa;
+      --green: #a3e635;
+      --orange: #fb923c;
+      --purple: #c084fc;
+      --border: 3px solid #000;
+      --shadow: 6px 6px 0 #000;
+      --shadow-sm: 4px 4px 0 #000;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Space Grotesk', sans-serif;
+      background: var(--white);
+      color: var(--black);
+      line-height: 1.5;
+    }
+
+    /* Layout */
+    .app-container {
+      display: flex;
+      min-height: 100vh;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      width: 280px;
+      background: var(--black);
+      color: var(--white);
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      position: fixed;
+      height: 100vh;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 40px;
+    }
+
+    .logo-icon {
+      width: 50px;
+      height: 50px;
+      background: var(--yellow);
+      border: var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--black);
+      font-weight: 700;
+      font-size: 24px;
+    }
+
+    .logo-text {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--white);
+    }
+
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 14px 18px;
+      color: var(--white);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 15px;
+      border: var(--border);
+      border-color: transparent;
+      margin-bottom: 8px;
+      transition: all 0.15s ease;
+    }
+
+    .nav-item:hover {
+      background: var(--white);
+      color: var(--black);
+      border-color: var(--white);
+      transform: translate(-2px, -2px);
+      box-shadow: 4px 4px 0 var(--white);
+    }
+
+    .nav-item.active {
+      background: var(--yellow);
+      color: var(--black);
+      border-color: var(--yellow);
+      box-shadow: 4px 4px 0 var(--yellow);
+    }
+
+    .nav-item svg {
+      width: 22px;
+      height: 22px;
+    }
+
+    .nav-badge {
+      margin-left: auto;
+      background: var(--pink);
+      color: var(--black);
+      font-size: 12px;
+      font-weight: 700;
+      padding: 4px 10px;
+      border: 2px solid var(--black);
+    }
+
+    .sidebar-cta {
+      margin-top: auto;
+      background: var(--green);
+      border: var(--border);
+      padding: 20px;
+      color: var(--black);
+    }
+
+    .sidebar-cta h4 {
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .sidebar-cta p {
+      font-size: 13px;
+      margin-bottom: 16px;
+    }
+
+    .btn-brutal {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 12px 24px;
+      font-weight: 700;
+      font-size: 14px;
+      border: var(--border);
+      cursor: pointer;
+      transition: all 0.15s ease;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .btn-brutal:hover {
+      transform: translate(-2px, -2px);
+      box-shadow: 6px 6px 0 var(--black);
+    }
+
+    .btn-brutal:active {
+      transform: translate(0, 0);
+      box-shadow: none;
+    }
+
+    .btn-black {
+      background: var(--black);
+      color: var(--white);
+    }
+
+    .btn-white {
+      background: var(--white);
+      color: var(--black);
+    }
+
+    /* Main Content */
+    .main-content {
+      flex: 1;
+      margin-left: 280px;
+    }
+
+    /* Header */
+    .header {
+      background: var(--white);
+      border-bottom: var(--border);
+      padding: 20px 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .search-box {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: var(--white);
+      border: var(--border);
+      padding: 12px 18px;
+      width: 350px;
+    }
+
+    .search-box:focus-within {
+      box-shadow: var(--shadow-sm);
+      transform: translate(-2px, -2px);
+    }
+
+    .search-box input {
+      border: none;
+      background: none;
+      outline: none;
+      font-family: inherit;
+      font-size: 15px;
+      font-weight: 500;
+      width: 100%;
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .icon-btn {
+      width: 48px;
+      height: 48px;
+      border: var(--border);
+      background: var(--white);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.15s ease;
+    }
+
+    .icon-btn:hover {
+      transform: translate(-2px, -2px);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .icon-btn.has-notif {
+      position: relative;
+    }
+
+    .icon-btn.has-notif::after {
+      content: '';
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      width: 10px;
+      height: 10px;
+      background: var(--pink);
+      border: 2px solid var(--black);
+    }
+
+    .user-menu {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 8px 16px 8px 8px;
+      border: var(--border);
+      background: var(--yellow);
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .user-menu:hover {
+      transform: translate(-2px, -2px);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .user-avatar {
+      width: 36px;
+      height: 36px;
+      background: var(--black);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--white);
+      font-weight: 700;
+      font-size: 14px;
+    }
+
+    .user-name {
+      font-weight: 700;
+      font-size: 14px;
+    }
+
+    /* Dashboard Content */
+    .dashboard {
+      padding: 32px;
+      background: repeating-linear-gradient(
+        -45deg,
+        var(--white),
+        var(--white) 10px,
+        #f5f5dc 10px,
+        #f5f5dc 11px
+      );
+    }
+
+    /* Welcome Hero */
+    .welcome-hero {
+      background: var(--blue);
+      border: var(--border);
+      box-shadow: var(--shadow);
+      padding: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 24px;
+      position: relative;
+    }
+
+    .welcome-content {
+      position: relative;
+      z-index: 1;
+    }
+
+    .welcome-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--black);
+      color: var(--white);
+      font-size: 12px;
+      font-weight: 700;
+      padding: 6px 14px;
+      border: 2px solid var(--white);
+      margin-bottom: 16px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .welcome-title {
+      font-size: 36px;
+      font-weight: 700;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+    }
+
+    .welcome-subtitle {
+      font-size: 16px;
+      max-width: 450px;
+      font-weight: 500;
+    }
+
+    .welcome-illustration {
+      width: 180px;
+      height: 160px;
+      background: var(--yellow);
+      border: var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 80px;
+      transform: rotate(5deg);
+    }
+
+    /* Bento Grid */
+    .bento-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+    }
+
+    .card {
+      background: var(--white);
+      border: var(--border);
+      box-shadow: var(--shadow);
+      padding: 24px;
+      transition: all 0.15s ease;
+    }
+
+    .card:hover {
+      transform: translate(-4px, -4px);
+      box-shadow: 10px 10px 0 var(--black);
+    }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
+    }
+
+    .card-title {
+      font-size: 14px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .card-action {
+      color: var(--black);
+      font-size: 12px;
+      font-weight: 700;
+      text-decoration: none;
+      text-transform: uppercase;
+      border-bottom: 2px solid var(--black);
+    }
+
+    /* Stats Cards */
+    .stat-card {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .stat-icon {
+      width: 56px;
+      height: 56px;
+      border: var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 16px;
+    }
+
+    .stat-icon.yellow { background: var(--yellow); }
+    .stat-icon.pink { background: var(--pink); }
+    .stat-icon.green { background: var(--green); }
+    .stat-icon.blue { background: var(--blue); }
+
+    .stat-value {
+      font-size: 48px;
+      font-weight: 700;
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+
+    .stat-label {
+      font-size: 13px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .stat-trend {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      font-weight: 700;
+      margin-top: 12px;
+      padding: 4px 10px;
+      border: 2px solid var(--black);
+    }
+
+    .stat-trend.up { background: var(--green); }
+    .stat-trend.warning { background: var(--orange); }
+
+    /* Progress Card */
+    .progress-card {
+      grid-column: span 2;
+    }
+
+    .progress-bars {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .progress-item {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .progress-label {
+      width: 120px;
+      font-size: 13px;
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+
+    .progress-bar {
+      flex: 1;
+      height: 24px;
+      background: var(--white);
+      border: var(--border);
+      position: relative;
+    }
+
+    .progress-fill {
+      height: 100%;
+      transition: width 0.3s ease;
+    }
+
+    .progress-fill.yellow { background: var(--yellow); }
+    .progress-fill.pink { background: var(--pink); }
+    .progress-fill.green { background: var(--green); }
+
+    .progress-value {
+      font-size: 14px;
+      font-weight: 700;
+      width: 50px;
+      text-align: right;
+    }
+
+    /* Big Number Card */
+    .big-number-card {
+      grid-column: span 2;
+      background: var(--black);
+      color: var(--white);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      text-align: center;
+    }
+
+    .big-number-card:hover {
+      box-shadow: 10px 10px 0 var(--yellow);
+    }
+
+    .big-number {
+      font-size: 120px;
+      font-weight: 700;
+      line-height: 1;
+      color: var(--yellow);
+    }
+
+    .big-number-label {
+      font-size: 18px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin-top: 8px;
+    }
+
+    /* Tasks Card */
+    .tasks-card {
+      grid-column: span 2;
+    }
+
+    .task-item {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 16px;
+      border: var(--border);
+      margin-bottom: 12px;
+      transition: all 0.15s ease;
+    }
+
+    .task-item:hover {
+      transform: translate(-2px, -2px);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .task-checkbox {
+      width: 28px;
+      height: 28px;
+      border: var(--border);
+      background: var(--white);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .task-checkbox.checked {
+      background: var(--green);
+    }
+
+    .task-content {
+      flex: 1;
+    }
+
+    .task-title {
+      font-weight: 700;
+      font-size: 15px;
+    }
+
+    .task-meta {
+      font-size: 12px;
+      font-weight: 500;
+      color: #666;
+    }
+
+    .task-tag {
+      padding: 6px 12px;
+      border: 2px solid var(--black);
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    .task-tag.urgent { background: var(--pink); }
+    .task-tag.normal { background: var(--yellow); }
+    .task-tag.done { background: var(--green); }
+
+    /* Calendar Card */
+    .calendar-card {
+      grid-column: span 2;
+      background: var(--pink);
+    }
+
+    .calendar-card .card-title {
+      color: var(--black);
+    }
+
+    .calendar-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 4px;
+    }
+
+    .calendar-day-name {
+      text-align: center;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 8px 0;
+      text-transform: uppercase;
+    }
+
+    .calendar-day {
+      aspect-ratio: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      font-weight: 700;
+      border: 2px solid transparent;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .calendar-day:hover {
+      background: var(--white);
+      border-color: var(--black);
+    }
+
+    .calendar-day.today {
+      background: var(--black);
+      color: var(--white);
+    }
+
+    .calendar-day.has-event {
+      background: var(--yellow);
+      border-color: var(--black);
+    }
+
+    /* Universities Card */
+    .universities-card {
+      grid-column: span 2;
+      grid-row: span 2;
+    }
+
+    .uni-item {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 16px;
+      border: var(--border);
+      margin-bottom: 12px;
+      transition: all 0.15s ease;
+    }
+
+    .uni-item:hover {
+      transform: translate(-2px, -2px);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .uni-rank {
+      width: 48px;
+      height: 48px;
+      background: var(--black);
+      color: var(--white);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 18px;
+    }
+
+    .uni-info {
+      flex: 1;
+    }
+
+    .uni-name {
+      font-weight: 700;
+      font-size: 15px;
+    }
+
+    .uni-location {
+      font-size: 12px;
+      color: #666;
+    }
+
+    .uni-status {
+      padding: 6px 12px;
+      border: 2px solid var(--black);
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    .uni-status.target { background: var(--yellow); }
+    .uni-status.dream { background: var(--pink); }
+    .uni-status.safe { background: var(--green); }
+
+    /* Back Link */
+    .back-link {
+      position: fixed;
+      top: 24px;
+      left: 304px;
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 16px;
+      background: var(--yellow);
+      border: var(--border);
+      color: var(--black);
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 13px;
+      text-transform: uppercase;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .back-link:hover {
+      transform: translate(-2px, -2px);
+      box-shadow: var(--shadow);
+    }
+  </style>
+</head>
+<body>
+  <a href="index.html" class="back-link">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+      <path d="M19 12H5M12 19l-7-7 7-7"/>
+    </svg>
+    Back
+  </a>
+
+  <div class="app-container">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="logo">
+        <div class="logo-icon">S</div>
+        <span class="logo-text">StudyBuddy</span>
+      </div>
+
+      <nav>
+        <a href="#" class="nav-item active">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+            <polyline points="9 22 9 12 15 12 15 22"/>
+          </svg>
+          Dashboard
+        </a>
+        <a href="#" class="nav-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <path d="M12 14l9-5-9-5-9 5 9 5z"/>
+            <path d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055"/>
+          </svg>
+          Universities
+          <span class="nav-badge">12</span>
+        </a>
+        <a href="#" class="nav-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+          </svg>
+          AI Chat
+        </a>
+        <a href="#" class="nav-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <rect x="3" y="4" width="18" height="18" rx="2"/>
+            <line x1="16" y1="2" x2="16" y2="6"/>
+            <line x1="8" y1="2" x2="8" y2="6"/>
+          </svg>
+          Applications
+        </a>
+        <a href="#" class="nav-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+            <circle cx="12" cy="7" r="4"/>
+          </svg>
+          Profile
+        </a>
+      </nav>
+
+      <div class="sidebar-cta">
+        <h4>Need Help?</h4>
+        <p>Talk to our AI counsellor for personalized guidance.</p>
+        <button class="btn-brutal btn-black" style="width: 100%;">Start Chat</button>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <!-- Header -->
+      <header class="header">
+        <div class="search-box">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <circle cx="11" cy="11" r="8"/>
+            <path d="M21 21l-4.35-4.35"/>
+          </svg>
+          <input type="text" placeholder="Search universities...">
+        </div>
+
+        <div class="header-actions">
+          <button class="icon-btn has-notif">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/>
+              <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
+            </svg>
+          </button>
+          <div class="user-menu">
+            <div class="user-avatar">JD</div>
+            <span class="user-name">JOHN DOE</span>
+          </div>
+        </div>
+      </header>
+
+      <!-- Dashboard Content -->
+      <div class="dashboard">
+        <!-- Welcome Hero -->
+        <div class="welcome-hero">
+          <div class="welcome-content">
+            <div class="welcome-badge">Stage 3: Finalizing</div>
+            <h1 class="welcome-title">Hey John!</h1>
+            <p class="welcome-subtitle">You're crushing it! 3 universities shortlisted and 1 deadline coming up. Let's get that application done!</p>
+          </div>
+          <div class="welcome-illustration">📚</div>
+        </div>
+
+        <!-- Bento Grid -->
+        <div class="bento-grid">
+          <!-- Stat Cards -->
+          <div class="card stat-card">
+            <div class="stat-icon yellow">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <path d="M12 14l9-5-9-5-9 5 9 5z"/>
+              </svg>
+            </div>
+            <div class="stat-value">12</div>
+            <div class="stat-label">Universities</div>
+            <div class="stat-trend up">+3 This Week</div>
+          </div>
+
+          <div class="card stat-card">
+            <div class="stat-icon green">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                <polyline points="22 4 12 14.01 9 11.01"/>
+              </svg>
+            </div>
+            <div class="stat-value">3</div>
+            <div class="stat-label">Shortlisted</div>
+            <div class="stat-trend up">On Track!</div>
+          </div>
+
+          <div class="card stat-card">
+            <div class="stat-icon pink">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <rect x="3" y="4" width="18" height="18" rx="2"/>
+                <line x1="16" y1="2" x2="16" y2="6"/>
+                <line x1="8" y1="2" x2="8" y2="6"/>
+              </svg>
+            </div>
+            <div class="stat-value">5</div>
+            <div class="stat-label">Days Left</div>
+            <div class="stat-trend warning">Hurry Up!</div>
+          </div>
+
+          <div class="card stat-card">
+            <div class="stat-icon blue">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                <polyline points="14 2 14 8 20 8"/>
+              </svg>
+            </div>
+            <div class="stat-value">8</div>
+            <div class="stat-label">Tasks Done</div>
+            <div class="stat-trend up">67% Complete</div>
+          </div>
+
+          <!-- Progress Card -->
+          <div class="card progress-card">
+            <div class="card-header">
+              <h3 class="card-title">Your Progress</h3>
+              <a href="#" class="card-action">Details</a>
+            </div>
+            <div class="progress-bars">
+              <div class="progress-item">
+                <span class="progress-label">Profile</span>
+                <div class="progress-bar">
+                  <div class="progress-fill green" style="width: 100%;"></div>
+                </div>
+                <span class="progress-value">100%</span>
+              </div>
+              <div class="progress-item">
+                <span class="progress-label">Documents</span>
+                <div class="progress-bar">
+                  <div class="progress-fill yellow" style="width: 80%;"></div>
+                </div>
+                <span class="progress-value">80%</span>
+              </div>
+              <div class="progress-item">
+                <span class="progress-label">Applications</span>
+                <div class="progress-bar">
+                  <div class="progress-fill pink" style="width: 45%;"></div>
+                </div>
+                <span class="progress-value">45%</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Big Number Card -->
+          <div class="card big-number-card">
+            <div class="big-number">75%</div>
+            <div class="big-number-label">Overall Progress</div>
+          </div>
+
+          <!-- Tasks Card -->
+          <div class="card tasks-card">
+            <div class="card-header">
+              <h3 class="card-title">Upcoming Tasks</h3>
+              <a href="#" class="card-action">View All</a>
+            </div>
+            <div class="task-item">
+              <div class="task-checkbox"></div>
+              <div class="task-content">
+                <div class="task-title">Submit MIT Application</div>
+                <div class="task-meta">Due Feb 2, 2026</div>
+              </div>
+              <span class="task-tag urgent">Urgent</span>
+            </div>
+            <div class="task-item">
+              <div class="task-checkbox"></div>
+              <div class="task-content">
+                <div class="task-title">Finalize SOP Draft</div>
+                <div class="task-meta">Due Jan 30, 2026</div>
+              </div>
+              <span class="task-tag normal">In Progress</span>
+            </div>
+            <div class="task-item">
+              <div class="task-checkbox checked">✓</div>
+              <div class="task-content">
+                <div class="task-title">Request Recommendation Letter</div>
+                <div class="task-meta">Completed Jan 25, 2026</div>
+              </div>
+              <span class="task-tag done">Done</span>
+            </div>
+          </div>
+
+          <!-- Calendar Card -->
+          <div class="card calendar-card">
+            <div class="card-header">
+              <h3 class="card-title">January 2026</h3>
+            </div>
+            <div class="calendar-grid">
+              <div class="calendar-day-name">S</div>
+              <div class="calendar-day-name">M</div>
+              <div class="calendar-day-name">T</div>
+              <div class="calendar-day-name">W</div>
+              <div class="calendar-day-name">T</div>
+              <div class="calendar-day-name">F</div>
+              <div class="calendar-day-name">S</div>
+              <div class="calendar-day"></div>
+              <div class="calendar-day"></div>
+              <div class="calendar-day"></div>
+              <div class="calendar-day">1</div>
+              <div class="calendar-day has-event">2</div>
+              <div class="calendar-day">3</div>
+              <div class="calendar-day">4</div>
+              <div class="calendar-day">5</div>
+              <div class="calendar-day">6</div>
+              <div class="calendar-day">7</div>
+              <div class="calendar-day">8</div>
+              <div class="calendar-day">9</div>
+              <div class="calendar-day has-event">10</div>
+              <div class="calendar-day">11</div>
+              <div class="calendar-day">12</div>
+              <div class="calendar-day">13</div>
+              <div class="calendar-day">14</div>
+              <div class="calendar-day has-event">15</div>
+              <div class="calendar-day">16</div>
+              <div class="calendar-day">17</div>
+              <div class="calendar-day">18</div>
+              <div class="calendar-day">19</div>
+              <div class="calendar-day">20</div>
+              <div class="calendar-day">21</div>
+              <div class="calendar-day">22</div>
+              <div class="calendar-day">23</div>
+              <div class="calendar-day">24</div>
+              <div class="calendar-day">25</div>
+              <div class="calendar-day">26</div>
+              <div class="calendar-day">27</div>
+              <div class="calendar-day today">28</div>
+              <div class="calendar-day">29</div>
+              <div class="calendar-day">30</div>
+              <div class="calendar-day">31</div>
+            </div>
+          </div>
+
+          <!-- Universities Card -->
+          <div class="card universities-card">
+            <div class="card-header">
+              <h3 class="card-title">Your Shortlist</h3>
+              <a href="#" class="card-action">View All</a>
+            </div>
+            <div class="uni-item">
+              <div class="uni-rank">#1</div>
+              <div class="uni-info">
+                <div class="uni-name">Massachusetts Institute of Technology</div>
+                <div class="uni-location">Cambridge, MA, USA</div>
+              </div>
+              <span class="uni-status dream">Dream</span>
+            </div>
+            <div class="uni-item">
+              <div class="uni-rank">#3</div>
+              <div class="uni-info">
+                <div class="uni-name">Stanford University</div>
+                <div class="uni-location">Stanford, CA, USA</div>
+              </div>
+              <span class="uni-status target">Target</span>
+            </div>
+            <div class="uni-item">
+              <div class="uni-rank">#7</div>
+              <div class="uni-info">
+                <div class="uni-name">University of Michigan</div>
+                <div class="uni-location">Ann Arbor, MI, USA</div>
+              </div>
+              <span class="uni-status safe">Safe</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</body>
+</html>

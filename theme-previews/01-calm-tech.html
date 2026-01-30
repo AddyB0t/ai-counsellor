@@ -1,0 +1,1380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>StudyBuddy - Calm Tech Theme</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #3b82f6;
+      --primary-light: #60a5fa;
+      --primary-lighter: #dbeafe;
+      --primary-dark: #2563eb;
+      --bg: #f8fafc;
+      --bg-card: #ffffff;
+      --text: #1e293b;
+      --text-secondary: #64748b;
+      --text-muted: #94a3b8;
+      --border: #e2e8f0;
+      --success: #10b981;
+      --warning: #f59e0b;
+      --danger: #ef4444;
+      --shadow: 0 1px 3px rgba(0,0,0,0.08), 0 4px 12px rgba(0,0,0,0.05);
+      --shadow-lg: 0 4px 6px rgba(0,0,0,0.07), 0 10px 20px rgba(0,0,0,0.08);
+      --radius: 16px;
+      --radius-sm: 12px;
+      --radius-xs: 8px;
+    }
+
+    .dark {
+      --primary: #60a5fa;
+      --primary-light: #93c5fd;
+      --primary-lighter: #1e3a5f;
+      --primary-dark: #3b82f6;
+      --bg: #0f172a;
+      --bg-card: #1e293b;
+      --text: #f1f5f9;
+      --text-secondary: #94a3b8;
+      --text-muted: #64748b;
+      --border: #334155;
+      --shadow: 0 1px 3px rgba(0,0,0,0.3), 0 4px 12px rgba(0,0,0,0.2);
+      --shadow-lg: 0 4px 6px rgba(0,0,0,0.4), 0 10px 20px rgba(0,0,0,0.3);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      transition: all 0.3s ease;
+    }
+
+    /* Layout */
+    .app-container {
+      display: flex;
+      min-height: 100vh;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      width: 260px;
+      background: var(--bg-card);
+      border-right: 1px solid var(--border);
+      padding: 24px 16px;
+      display: flex;
+      flex-direction: column;
+      position: fixed;
+      height: 100vh;
+      box-shadow: var(--shadow);
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 0 12px;
+      margin-bottom: 32px;
+    }
+
+    .logo-icon {
+      width: 42px;
+      height: 42px;
+      background: linear-gradient(135deg, var(--primary), var(--primary-light));
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 700;
+      font-size: 18px;
+      box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+    }
+
+    .logo-text {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .nav-section {
+      margin-bottom: 24px;
+    }
+
+    .nav-label {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--text-muted);
+      padding: 0 12px;
+      margin-bottom: 8px;
+    }
+
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 16px;
+      border-radius: var(--radius-sm);
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 14px;
+      transition: all 0.2s ease;
+      margin-bottom: 4px;
+    }
+
+    .nav-item:hover {
+      background: var(--primary-lighter);
+      color: var(--primary);
+    }
+
+    .nav-item.active {
+      background: linear-gradient(135deg, var(--primary), var(--primary-light));
+      color: white;
+      box-shadow: 0 4px 12px rgba(59, 130, 246, 0.25);
+    }
+
+    .nav-item svg {
+      width: 20px;
+      height: 20px;
+    }
+
+    .nav-badge {
+      margin-left: auto;
+      background: var(--danger);
+      color: white;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: 10px;
+    }
+
+    .sidebar-footer {
+      margin-top: auto;
+      padding: 16px;
+      background: var(--primary-lighter);
+      border-radius: var(--radius);
+    }
+
+    .sidebar-footer-title {
+      font-weight: 600;
+      font-size: 14px;
+      margin-bottom: 4px;
+    }
+
+    .sidebar-footer-text {
+      font-size: 12px;
+      color: var(--text-secondary);
+      margin-bottom: 12px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 10px 20px;
+      border-radius: var(--radius-xs);
+      font-weight: 600;
+      font-size: 14px;
+      border: none;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--primary), var(--primary-light));
+      color: white;
+      box-shadow: 0 4px 12px rgba(59, 130, 246, 0.25);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 16px rgba(59, 130, 246, 0.35);
+    }
+
+    /* Main Content */
+    .main-content {
+      flex: 1;
+      margin-left: 260px;
+    }
+
+    /* Header */
+    .header {
+      background: var(--bg-card);
+      border-bottom: 1px solid var(--border);
+      padding: 16px 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: var(--shadow);
+    }
+
+    .search-box {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 10px 16px;
+      width: 320px;
+      transition: all 0.2s ease;
+    }
+
+    .search-box:focus-within {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    }
+
+    .search-box input {
+      border: none;
+      background: none;
+      outline: none;
+      font-size: 14px;
+      color: var(--text);
+      width: 100%;
+    }
+
+    .search-box input::placeholder {
+      color: var(--text-muted);
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .theme-toggle {
+      width: 44px;
+      height: 44px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border);
+      background: var(--bg);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-secondary);
+      transition: all 0.2s ease;
+    }
+
+    .theme-toggle:hover {
+      background: var(--primary-lighter);
+      color: var(--primary);
+      border-color: var(--primary);
+    }
+
+    .notification-btn {
+      width: 44px;
+      height: 44px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border);
+      background: var(--bg);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-secondary);
+      position: relative;
+    }
+
+    .notification-dot {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      width: 8px;
+      height: 8px;
+      background: var(--danger);
+      border-radius: 50%;
+      border: 2px solid var(--bg-card);
+    }
+
+    .user-menu {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 6px 12px 6px 6px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border);
+      background: var(--bg);
+      cursor: pointer;
+    }
+
+    .user-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, var(--primary), var(--primary-light));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 600;
+      font-size: 13px;
+    }
+
+    .user-name {
+      font-weight: 500;
+      font-size: 14px;
+    }
+
+    /* Dashboard Content */
+    .dashboard {
+      padding: 32px;
+    }
+
+    /* Welcome Hero */
+    .welcome-hero {
+      background: linear-gradient(135deg, var(--primary-lighter), #f0f9ff);
+      border-radius: var(--radius);
+      padding: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 24px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .dark .welcome-hero {
+      background: linear-gradient(135deg, #1e3a5f, #1e293b);
+    }
+
+    .welcome-hero::before {
+      content: '';
+      position: absolute;
+      right: 0;
+      top: 0;
+      width: 300px;
+      height: 100%;
+      background: url("data:image/svg+xml,%3Csvg width='300' height='200' viewBox='0 0 300 200' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='250' cy='100' r='120' fill='%233b82f6' fill-opacity='0.1'/%3E%3Ccircle cx='280' cy='60' r='60' fill='%2360a5fa' fill-opacity='0.15'/%3E%3C/svg%3E") no-repeat right center;
+    }
+
+    .welcome-content {
+      position: relative;
+      z-index: 1;
+    }
+
+    .welcome-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--primary);
+      color: white;
+      font-size: 12px;
+      font-weight: 600;
+      padding: 4px 12px;
+      border-radius: 20px;
+      margin-bottom: 12px;
+    }
+
+    .welcome-title {
+      font-size: 28px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .welcome-subtitle {
+      color: var(--text-secondary);
+      font-size: 15px;
+      max-width: 400px;
+    }
+
+    .welcome-illustration {
+      width: 180px;
+      height: 140px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .welcome-illustration svg {
+      width: 100%;
+      height: 100%;
+    }
+
+    /* Bento Grid */
+    .bento-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      grid-template-rows: auto auto auto;
+      gap: 20px;
+    }
+
+    .card {
+      background: var(--bg-card);
+      border-radius: var(--radius);
+      padding: 24px;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+      transition: all 0.2s ease;
+    }
+
+    .card:hover {
+      box-shadow: var(--shadow-lg);
+      transform: translateY(-2px);
+    }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
+    }
+
+    .card-title {
+      font-size: 16px;
+      font-weight: 600;
+    }
+
+    .card-action {
+      color: var(--primary);
+      font-size: 13px;
+      font-weight: 500;
+      text-decoration: none;
+    }
+
+    /* Stats Cards */
+    .stat-card {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .stat-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: var(--radius-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 16px;
+    }
+
+    .stat-icon.blue { background: var(--primary-lighter); color: var(--primary); }
+    .stat-icon.green { background: #dcfce7; color: #16a34a; }
+    .stat-icon.orange { background: #fef3c7; color: #d97706; }
+    .stat-icon.purple { background: #f3e8ff; color: #9333ea; }
+
+    .dark .stat-icon.blue { background: rgba(59, 130, 246, 0.2); }
+    .dark .stat-icon.green { background: rgba(22, 163, 74, 0.2); }
+    .dark .stat-icon.orange { background: rgba(217, 119, 6, 0.2); }
+    .dark .stat-icon.purple { background: rgba(147, 51, 234, 0.2); }
+
+    .stat-value {
+      font-size: 28px;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .stat-label {
+      font-size: 13px;
+      color: var(--text-secondary);
+    }
+
+    .stat-trend {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 12px;
+      font-weight: 600;
+      margin-top: 8px;
+    }
+
+    .stat-trend.up { color: var(--success); }
+    .stat-trend.down { color: var(--danger); }
+
+    /* Progress Card */
+    .progress-card {
+      grid-column: span 2;
+    }
+
+    .progress-ring-container {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+    }
+
+    .progress-ring {
+      position: relative;
+      width: 140px;
+      height: 140px;
+    }
+
+    .progress-ring svg {
+      transform: rotate(-90deg);
+    }
+
+    .progress-ring-bg {
+      fill: none;
+      stroke: var(--border);
+      stroke-width: 12;
+    }
+
+    .progress-ring-fill {
+      fill: none;
+      stroke: url(#gradient);
+      stroke-width: 12;
+      stroke-linecap: round;
+      stroke-dasharray: 377;
+      stroke-dashoffset: 94;
+      transition: stroke-dashoffset 0.5s ease;
+    }
+
+    .progress-ring-text {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+    }
+
+    .progress-ring-value {
+      font-size: 32px;
+      font-weight: 700;
+      color: var(--primary);
+    }
+
+    .progress-ring-label {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .progress-details {
+      flex: 1;
+    }
+
+    .progress-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .progress-item:last-child {
+      border-bottom: none;
+    }
+
+    .progress-item-label {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 14px;
+    }
+
+    .progress-item-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+    }
+
+    .progress-item-value {
+      font-weight: 600;
+      font-size: 14px;
+    }
+
+    /* Chart Card */
+    .chart-card {
+      grid-column: span 2;
+    }
+
+    .chart-container {
+      height: 200px;
+      position: relative;
+    }
+
+    .chart-placeholder {
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(180deg, var(--primary-lighter) 0%, transparent 100%);
+      border-radius: var(--radius-xs);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .chart-line {
+      position: absolute;
+      bottom: 20%;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--primary), var(--primary-light));
+      border-radius: 2px;
+    }
+
+    .chart-line::before {
+      content: '';
+      position: absolute;
+      width: 100%;
+      height: 100px;
+      bottom: 0;
+      background: linear-gradient(180deg, rgba(59, 130, 246, 0.2) 0%, transparent 100%);
+    }
+
+    /* Calendar Card */
+    .calendar-card {
+      grid-column: span 2;
+    }
+
+    .calendar-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+    }
+
+    .calendar-nav {
+      display: flex;
+      gap: 8px;
+    }
+
+    .calendar-nav button {
+      width: 32px;
+      height: 32px;
+      border-radius: var(--radius-xs);
+      border: 1px solid var(--border);
+      background: var(--bg);
+      cursor: pointer;
+      color: var(--text-secondary);
+    }
+
+    .calendar-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 4px;
+    }
+
+    .calendar-day-name {
+      text-align: center;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-muted);
+      padding: 8px 0;
+    }
+
+    .calendar-day {
+      aspect-ratio: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      font-weight: 500;
+      border-radius: var(--radius-xs);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .calendar-day:hover {
+      background: var(--primary-lighter);
+    }
+
+    .calendar-day.today {
+      background: var(--primary);
+      color: white;
+    }
+
+    .calendar-day.has-event {
+      position: relative;
+    }
+
+    .calendar-day.has-event::after {
+      content: '';
+      position: absolute;
+      bottom: 4px;
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: var(--primary);
+    }
+
+    .calendar-day.today.has-event::after {
+      background: white;
+    }
+
+    .calendar-day.other-month {
+      color: var(--text-muted);
+    }
+
+    /* Activities Card */
+    .activities-card {
+      grid-column: span 2;
+    }
+
+    .activity-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      padding: 16px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .activity-item:last-child {
+      border-bottom: none;
+    }
+
+    .activity-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: var(--radius-xs);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .activity-content {
+      flex: 1;
+    }
+
+    .activity-title {
+      font-weight: 500;
+      font-size: 14px;
+      margin-bottom: 4px;
+    }
+
+    .activity-meta {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .activity-tag {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: 600;
+    }
+
+    .tag-blue { background: var(--primary-lighter); color: var(--primary); }
+    .tag-green { background: #dcfce7; color: #16a34a; }
+    .tag-orange { background: #fef3c7; color: #d97706; }
+    .tag-purple { background: #f3e8ff; color: #9333ea; }
+
+    .dark .tag-blue { background: rgba(59, 130, 246, 0.2); }
+    .dark .tag-green { background: rgba(22, 163, 74, 0.2); }
+    .dark .tag-orange { background: rgba(217, 119, 6, 0.2); }
+    .dark .tag-purple { background: rgba(147, 51, 234, 0.2); }
+
+    /* Messages Card */
+    .messages-card {
+      grid-column: span 2;
+      grid-row: span 2;
+    }
+
+    .message-item {
+      display: flex;
+      gap: 12px;
+      padding: 14px;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: all 0.2s ease;
+      margin-bottom: 8px;
+    }
+
+    .message-item:hover {
+      background: var(--primary-lighter);
+    }
+
+    .message-avatar {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, var(--primary), var(--primary-light));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 600;
+      font-size: 14px;
+      flex-shrink: 0;
+    }
+
+    .message-content {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .message-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 4px;
+    }
+
+    .message-sender {
+      font-weight: 600;
+      font-size: 14px;
+    }
+
+    .message-time {
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    .message-preview {
+      font-size: 13px;
+      color: var(--text-secondary);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .message-unread {
+      width: 8px;
+      height: 8px;
+      background: var(--primary);
+      border-radius: 50%;
+      flex-shrink: 0;
+      margin-top: 6px;
+    }
+
+    /* Theme Switcher Demo */
+    .theme-demo {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: var(--bg-card);
+      border-radius: var(--radius);
+      padding: 16px;
+      box-shadow: var(--shadow-lg);
+      border: 1px solid var(--border);
+      z-index: 1000;
+    }
+
+    .theme-demo-title {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-muted);
+      margin-bottom: 12px;
+    }
+
+    .theme-demo-buttons {
+      display: flex;
+      gap: 8px;
+    }
+
+    .theme-demo-btn {
+      padding: 8px 16px;
+      border-radius: var(--radius-xs);
+      border: 1px solid var(--border);
+      background: var(--bg);
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .theme-demo-btn.active {
+      background: var(--primary);
+      color: white;
+      border-color: var(--primary);
+    }
+
+    /* Back Link */
+    .back-link {
+      position: fixed;
+      top: 24px;
+      left: 24px;
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 16px;
+      background: var(--bg-card);
+      border-radius: var(--radius-xs);
+      border: 1px solid var(--border);
+      color: var(--text);
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 14px;
+      box-shadow: var(--shadow);
+    }
+
+    .back-link:hover {
+      background: var(--primary-lighter);
+      color: var(--primary);
+    }
+  </style>
+</head>
+<body>
+  <a href="index.html" class="back-link">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M19 12H5M12 19l-7-7 7-7"/>
+    </svg>
+    Back to Themes
+  </a>
+
+  <div class="app-container">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="logo">
+        <div class="logo-icon">S</div>
+        <span class="logo-text">StudyBuddy</span>
+      </div>
+
+      <nav class="nav-section">
+        <div class="nav-label">Main</div>
+        <a href="#" class="nav-item active">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+            <polyline points="9 22 9 12 15 12 15 22"/>
+          </svg>
+          Dashboard
+        </a>
+        <a href="#" class="nav-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 14l9-5-9-5-9 5 9 5z"/>
+            <path d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z"/>
+          </svg>
+          Universities
+          <span class="nav-badge">12</span>
+        </a>
+        <a href="#" class="nav-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+          </svg>
+          AI Counsellor
+        </a>
+        <a href="#" class="nav-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+            <line x1="16" y1="2" x2="16" y2="6"/>
+            <line x1="8" y1="2" x2="8" y2="6"/>
+            <line x1="3" y1="10" x2="21" y2="10"/>
+          </svg>
+          Applications
+        </a>
+      </nav>
+
+      <nav class="nav-section">
+        <div class="nav-label">Account</div>
+        <a href="#" class="nav-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+            <circle cx="12" cy="7" r="4"/>
+          </svg>
+          Profile
+        </a>
+        <a href="#" class="nav-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="3"/>
+            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+          </svg>
+          Settings
+        </a>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="sidebar-footer-title">Need Help?</div>
+        <p class="sidebar-footer-text">Contact our support team for assistance with your applications.</p>
+        <button class="btn btn-primary" style="width: 100%;">Get Support</button>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <!-- Header -->
+      <header class="header">
+        <div class="search-box">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="11" cy="11" r="8"/>
+            <path d="M21 21l-4.35-4.35"/>
+          </svg>
+          <input type="text" placeholder="Search universities, documents...">
+        </div>
+
+        <div class="header-actions">
+          <button class="theme-toggle" onclick="toggleTheme()">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="5"/>
+              <line x1="12" y1="1" x2="12" y2="3"/>
+              <line x1="12" y1="21" x2="12" y2="23"/>
+              <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+              <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+              <line x1="1" y1="12" x2="3" y2="12"/>
+              <line x1="21" y1="12" x2="23" y2="12"/>
+              <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+              <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+            </svg>
+          </button>
+          <button class="notification-btn">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/>
+              <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
+            </svg>
+            <span class="notification-dot"></span>
+          </button>
+          <div class="user-menu">
+            <div class="user-avatar">JD</div>
+            <span class="user-name">John Doe</span>
+          </div>
+        </div>
+      </header>
+
+      <!-- Dashboard Content -->
+      <div class="dashboard">
+        <!-- Welcome Hero -->
+        <div class="welcome-hero">
+          <div class="welcome-content">
+            <div class="welcome-badge">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+              </svg>
+              Stage 3: Finalizing
+            </div>
+            <h1 class="welcome-title">Welcome back, John!</h1>
+            <p class="welcome-subtitle">You're making great progress. 3 universities shortlisted, 1 application deadline in 5 days.</p>
+          </div>
+          <div class="welcome-illustration">
+            <svg viewBox="0 0 200 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="100" cy="80" r="60" fill="#dbeafe"/>
+              <rect x="70" y="50" width="60" height="80" rx="8" fill="white" stroke="#3b82f6" stroke-width="2"/>
+              <rect x="78" y="60" width="44" height="4" rx="2" fill="#3b82f6"/>
+              <rect x="78" y="70" width="30" height="4" rx="2" fill="#93c5fd"/>
+              <rect x="78" y="80" width="38" height="4" rx="2" fill="#93c5fd"/>
+              <rect x="78" y="90" width="25" height="4" rx="2" fill="#93c5fd"/>
+              <circle cx="100" cy="115" r="8" fill="#3b82f6"/>
+              <path d="M96 115l3 3 5-5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <circle cx="45" cy="60" r="15" fill="#fef3c7"/>
+              <circle cx="155" cy="100" r="12" fill="#dcfce7"/>
+            </svg>
+          </div>
+        </div>
+
+        <!-- Bento Grid -->
+        <div class="bento-grid">
+          <!-- Stat Cards -->
+          <div class="card stat-card">
+            <div class="stat-icon blue">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 14l9-5-9-5-9 5 9 5z"/>
+                <path d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z"/>
+              </svg>
+            </div>
+            <div class="stat-value">12</div>
+            <div class="stat-label">Universities Explored</div>
+            <div class="stat-trend up">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/>
+              </svg>
+              +3 this week
+            </div>
+          </div>
+
+          <div class="card stat-card">
+            <div class="stat-icon green">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                <polyline points="22 4 12 14.01 9 11.01"/>
+              </svg>
+            </div>
+            <div class="stat-value">3</div>
+            <div class="stat-label">Shortlisted</div>
+            <div class="stat-trend up">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/>
+              </svg>
+              +1 this week
+            </div>
+          </div>
+
+          <div class="card stat-card">
+            <div class="stat-icon orange">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+                <line x1="16" y1="2" x2="16" y2="6"/>
+                <line x1="8" y1="2" x2="8" y2="6"/>
+                <line x1="3" y1="10" x2="21" y2="10"/>
+              </svg>
+            </div>
+            <div class="stat-value">5</div>
+            <div class="stat-label">Days to Deadline</div>
+            <div class="stat-trend down">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"/>
+                <line x1="12" y1="8" x2="12" y2="12"/>
+                <line x1="12" y1="16" x2="12.01" y2="16"/>
+              </svg>
+              Urgent
+            </div>
+          </div>
+
+          <div class="card stat-card">
+            <div class="stat-icon purple">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                <polyline points="14 2 14 8 20 8"/>
+                <line x1="16" y1="13" x2="8" y2="13"/>
+                <line x1="16" y1="17" x2="8" y2="17"/>
+              </svg>
+            </div>
+            <div class="stat-value">8</div>
+            <div class="stat-label">Tasks Completed</div>
+            <div class="stat-trend up">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/>
+              </svg>
+              67% done
+            </div>
+          </div>
+
+          <!-- Progress Card -->
+          <div class="card progress-card">
+            <div class="card-header">
+              <h3 class="card-title">Application Progress</h3>
+              <a href="#" class="card-action">View Details</a>
+            </div>
+            <div class="progress-ring-container">
+              <div class="progress-ring">
+                <svg width="140" height="140" viewBox="0 0 140 140">
+                  <defs>
+                    <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                      <stop offset="0%" stop-color="#3b82f6"/>
+                      <stop offset="100%" stop-color="#60a5fa"/>
+                    </linearGradient>
+                  </defs>
+                  <circle cx="70" cy="70" r="60" class="progress-ring-bg"/>
+                  <circle cx="70" cy="70" r="60" class="progress-ring-fill"/>
+                </svg>
+                <div class="progress-ring-text">
+                  <div class="progress-ring-value">75%</div>
+                  <div class="progress-ring-label">Complete</div>
+                </div>
+              </div>
+              <div class="progress-details">
+                <div class="progress-item">
+                  <span class="progress-item-label">
+                    <span class="progress-item-dot" style="background: #3b82f6;"></span>
+                    Profile Complete
+                  </span>
+                  <span class="progress-item-value">100%</span>
+                </div>
+                <div class="progress-item">
+                  <span class="progress-item-label">
+                    <span class="progress-item-dot" style="background: #10b981;"></span>
+                    Documents Ready
+                  </span>
+                  <span class="progress-item-value">80%</span>
+                </div>
+                <div class="progress-item">
+                  <span class="progress-item-label">
+                    <span class="progress-item-dot" style="background: #f59e0b;"></span>
+                    Applications Sent
+                  </span>
+                  <span class="progress-item-value">45%</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Chart Card -->
+          <div class="card chart-card">
+            <div class="card-header">
+              <h3 class="card-title">Activity Overview</h3>
+              <a href="#" class="card-action">Last 7 days</a>
+            </div>
+            <div class="chart-container">
+              <div class="chart-placeholder">
+                <svg width="100%" height="100%" viewBox="0 0 400 200" preserveAspectRatio="none">
+                  <defs>
+                    <linearGradient id="chartGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                      <stop offset="0%" stop-color="#3b82f6" stop-opacity="0.3"/>
+                      <stop offset="100%" stop-color="#3b82f6" stop-opacity="0"/>
+                    </linearGradient>
+                  </defs>
+                  <path d="M0,180 Q50,160 100,140 T200,100 T300,120 T400,80 V200 H0 Z" fill="url(#chartGradient)"/>
+                  <path d="M0,180 Q50,160 100,140 T200,100 T300,120 T400,80" fill="none" stroke="#3b82f6" stroke-width="3" stroke-linecap="round"/>
+                  <circle cx="400" cy="80" r="6" fill="#3b82f6"/>
+                </svg>
+              </div>
+            </div>
+          </div>
+
+          <!-- Calendar Card -->
+          <div class="card calendar-card">
+            <div class="card-header">
+              <h3 class="card-title">January 2026</h3>
+              <div class="calendar-nav">
+                <button>&lt;</button>
+                <button>&gt;</button>
+              </div>
+            </div>
+            <div class="calendar-grid">
+              <div class="calendar-day-name">Sun</div>
+              <div class="calendar-day-name">Mon</div>
+              <div class="calendar-day-name">Tue</div>
+              <div class="calendar-day-name">Wed</div>
+              <div class="calendar-day-name">Thu</div>
+              <div class="calendar-day-name">Fri</div>
+              <div class="calendar-day-name">Sat</div>
+              <div class="calendar-day other-month">29</div>
+              <div class="calendar-day other-month">30</div>
+              <div class="calendar-day other-month">31</div>
+              <div class="calendar-day">1</div>
+              <div class="calendar-day has-event">2</div>
+              <div class="calendar-day">3</div>
+              <div class="calendar-day">4</div>
+              <div class="calendar-day">5</div>
+              <div class="calendar-day">6</div>
+              <div class="calendar-day">7</div>
+              <div class="calendar-day">8</div>
+              <div class="calendar-day">9</div>
+              <div class="calendar-day has-event">10</div>
+              <div class="calendar-day">11</div>
+              <div class="calendar-day">12</div>
+              <div class="calendar-day">13</div>
+              <div class="calendar-day">14</div>
+              <div class="calendar-day has-event">15</div>
+              <div class="calendar-day">16</div>
+              <div class="calendar-day">17</div>
+              <div class="calendar-day">18</div>
+              <div class="calendar-day">19</div>
+              <div class="calendar-day">20</div>
+              <div class="calendar-day">21</div>
+              <div class="calendar-day">22</div>
+              <div class="calendar-day">23</div>
+              <div class="calendar-day">24</div>
+              <div class="calendar-day">25</div>
+              <div class="calendar-day">26</div>
+              <div class="calendar-day">27</div>
+              <div class="calendar-day today has-event">28</div>
+            </div>
+          </div>
+
+          <!-- Activities Card -->
+          <div class="card activities-card">
+            <div class="card-header">
+              <h3 class="card-title">Upcoming Activities</h3>
+              <a href="#" class="card-action">View All</a>
+            </div>
+            <div class="activity-item">
+              <div class="activity-icon" style="background: var(--primary-lighter); color: var(--primary);">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                  <polyline points="14 2 14 8 20 8"/>
+                </svg>
+              </div>
+              <div class="activity-content">
+                <div class="activity-title">Submit MIT Application</div>
+                <div class="activity-meta">Due Feb 2, 2026 at 11:59 PM</div>
+              </div>
+              <span class="activity-tag tag-orange">5 days left</span>
+            </div>
+            <div class="activity-item">
+              <div class="activity-icon" style="background: #dcfce7; color: #16a34a;">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+                </svg>
+              </div>
+              <div class="activity-content">
+                <div class="activity-title">AI Counsellor Session</div>
+                <div class="activity-meta">Today at 3:00 PM</div>
+              </div>
+              <span class="activity-tag tag-green">Today</span>
+            </div>
+            <div class="activity-item">
+              <div class="activity-icon" style="background: #f3e8ff; color: #9333ea;">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="12" cy="12" r="10"/>
+                  <polyline points="12 6 12 12 16 14"/>
+                </svg>
+              </div>
+              <div class="activity-content">
+                <div class="activity-title">IELTS Score Release</div>
+                <div class="activity-meta">Feb 10, 2026</div>
+              </div>
+              <span class="activity-tag tag-purple">Scheduled</span>
+            </div>
+          </div>
+
+          <!-- Messages Card -->
+          <div class="card messages-card">
+            <div class="card-header">
+              <h3 class="card-title">Recent Messages</h3>
+              <a href="#" class="card-action">View All</a>
+            </div>
+            <div class="message-item">
+              <div class="message-avatar">AI</div>
+              <div class="message-content">
+                <div class="message-header">
+                  <span class="message-sender">AI Counsellor</span>
+                  <span class="message-time">2 min ago</span>
+                </div>
+                <p class="message-preview">Great progress! I've reviewed your SOP and have some suggestions...</p>
+              </div>
+              <div class="message-unread"></div>
+            </div>
+            <div class="message-item">
+              <div class="message-avatar" style="background: linear-gradient(135deg, #10b981, #34d399);">SS</div>
+              <div class="message-content">
+                <div class="message-header">
+                  <span class="message-sender">Stanford Support</span>
+                  <span class="message-time">1 hour ago</span>
+                </div>
+                <p class="message-preview">Your application has been received. Thank you for applying!</p>
+              </div>
+            </div>
+            <div class="message-item">
+              <div class="message-avatar" style="background: linear-gradient(135deg, #f59e0b, #fbbf24);">MA</div>
+              <div class="message-content">
+                <div class="message-header">
+                  <span class="message-sender">MIT Admissions</span>
+                  <span class="message-time">Yesterday</span>
+                </div>
+                <p class="message-preview">Reminder: Application deadline approaching in 5 days.</p>
+              </div>
+            </div>
+            <div class="message-item">
+              <div class="message-avatar" style="background: linear-gradient(135deg, #8b5cf6, #a78bfa);">HU</div>
+              <div class="message-content">
+                <div class="message-header">
+                  <span class="message-sender">Harvard Updates</span>
+                  <span class="message-time">2 days ago</span>
+                </div>
+                <p class="message-preview">New scholarship opportunities available for international students.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Theme Switcher -->
+  <div class="theme-demo">
+    <div class="theme-demo-title">THEME MODE</div>
+    <div class="theme-demo-buttons">
+      <button class="theme-demo-btn active" onclick="setTheme('light')">Light</button>
+      <button class="theme-demo-btn" onclick="setTheme('dark')">Dark</button>
+    </div>
+  </div>
+
+  <script>
+    function setTheme(theme) {
+      if (theme === 'dark') {
+        document.body.classList.add('dark');
+      } else {
+        document.body.classList.remove('dark');
+      }
+      document.querySelectorAll('.theme-demo-btn').forEach(btn => btn.classList.remove('active'));
+      event.target.classList.add('active');
+    }
+
+    function toggleTheme() {
+      document.body.classList.toggle('dark');
+      const isDark = document.body.classList.contains('dark');
+      document.querySelectorAll('.theme-demo-btn').forEach(btn => {
+        btn.classList.toggle('active', (isDark && btn.textContent === 'Dark') || (!isDark && btn.textContent === 'Light'));
+      });
+    }
+  </script>
+</body>
+</html>

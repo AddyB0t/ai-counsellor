@@ -1,0 +1,185 @@
+/* ============================================
+   STUDYBUDDY THEME - CSS Custom Properties
+   ============================================
+
+   Usage:
+   - In CSS: var(--color-primary)
+   - In Tailwind: bg-primary, text-accent, etc.
+
+   To change the entire theme, just update values here.
+   ============================================ */
+
+:root {
+  /* ============================================
+     COLORS
+     ============================================ */
+
+  /* Primary - Emerald */
+  --color-primary: #10b981;
+  --color-primary-hover: #059669;
+  --color-primary-light: #d1fae5;
+  --color-primary-dark: #047857;
+
+  /* Accent - Teal (harmonious with emerald) */
+  --color-accent: #14b8a6;
+  --color-accent-hover: #0d9488;
+  --color-accent-light: #ccfbf1;
+  --color-accent-dark: #0f766e;
+
+  /* Secondary - Green */
+  --color-secondary: #22c55e;
+  --color-secondary-hover: #16a34a;
+  --color-secondary-light: #dcfce7;
+
+  /* Backgrounds */
+  --color-bg: #ffffff;
+  --color-bg-secondary: #f9fafb;
+  --color-bg-tertiary: #f3f4f6;
+  --color-bg-glass: rgba(255, 255, 255, 0.8);
+  --color-bg-glass-strong: rgba(255, 255, 255, 0.9);
+
+  /* Text */
+  --color-text: #1f2937;
+  --color-text-secondary: #6b7280;
+  --color-text-muted: #9ca3af;
+  --color-text-inverse: #ffffff;
+
+  /* Borders */
+  --color-border: #e5e7eb;
+  --color-border-light: #f3f4f6;
+  --color-border-focus: var(--color-primary);
+
+  /* Status Colors */
+  --color-success: #22c55e;
+  --color-success-light: #dcfce7;
+  --color-warning: #f59e0b;
+  --color-warning-light: #fef3c7;
+  --color-error: #ef4444;
+  --color-error-light: #fee2e2;
+  --color-info: #3b82f6;
+  --color-info-light: #dbeafe;
+
+  /* Category Colors (for university matching) */
+  --color-category-dream: #7c3aed;
+  --color-category-dream-bg: rgba(139, 92, 246, 0.15);
+  --color-category-target: #0891b2;
+  --color-category-target-bg: rgba(8, 145, 178, 0.15);
+  --color-category-safe: #16a34a;
+  --color-category-safe-bg: rgba(34, 197, 94, 0.15);
+
+  /* ============================================
+     TYPOGRAPHY
+     ============================================ */
+
+  /* Font Families */
+  --font-display: 'Raleway', sans-serif;
+  --font-body: 'Manrope', system-ui, sans-serif;
+
+  /* Font Weights */
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+  --font-weight-extrabold: 800;
+
+  /* Font Sizes */
+  --text-xs: 0.75rem;      /* 12px */
+  --text-sm: 0.875rem;     /* 14px */
+  --text-base: 1rem;       /* 16px */
+  --text-lg: 1.125rem;     /* 18px */
+  --text-xl: 1.25rem;      /* 20px */
+  --text-2xl: 1.5rem;      /* 24px */
+  --text-3xl: 1.875rem;    /* 30px */
+  --text-4xl: 2.25rem;     /* 36px */
+  --text-5xl: 3rem;        /* 48px */
+  --text-6xl: 3.75rem;     /* 60px */
+
+  /* Line Heights */
+  --leading-tight: 1.2;
+  --leading-snug: 1.375;
+  --leading-normal: 1.5;
+  --leading-relaxed: 1.625;
+
+  /* ============================================
+     SPACING & LAYOUT
+     ============================================ */
+
+  /* Border Radius */
+  --radius-sm: 0.375rem;   /* 6px */
+  --radius-md: 0.5rem;     /* 8px */
+  --radius-lg: 0.75rem;    /* 12px */
+  --radius-xl: 1rem;       /* 16px */
+  --radius-2xl: 1.5rem;    /* 24px */
+  --radius-3xl: 2rem;      /* 32px */
+  --radius-full: 9999px;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+  --shadow-glow: 0 0 30px rgba(16, 185, 129, 0.3);
+  --shadow-primary: 0 10px 40px rgba(16, 185, 129, 0.1), 0 4px 12px rgba(34, 197, 94, 0.05);
+
+  /* Transitions */
+  --transition-fast: 150ms ease;
+  --transition-base: 200ms ease;
+  --transition-slow: 300ms ease;
+
+  /* ============================================
+     GRADIENTS
+     ============================================ */
+
+  --gradient-primary: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 50%, var(--color-accent) 100%);
+  --gradient-bg: linear-gradient(135deg, #ffffff 0%, #faf8f5 50%, #f5f5f5 100%);
+  --gradient-blob-1: linear-gradient(135deg, rgba(16, 185, 129, 0.15), rgba(20, 184, 166, 0.15));
+  --gradient-blob-2: linear-gradient(135deg, rgba(34, 197, 94, 0.15), rgba(20, 184, 166, 0.15));
+}
+
+/* ============================================
+   DARK MODE OVERRIDES
+   ============================================ */
+
+.dark {
+  /* Backgrounds */
+  --color-bg: #0f1419;
+  --color-bg-secondary: #1a1f26;
+  --color-bg-tertiary: #252b33;
+  --color-bg-glass: rgba(15, 20, 25, 0.85);
+  --color-bg-glass-strong: rgba(15, 20, 25, 0.95);
+
+  /* Text */
+  --color-text: #f9fafb;
+  --color-text-secondary: #d1d5db;
+  --color-text-muted: #9ca3af;
+
+  /* Borders */
+  --color-border: #374151;
+  --color-border-light: #1f2937;
+
+  /* Status light variants (darker in dark mode) */
+  --color-primary-light: #064e3b;
+  --color-accent-light: #134e4a;
+  --color-secondary-light: #14532d;
+  --color-success-light: #14532d;
+  --color-warning-light: #78350f;
+  --color-error-light: #7f1d1d;
+  --color-info-light: #1e3a8a;
+
+  /* Category colors (brighter in dark mode) */
+  --color-category-dream: #a78bfa;
+  --color-category-dream-bg: rgba(139, 92, 246, 0.25);
+  --color-category-target: #22d3ee;
+  --color-category-target-bg: rgba(8, 145, 178, 0.25);
+  --color-category-safe: #4ade80;
+  --color-category-safe-bg: rgba(34, 197, 94, 0.25);
+
+  /* Shadows (more prominent in dark mode) */
+  --shadow-primary: 0 10px 40px rgba(16, 185, 129, 0.15), 0 4px 12px rgba(34, 197, 94, 0.1);
+  --shadow-glow: 0 0 30px rgba(16, 185, 129, 0.4);
+
+  /* Gradients */
+  --gradient-bg: linear-gradient(135deg, #0f1419 0%, #1a1f26 50%, #0f1419 100%);
+  --gradient-blob-1: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(20, 184, 166, 0.1));
+  --gradient-blob-2: linear-gradient(135deg, rgba(34, 197, 94, 0.1), rgba(20, 184, 166, 0.1));
+}

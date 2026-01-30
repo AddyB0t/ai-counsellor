@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>StudyBuddy – Preview</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Inter font -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #f9fafb;
+      --card: #ffffff;
+      --text: #111827;
+      --muted: #6b7280;
+      --border: #e5e7eb;
+      --primary: #16a34a;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Inter, system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 240px 1fr;
+      min-height: 100vh;
+    }
+
+    /* Sidebar */
+    aside {
+      background: #ffffff;
+      border-right: 1px solid var(--border);
+      padding: 24px;
+    }
+
+    .logo {
+      font-weight: 600;
+      margin-bottom: 32px;
+    }
+
+    nav a {
+      display: block;
+      padding: 10px 12px;
+      border-radius: 8px;
+      color: var(--text);
+      text-decoration: none;
+      margin-bottom: 6px;
+      font-size: 14px;
+    }
+
+    nav a.active {
+      background: #ecfdf5;
+      color: var(--primary);
+      font-weight: 500;
+    }
+
+    /* Main */
+    main {
+      padding: 40px;
+      max-width: 1100px;
+    }
+
+    h1 {
+      font-size: 28px;
+      margin-bottom: 4px;
+    }
+
+    .subtitle {
+      color: var(--muted);
+      margin-bottom: 32px;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 24px;
+      margin-bottom: 24px;
+    }
+
+    .card h2 {
+      font-size: 18px;
+      margin-bottom: 6px;
+    }
+
+    .hint {
+      font-size: 14px;
+      color: var(--muted);
+      margin-bottom: 16px;
+    }
+
+    /* Dashboard */
+    .next-step {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .btn {
+      background: var(--primary);
+      color: #ffffff;
+      border: none;
+      padding: 12px 18px;
+      border-radius: 10px;
+      font-size: 14px;
+      cursor: pointer;
+    }
+
+    .progress {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      font-size: 13px;
+    }
+
+    .progress div {
+      padding: 10px;
+      border-radius: 10px;
+      text-align: center;
+      background: #f3f4f6;
+      color: var(--muted);
+    }
+
+    .progress .active {
+      background: #ecfdf5;
+      color: var(--primary);
+      font-weight: 500;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
+    }
+
+    /* Profile page */
+    .field {
+      margin-bottom: 16px;
+    }
+
+    label {
+      font-size: 13px;
+      color: var(--muted);
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px 12px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      font-family: inherit;
+    }
+
+    .chips span {
+      display: inline-block;
+      padding: 6px 12px;
+      border-radius: 999px;
+      background: #ecfdf5;
+      color: var(--primary);
+      font-size: 13px;
+      margin-right: 6px;
+      margin-bottom: 6px;
+    }
+
+    footer {
+      margin-top: 48px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    @media (max-width: 900px) {
+      .layout {
+        grid-template-columns: 1fr;
+      }
+
+      aside {
+        display: none;
+      }
+
+      .grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div class="layout">
+  <!-- Sidebar -->
+  <aside>
+    <div class="logo">🎓 StudyBuddy</div>
+    <nav>
+      <a class="active">Dashboard</a>
+      <a>Universities</a>
+      <a>Applications</a>
+      <a>Profile</a>
+    </nav>
+  </aside>
+
+  <!-- Main -->
+  <main>
+    <!-- DASHBOARD -->
+    <h1>Hey Aaditya 👋</h1>
+    <div class="subtitle">Let’s find the right university for you.</div>
+
+    <div class="card next-step">
+      <div>
+        <h2>Next step: Complete your SOP</h2>
+        <div class="hint">
+          You’re ready to apply to 2 universities. Estimated time: 30–45 minutes.
+        </div>
+      </div>
+      <button class="btn">Continue</button>
+    </div>
+
+    <div class="card">
+      <h2>Your journey</h2>
+      <div class="hint">You’re almost ready to apply.</div>
+      <div class="progress">
+        <div>Profile ready</div>
+        <div>Universities shortlisted</div>
+        <div class="active">Finalize choices</div>
+        <div>Apply</div>
+      </div>
+    </div>
+
+    <div class="grid">
+      <div class="card">
+        <h2>Your profile</h2>
+        <div class="hint">
+          Competitive for mid-tier universities with your current profile.
+        </div>
+        <p><strong>Target degree:</strong> Bachelor’s</p>
+        <p><strong>Countries:</strong> Germany, Canada, UK</p>
+        <p><strong>Budget:</strong> $35k / year</p>
+      </div>
+
+      <div class="card">
+        <h2>Shortlisted universities</h2>
+        <div class="hint">
+          These match your budget, GPA, and intake preference.
+        </div>
+        <p>• University of XYZ (Germany)</p>
+        <p>• ABC University (Canada)</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Talk to a counselor</h2>
+      <div class="hint">
+        Get personal guidance based on your profile and goals.
+      </div>
+      <button class="btn">Ask a question</button>
+    </div>
+
+    <!-- PROFILE PREVIEW -->
+    <h1 style="margin-top:64px;">Profile settings</h1>
+    <div class="subtitle">You can update this anytime.</div>
+
+    <div class="card">
+      <h2>Academic background</h2>
+      <div class="hint">
+        This helps us understand which universities fit you best.
+      </div>
+
+      <div class="field">
+        <label>Education level</label>
+        <input value="High school" />
+      </div>
+
+      <div class="field">
+        <label>GPA</label>
+        <input value="9.3 / 10" />
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Study goals</h2>
+      <div class="hint">
+        Your preferences guide recommendations — you can change these anytime.
+      </div>
+
+      <div class="field">
+        <label>Intended degree</label>
+        <input value="Bachelor’s" />
+      </div>
+
+      <div class="field">
+        <label>Preferred countries</label>
+        <div class="chips">
+          <span>Germany</span>
+          <span>Canada</span>
+          <span>UK</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Budget & funding</h2>
+      <div class="hint">
+        We’ll prioritize universities that fit this range and flag scholarships where possible.
+      </div>
+      <p><strong>Maximum budget:</strong> $35k / year</p>
+    </div>
+
+    <footer>
+      Preview UI – StudyBuddy
+    </footer>
+  </main>
+</div>
+
+</body>
+</html>

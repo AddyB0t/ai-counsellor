@@ -1,0 +1,11 @@
+/* ============================================
+   STUDYBUDDY STYLES - Main Entry Point
+   ============================================
+
+   Import order matters:
+   1. theme.css - CSS custom properties (colors, typography)
+   2. components.css - Reusable component styles
+   ============================================ */
+
+@import './theme.css';
+@import './components.css';

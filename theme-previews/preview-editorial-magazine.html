@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Theme 3: Editorial Magazine Onboarding</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Source+Sans+3:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --ink-black: #1A1A1A;
+      --warm-cream: #FAF8F5;
+      --gold-accent: #C9A227;
+      --terracotta: #C7522A;
+      --sage-green: #6B8E6B;
+      --soft-gray: #9B9B9B;
+      --paper-white: #FFFFFF;
+    }
+
+    body {
+      font-family: 'Source Sans 3', sans-serif;
+      background: var(--warm-cream);
+      color: var(--ink-black);
+      min-height: 100vh;
+      line-height: 1.6;
+    }
+
+    .font-serif {
+      font-family: 'Playfair Display', Georgia, serif;
+    }
+
+    /* Header Bar */
+    .header-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      background: var(--paper-white);
+      border-bottom: 1px solid #E5E5E5;
+      padding: 16px 0;
+      z-index: 100;
+    }
+
+    .header-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 32px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .header-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 24px;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      color: var(--ink-black);
+    }
+
+    .header-logo span {
+      color: var(--gold-accent);
+    }
+
+    .header-date {
+      font-size: 12px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--soft-gray);
+    }
+
+    .header-issue {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 14px;
+      color: var(--soft-gray);
+    }
+
+    /* Main Content */
+    .main-content {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 120px 24px 80px;
+    }
+
+    /* Progress - Editorial Style */
+    .progress-section {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 32px;
+      margin-bottom: 64px;
+      padding-bottom: 32px;
+      border-bottom: 1px solid #E5E5E5;
+    }
+
+    .progress-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .progress-number {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Playfair Display', serif;
+      font-size: 14px;
+      font-weight: 500;
+      border: 1px solid #E5E5E5;
+      color: var(--soft-gray);
+      transition: all 0.3s ease;
+    }
+
+    .progress-number.active {
+      background: var(--ink-black);
+      border-color: var(--ink-black);
+      color: var(--paper-white);
+    }
+
+    .progress-number.completed {
+      background: var(--sage-green);
+      border-color: var(--sage-green);
+      color: var(--paper-white);
+    }
+
+    .progress-label {
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--soft-gray);
+    }
+
+    .progress-label.active {
+      color: var(--ink-black);
+      font-weight: 500;
+    }
+
+    .progress-line {
+      width: 60px;
+      height: 1px;
+      background: #E5E5E5;
+    }
+
+    .progress-line.completed {
+      background: var(--sage-green);
+    }
+
+    /* Form Section */
+    .form-section {
+      text-align: center;
+    }
+
+    .section-number {
+      font-family: 'Playfair Display', serif;
+      font-size: 12px;
+      letter-spacing: 0.2em;
+      color: var(--gold-accent);
+      margin-bottom: 16px;
+    }
+
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 48px;
+      font-weight: 500;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+      margin-bottom: 16px;
+    }
+
+    .section-subtitle {
+      font-size: 18px;
+      color: var(--soft-gray);
+      font-weight: 300;
+      margin-bottom: 56px;
+    }
+
+    /* Form Card */
+    .form-card {
+      background: var(--paper-white);
+      padding: 56px 48px;
+      box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
+    }
+
+    /* Form Group */
+    .form-group {
+      margin-bottom: 40px;
+      text-align: left;
+    }
+
+    .form-label {
+      display: block;
+      font-size: 11px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--soft-gray);
+      margin-bottom: 12px;
+      font-weight: 500;
+    }
+
+    /* Elegant Input */
+    .elegant-input, .elegant-select {
+      width: 100%;
+      padding: 16px 0;
+      border: none;
+      border-bottom: 1px solid #E5E5E5;
+      background: transparent;
+      font-family: 'Source Sans 3', sans-serif;
+      font-size: 18px;
+      color: var(--ink-black);
+      transition: border-color 0.3s ease;
+    }
+
+    .elegant-input:focus, .elegant-select:focus {
+      outline: none;
+      border-bottom-color: var(--ink-black);
+    }
+
+    .elegant-input::placeholder {
+      color: #CCCCCC;
+      font-style: italic;
+    }
+
+    /* Radio Cards */
+    .radio-cards {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+    }
+
+    .radio-card {
+      padding: 24px;
+      border: 1px solid #E5E5E5;
+      background: var(--paper-white);
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-align: center;
+    }
+
+    .radio-card:hover {
+      border-color: var(--ink-black);
+    }
+
+    .radio-card.selected {
+      border-color: var(--ink-black);
+      background: var(--ink-black);
+      color: var(--paper-white);
+    }
+
+    .radio-card-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 18px;
+      font-weight: 500;
+      margin-bottom: 4px;
+    }
+
+    .radio-card-subtitle {
+      font-size: 12px;
+      color: var(--soft-gray);
+    }
+
+    .radio-card.selected .radio-card-subtitle {
+      color: rgba(255, 255, 255, 0.7);
+    }
+
+    /* Inline Options */
+    .inline-options {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .inline-option {
+      padding: 12px 24px;
+      border: 1px solid #E5E5E5;
+      font-size: 14px;
+      color: var(--ink-black);
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-weight: 400;
+    }
+
+    .inline-option:hover {
+      border-color: var(--ink-black);
+    }
+
+    .inline-option.selected {
+      background: var(--ink-black);
+      border-color: var(--ink-black);
+      color: var(--paper-white);
+    }
+
+    .inline-option.selected-gold {
+      background: var(--gold-accent);
+      border-color: var(--gold-accent);
+      color: var(--paper-white);
+    }
+
+    .inline-option.selected-terracotta {
+      background: var(--terracotta);
+      border-color: var(--terracotta);
+      color: var(--paper-white);
+    }
+
+    /* Country Pills */
+    .country-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .country-pill {
+      padding: 10px 20px;
+      border: 1px solid #E5E5E5;
+      border-radius: 100px;
+      font-size: 13px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .country-pill:hover {
+      border-color: var(--sage-green);
+    }
+
+    .country-pill.selected {
+      background: var(--sage-green);
+      border-color: var(--sage-green);
+      color: var(--paper-white);
+    }
+
+    /* Budget Section */
+    .budget-section {
+      background: var(--warm-cream);
+      padding: 32px;
+      margin-bottom: 32px;
+    }
+
+    .budget-amount {
+      font-family: 'Playfair Display', serif;
+      font-size: 64px;
+      font-weight: 500;
+      text-align: center;
+      color: var(--ink-black);
+      margin-bottom: 8px;
+    }
+
+    .budget-label {
+      text-align: center;
+      font-size: 12px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--soft-gray);
+      margin-bottom: 24px;
+    }
+
+    .elegant-range {
+      width: 100%;
+      height: 2px;
+      -webkit-appearance: none;
+      background: #E5E5E5;
+      outline: none;
+    }
+
+    .elegant-range::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 20px;
+      height: 20px;
+      background: var(--ink-black);
+      border-radius: 50%;
+      cursor: pointer;
+    }
+
+    .range-labels {
+      display: flex;
+      justify-content: space-between;
+      font-size: 12px;
+      color: var(--soft-gray);
+      margin-top: 12px;
+    }
+
+    /* Divider */
+    .divider {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      margin: 48px 0;
+    }
+
+    .divider-line {
+      flex: 1;
+      height: 1px;
+      background: #E5E5E5;
+    }
+
+    .divider-text {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 14px;
+      color: var(--soft-gray);
+    }
+
+    /* Navigation */
+    .nav-section {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 48px;
+      padding-top: 40px;
+      border-top: 1px solid #E5E5E5;
+    }
+
+    .nav-btn {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 16px 32px;
+      font-family: 'Source Sans 3', sans-serif;
+      font-size: 14px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .nav-btn-back {
+      background: transparent;
+      border: 1px solid #E5E5E5;
+      color: var(--soft-gray);
+    }
+
+    .nav-btn-back:hover {
+      border-color: var(--ink-black);
+      color: var(--ink-black);
+    }
+
+    .nav-btn-next {
+      background: var(--ink-black);
+      border: 1px solid var(--ink-black);
+      color: var(--paper-white);
+    }
+
+    .nav-btn-next:hover {
+      background: #333;
+    }
+
+    .nav-btn-complete {
+      background: var(--gold-accent);
+      border: 1px solid var(--gold-accent);
+      color: var(--paper-white);
+    }
+
+    /* Page Number */
+    .page-number {
+      position: fixed;
+      bottom: 32px;
+      right: 32px;
+      font-family: 'Playfair Display', serif;
+      font-size: 48px;
+      font-weight: 300;
+      color: rgba(0, 0, 0, 0.05);
+    }
+
+    /* Pull Quote */
+    .pull-quote {
+      font-family: 'Playfair Display', serif;
+      font-size: 24px;
+      font-style: italic;
+      text-align: center;
+      color: var(--soft-gray);
+      line-height: 1.5;
+      padding: 40px 0;
+      border-top: 1px solid #E5E5E5;
+      border-bottom: 1px solid #E5E5E5;
+      margin: 48px 0;
+    }
+
+    /* Responsive */
+    @media (max-width: 640px) {
+      .main-content {
+        padding: 100px 20px 60px;
+      }
+      .section-title {
+        font-size: 36px;
+      }
+      .form-card {
+        padding: 40px 24px;
+      }
+      .radio-cards {
+        grid-template-columns: 1fr;
+      }
+      .budget-amount {
+        font-size: 48px;
+      }
+      .progress-section {
+        gap: 16px;
+      }
+      .progress-line {
+        width: 30px;
+      }
+      .header-content {
+        padding: 0 16px;
+      }
+      .header-date, .header-issue {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header Bar -->
+  <header class="header-bar">
+    <div class="header-content">
+      <div class="header-logo">Study<span>Buddy</span></div>
+      <div class="header-date">January 2026</div>
+      <div class="header-issue">Issue No. 47 — The Journey Begins</div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <!-- Progress -->
+    <div class="progress-section">
+      <div class="progress-item">
+        <div class="progress-number completed">✓</div>
+        <span class="progress-label">Academic</span>
+      </div>
+      <div class="progress-line completed"></div>
+      <div class="progress-item">
+        <div class="progress-number active">2</div>
+        <span class="progress-label active">Goals</span>
+      </div>
+      <div class="progress-line"></div>
+      <div class="progress-item">
+        <div class="progress-number">3</div>
+        <span class="progress-label">Budget</span>
+      </div>
+      <div class="progress-line"></div>
+      <div class="progress-item">
+        <div class="progress-number">4</div>
+        <span class="progress-label">Readiness</span>
+      </div>
+    </div>
+
+    <!-- Form Section -->
+    <div class="form-section">
+      <div class="section-number">— Chapter Two —</div>
+      <h1 class="section-title">Your Study Goals</h1>
+      <p class="section-subtitle">Tell us about your academic aspirations</p>
+
+      <div class="form-card">
+        <!-- Intended Degree -->
+        <div class="form-group">
+          <label class="form-label">What degree are you pursuing?</label>
+          <div class="radio-cards">
+            <div class="radio-card">
+              <div class="radio-card-title">Bachelor's</div>
+              <div class="radio-card-subtitle">Undergraduate study</div>
+            </div>
+            <div class="radio-card selected">
+              <div class="radio-card-title">Master's</div>
+              <div class="radio-card-subtitle">Graduate study</div>
+            </div>
+            <div class="radio-card">
+              <div class="radio-card-title">MBA</div>
+              <div class="radio-card-subtitle">Business administration</div>
+            </div>
+            <div class="radio-card">
+              <div class="radio-card-title">PhD</div>
+              <div class="radio-card-subtitle">Doctoral research</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Field of Study -->
+        <div class="form-group">
+          <label class="form-label">Field of Study</label>
+          <input type="text" class="elegant-input" placeholder="e.g., Computer Science, Business Analytics" value="Artificial Intelligence">
+        </div>
+
+        <!-- Target Intake -->
+        <div class="form-group">
+          <label class="form-label">When do you plan to begin?</label>
+          <div class="inline-options">
+            <button class="inline-option selected-gold">Fall 2025</button>
+            <button class="inline-option">Spring 2026</button>
+            <button class="inline-option">Fall 2026</button>
+            <button class="inline-option">Spring 2027</button>
+          </div>
+        </div>
+
+        <div class="divider">
+          <div class="divider-line"></div>
+          <span class="divider-text">destinations</span>
+          <div class="divider-line"></div>
+        </div>
+
+        <!-- Countries -->
+        <div class="form-group">
+          <label class="form-label">Preferred Study Destinations</label>
+          <div class="country-pills">
+            <button class="country-pill selected">United States</button>
+            <button class="country-pill selected">United Kingdom</button>
+            <button class="country-pill">Canada</button>
+            <button class="country-pill selected">Australia</button>
+            <button class="country-pill">Germany</button>
+            <button class="country-pill">India</button>
+          </div>
+        </div>
+
+        <!-- Navigation -->
+        <div class="nav-section">
+          <button class="nav-btn nav-btn-back">← Previous</button>
+          <button class="nav-btn nav-btn-next">Continue →</button>
+        </div>
+      </div>
+
+      <!-- Pull Quote -->
+      <blockquote class="pull-quote">
+        "Education is the passport to the future, for tomorrow belongs to those who prepare for it today."
+      </blockquote>
+    </div>
+  </main>
+
+  <!-- Page Number -->
+  <div class="page-number">02</div>
+</body>
+</html>

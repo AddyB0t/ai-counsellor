@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Theme 2: Glassmorphism Aurora Onboarding</title>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --aurora-pink: #FF6B9D;
+      --aurora-purple: #C084FC;
+      --aurora-blue: #60A5FA;
+      --aurora-cyan: #22D3EE;
+      --aurora-green: #34D399;
+      --glass-bg: rgba(255, 255, 255, 0.08);
+      --glass-border: rgba(255, 255, 255, 0.15);
+      --text-primary: #FFFFFF;
+      --text-secondary: rgba(255, 255, 255, 0.7);
+    }
+
+    body {
+      font-family: 'Outfit', sans-serif;
+      min-height: 100vh;
+      background: linear-gradient(135deg, #0F0F23 0%, #1A1A3E 50%, #0F0F23 100%);
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* Aurora Background Effects */
+    .aurora-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      overflow: hidden;
+      z-index: 0;
+    }
+
+    .aurora-blob {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(80px);
+      opacity: 0.5;
+      animation: float 20s ease-in-out infinite;
+    }
+
+    .aurora-blob-1 {
+      width: 600px;
+      height: 600px;
+      background: linear-gradient(135deg, var(--aurora-pink), var(--aurora-purple));
+      top: -200px;
+      right: -100px;
+      animation-delay: 0s;
+    }
+
+    .aurora-blob-2 {
+      width: 500px;
+      height: 500px;
+      background: linear-gradient(135deg, var(--aurora-blue), var(--aurora-cyan));
+      bottom: -150px;
+      left: -100px;
+      animation-delay: -5s;
+    }
+
+    .aurora-blob-3 {
+      width: 400px;
+      height: 400px;
+      background: linear-gradient(135deg, var(--aurora-purple), var(--aurora-blue));
+      top: 40%;
+      left: 30%;
+      animation-delay: -10s;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translate(0, 0) scale(1); }
+      25% { transform: translate(30px, -30px) scale(1.05); }
+      50% { transform: translate(-20px, 20px) scale(0.95); }
+      75% { transform: translate(20px, 30px) scale(1.02); }
+    }
+
+    /* Noise Overlay */
+    .noise-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+      opacity: 0.03;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    /* Content */
+    .content {
+      position: relative;
+      z-index: 2;
+      max-width: 700px;
+      margin: 0 auto;
+      padding: 60px 24px;
+    }
+
+    /* Logo */
+    .logo-section {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      margin-bottom: 48px;
+    }
+
+    .logo-icon {
+      width: 56px;
+      height: 56px;
+      background: linear-gradient(135deg, var(--aurora-cyan), var(--aurora-green));
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 8px 32px rgba(34, 211, 238, 0.3);
+    }
+
+    .logo-icon svg {
+      width: 28px;
+      height: 28px;
+      color: white;
+    }
+
+    .logo-text {
+      font-size: 28px;
+      font-weight: 600;
+      color: var(--text-primary);
+      letter-spacing: -0.02em;
+    }
+
+    /* Progress */
+    .progress-section {
+      margin-bottom: 40px;
+    }
+
+    .step-indicator {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .step-text {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      color: var(--text-secondary);
+      letter-spacing: 0.1em;
+    }
+
+    .step-text span {
+      color: var(--aurora-cyan);
+      font-weight: 500;
+    }
+
+    .progress-track {
+      display: flex;
+      gap: 8px;
+      padding: 4px;
+      background: var(--glass-bg);
+      border-radius: 100px;
+      border: 1px solid var(--glass-border);
+      backdrop-filter: blur(20px);
+    }
+
+    .progress-step {
+      flex: 1;
+      height: 6px;
+      border-radius: 100px;
+      background: rgba(255, 255, 255, 0.1);
+      transition: all 0.5s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .progress-step.active {
+      background: linear-gradient(90deg, var(--aurora-cyan), var(--aurora-green));
+      box-shadow: 0 0 20px rgba(34, 211, 238, 0.4);
+    }
+
+    .progress-step.active::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+      animation: shimmer 2s infinite;
+    }
+
+    @keyframes shimmer {
+      100% { left: 100%; }
+    }
+
+    .progress-labels {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 12px;
+      padding: 0 8px;
+    }
+
+    .progress-labels span {
+      font-size: 11px;
+      color: rgba(255, 255, 255, 0.4);
+      font-weight: 500;
+      letter-spacing: 0.05em;
+    }
+
+    .progress-labels span.active {
+      color: var(--aurora-cyan);
+    }
+
+    /* Glass Card */
+    .glass-card {
+      background: var(--glass-bg);
+      backdrop-filter: blur(24px);
+      border: 1px solid var(--glass-border);
+      border-radius: 32px;
+      padding: 48px;
+      box-shadow:
+        0 32px 64px rgba(0, 0, 0, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    }
+
+    /* Form Header */
+    .form-header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .form-title {
+      font-size: 36px;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 8px;
+      letter-spacing: -0.02em;
+    }
+
+    .form-title span {
+      background: linear-gradient(135deg, var(--aurora-pink), var(--aurora-purple));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .form-subtitle {
+      font-size: 15px;
+      color: var(--text-secondary);
+      font-weight: 400;
+    }
+
+    /* Form Group */
+    .form-group {
+      margin-bottom: 28px;
+    }
+
+    .form-label {
+      display: block;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-secondary);
+      margin-bottom: 12px;
+      letter-spacing: 0.02em;
+    }
+
+    /* Glass Input */
+    .glass-input, .glass-select {
+      width: 100%;
+      padding: 16px 20px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      color: var(--text-primary);
+      font-family: 'Outfit', sans-serif;
+      font-size: 15px;
+      transition: all 0.3s ease;
+    }
+
+    .glass-input:focus, .glass-select:focus {
+      outline: none;
+      border-color: var(--aurora-cyan);
+      box-shadow: 0 0 0 4px rgba(34, 211, 238, 0.15);
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .glass-input::placeholder {
+      color: rgba(255, 255, 255, 0.3);
+    }
+
+    .glass-select option {
+      background: #1A1A3E;
+      color: white;
+    }
+
+    /* Option Pills */
+    .option-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .option-pill {
+      padding: 14px 24px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 100px;
+      color: var(--text-secondary);
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .option-pill:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+
+    .option-pill.selected {
+      background: linear-gradient(135deg, var(--aurora-cyan), var(--aurora-green));
+      border-color: transparent;
+      color: white;
+      box-shadow: 0 8px 24px rgba(34, 211, 238, 0.3);
+    }
+
+    .option-pill.selected-pink {
+      background: linear-gradient(135deg, var(--aurora-pink), var(--aurora-purple));
+      border-color: transparent;
+      color: white;
+      box-shadow: 0 8px 24px rgba(255, 107, 157, 0.3);
+    }
+
+    /* Country Tags */
+    .country-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .country-tag {
+      padding: 12px 20px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      color: var(--text-secondary);
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .country-tag:hover {
+      background: rgba(255, 255, 255, 0.1);
+      transform: translateY(-2px);
+    }
+
+    .country-tag.selected {
+      background: rgba(34, 211, 238, 0.15);
+      border-color: var(--aurora-cyan);
+      color: var(--aurora-cyan);
+    }
+
+    .country-tag.selected::before {
+      content: '✓';
+      font-size: 12px;
+    }
+
+    /* Budget Section */
+    .budget-display {
+      text-align: center;
+      padding: 32px;
+      background: linear-gradient(135deg, rgba(34, 211, 238, 0.1), rgba(52, 211, 153, 0.1));
+      border-radius: 20px;
+      border: 1px solid rgba(34, 211, 238, 0.2);
+      margin-bottom: 20px;
+    }
+
+    .budget-amount {
+      font-size: 56px;
+      font-weight: 700;
+      background: linear-gradient(135deg, var(--aurora-cyan), var(--aurora-green));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1;
+    }
+
+    .budget-label {
+      font-size: 14px;
+      color: var(--text-secondary);
+      margin-top: 8px;
+    }
+
+    .range-slider {
+      width: 100%;
+      height: 8px;
+      -webkit-appearance: none;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 100px;
+      outline: none;
+    }
+
+    .range-slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 24px;
+      height: 24px;
+      background: linear-gradient(135deg, var(--aurora-cyan), var(--aurora-green));
+      border-radius: 50%;
+      cursor: pointer;
+      box-shadow: 0 4px 16px rgba(34, 211, 238, 0.4);
+    }
+
+    .range-labels {
+      display: flex;
+      justify-content: space-between;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      color: var(--text-secondary);
+      margin-top: 12px;
+    }
+
+    /* Navigation */
+    .nav-section {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 40px;
+      padding-top: 32px;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .nav-btn {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 16px 28px;
+      border-radius: 100px;
+      font-family: 'Outfit', sans-serif;
+      font-size: 15px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .nav-btn-back {
+      background: transparent;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: var(--text-secondary);
+    }
+
+    .nav-btn-back:hover {
+      background: rgba(255, 255, 255, 0.05);
+      border-color: rgba(255, 255, 255, 0.3);
+    }
+
+    .nav-btn-next {
+      background: linear-gradient(135deg, var(--aurora-cyan), var(--aurora-green));
+      border: none;
+      color: white;
+      box-shadow: 0 8px 32px rgba(34, 211, 238, 0.3);
+    }
+
+    .nav-btn-next:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 40px rgba(34, 211, 238, 0.4);
+    }
+
+    .nav-btn-complete {
+      background: linear-gradient(135deg, var(--aurora-pink), var(--aurora-purple));
+      border: none;
+      color: white;
+      box-shadow: 0 8px 32px rgba(255, 107, 157, 0.3);
+    }
+
+    /* Footer */
+    .footer-text {
+      text-align: center;
+      font-size: 13px;
+      color: rgba(255, 255, 255, 0.4);
+      margin-top: 32px;
+    }
+
+    /* Responsive */
+    @media (max-width: 640px) {
+      .glass-card {
+        padding: 32px 24px;
+        border-radius: 24px;
+      }
+      .form-title {
+        font-size: 28px;
+      }
+      .budget-amount {
+        font-size: 40px;
+      }
+      .option-pills {
+        gap: 8px;
+      }
+      .option-pill {
+        padding: 12px 18px;
+        font-size: 13px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Aurora Background -->
+  <div class="aurora-container">
+    <div class="aurora-blob aurora-blob-1"></div>
+    <div class="aurora-blob aurora-blob-2"></div>
+    <div class="aurora-blob aurora-blob-3"></div>
+  </div>
+  <div class="noise-overlay"></div>
+
+  <div class="content">
+    <!-- Logo -->
+    <div class="logo-section">
+      <div class="logo-icon">
+        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
+          <path d="M6 12v5c3 3 9 3 12 0v-5"/>
+        </svg>
+      </div>
+      <span class="logo-text">StudyBuddy</span>
+    </div>
+
+    <!-- Progress -->
+    <div class="progress-section">
+      <div class="step-indicator">
+        <span class="step-text">Step <span>3</span> of 4</span>
+      </div>
+      <div class="progress-track">
+        <div class="progress-step active"></div>
+        <div class="progress-step active"></div>
+        <div class="progress-step active"></div>
+        <div class="progress-step"></div>
+      </div>
+      <div class="progress-labels">
+        <span class="active">Academic</span>
+        <span class="active">Goals</span>
+        <span class="active">Budget</span>
+        <span>Readiness</span>
+      </div>
+    </div>
+
+    <!-- Glass Card -->
+    <div class="glass-card">
+      <div class="form-header">
+        <h2 class="form-title">Budget & <span>Funding</span></h2>
+        <p class="form-subtitle">What's your budget for studying abroad?</p>
+      </div>
+
+      <!-- Budget Display -->
+      <div class="form-group">
+        <label class="form-label">Annual Tuition Budget (USD)</label>
+        <div class="budget-display">
+          <div class="budget-amount">$45K</div>
+          <div class="budget-label">per year maximum</div>
+        </div>
+        <input type="range" class="range-slider" min="10000" max="80000" step="5000" value="45000">
+        <div class="range-labels">
+          <span>$10K</span>
+          <span>$80K</span>
+        </div>
+      </div>
+
+      <!-- Funding Type -->
+      <div class="form-group">
+        <label class="form-label">Primary Funding Source</label>
+        <div class="option-pills">
+          <button class="option-pill">Self-funded</button>
+          <button class="option-pill selected">Scholarship</button>
+          <button class="option-pill">Education Loan</button>
+          <button class="option-pill">Mix</button>
+        </div>
+      </div>
+
+      <!-- Navigation -->
+      <div class="nav-section">
+        <button class="nav-btn nav-btn-back">← Back</button>
+        <button class="nav-btn nav-btn-next">Next →</button>
+      </div>
+    </div>
+
+    <p class="footer-text">Your dream university awaits ✨</p>
+  </div>
+</body>
+</html>

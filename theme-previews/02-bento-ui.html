@@ -1,0 +1,976 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StudyBuddy - Bento UI Theme</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #f8fafc;
+            --bg-secondary: #ffffff;
+            --bg-tertiary: #f1f5f9;
+            --text-primary: #0f172a;
+            --text-secondary: #475569;
+            --text-muted: #94a3b8;
+            --accent-blue: #3b82f6;
+            --accent-purple: #8b5cf6;
+            --accent-green: #10b981;
+            --accent-orange: #f59e0b;
+            --accent-pink: #ec4899;
+            --border: #e2e8f0;
+            --shadow: 0 1px 3px rgba(0,0,0,0.05);
+            --shadow-lg: 0 10px 40px rgba(0,0,0,0.08);
+            --radius: 20px;
+            --radius-sm: 12px;
+        }
+
+        [data-theme="dark"] {
+            --bg-primary: #0f172a;
+            --bg-secondary: #1e293b;
+            --bg-tertiary: #334155;
+            --text-primary: #f8fafc;
+            --text-secondary: #cbd5e1;
+            --text-muted: #64748b;
+            --border: #334155;
+            --shadow: 0 1px 3px rgba(0,0,0,0.3);
+            --shadow-lg: 0 10px 40px rgba(0,0,0,0.4);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+        }
+
+        .layout {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 280px;
+            background: var(--bg-secondary);
+            border-right: 1px solid var(--border);
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 40px;
+        }
+
+        .logo-icon {
+            width: 44px;
+            height: 44px;
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+            border-radius: var(--radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 20px;
+        }
+
+        .logo-text {
+            font-weight: 700;
+            font-size: 20px;
+        }
+
+        .nav-section {
+            margin-bottom: 32px;
+        }
+
+        .nav-label {
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-muted);
+            margin-bottom: 12px;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 16px;
+            border-radius: var(--radius-sm);
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.2s;
+            margin-bottom: 4px;
+        }
+
+        .nav-item:hover {
+            background: var(--bg-tertiary);
+            color: var(--text-primary);
+        }
+
+        .nav-item.active {
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+            color: white;
+        }
+
+        .nav-icon {
+            width: 20px;
+            height: 20px;
+            opacity: 0.8;
+        }
+
+        /* Main Content */
+        .main {
+            flex: 1;
+            padding: 24px 32px;
+            overflow-y: auto;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 32px;
+        }
+
+        .search-bar {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 50px;
+            padding: 12px 20px;
+            width: 400px;
+        }
+
+        .search-bar input {
+            border: none;
+            background: none;
+            outline: none;
+            flex: 1;
+            font-family: inherit;
+            font-size: 14px;
+            color: var(--text-primary);
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .theme-toggle {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+
+        .theme-toggle:hover {
+            background: var(--bg-tertiary);
+        }
+
+        .notification-btn {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .notification-dot {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 8px;
+            height: 8px;
+            background: var(--accent-pink);
+            border-radius: 50%;
+        }
+
+        .avatar {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent-orange), var(--accent-pink));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+        }
+
+        /* Bento Grid */
+        .bento-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-template-rows: auto;
+            gap: 20px;
+        }
+
+        .bento-card {
+            background: var(--bg-secondary);
+            border-radius: var(--radius);
+            padding: 24px;
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+        }
+
+        .bento-card:hover {
+            box-shadow: var(--shadow-lg);
+            transform: translateY(-2px);
+        }
+
+        /* Welcome Card - spans 2 columns */
+        .welcome-card {
+            grid-column: span 2;
+            background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .welcome-content h1 {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .welcome-content p {
+            opacity: 0.9;
+            font-size: 15px;
+            margin-bottom: 20px;
+        }
+
+        .welcome-btn {
+            background: rgba(255,255,255,0.2);
+            border: none;
+            padding: 12px 24px;
+            border-radius: 50px;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            backdrop-filter: blur(10px);
+            transition: all 0.2s;
+        }
+
+        .welcome-btn:hover {
+            background: rgba(255,255,255,0.3);
+        }
+
+        .welcome-illustration {
+            width: 180px;
+            height: 180px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 80px;
+        }
+
+        /* Stats Cards */
+        .stat-card {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: var(--radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            margin-bottom: 16px;
+        }
+
+        .stat-icon.blue { background: rgba(59, 130, 246, 0.1); }
+        .stat-icon.green { background: rgba(16, 185, 129, 0.1); }
+        .stat-icon.orange { background: rgba(245, 158, 11, 0.1); }
+        .stat-icon.purple { background: rgba(139, 92, 246, 0.1); }
+
+        .stat-value {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .stat-label {
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+
+        .stat-trend {
+            position: absolute;
+            top: 24px;
+            right: 24px;
+            font-size: 13px;
+            font-weight: 600;
+            padding: 4px 10px;
+            border-radius: 20px;
+        }
+
+        .stat-trend.up {
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--accent-green);
+        }
+
+        .stat-trend.down {
+            background: rgba(239, 68, 68, 0.1);
+            color: #ef4444;
+        }
+
+        /* Progress Card - spans 2 columns */
+        .progress-card {
+            grid-column: span 2;
+        }
+
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+        }
+
+        .progress-header h3 {
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .progress-tabs {
+            display: flex;
+            gap: 8px;
+        }
+
+        .progress-tab {
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 13px;
+            cursor: pointer;
+            background: var(--bg-tertiary);
+            color: var(--text-secondary);
+            border: none;
+        }
+
+        .progress-tab.active {
+            background: var(--accent-blue);
+            color: white;
+        }
+
+        .chart-area {
+            height: 200px;
+            background: linear-gradient(180deg, rgba(59, 130, 246, 0.1) 0%, transparent 100%);
+            border-radius: var(--radius-sm);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .chart-line {
+            position: absolute;
+            bottom: 40px;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--accent-blue);
+            clip-path: polygon(0 100%, 5% 60%, 15% 80%, 25% 40%, 35% 60%, 50% 20%, 65% 50%, 75% 30%, 85% 45%, 95% 10%, 100% 30%, 100% 100%);
+        }
+
+        .chart-dots {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: space-between;
+            padding: 0 20px;
+        }
+
+        .chart-dot {
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        /* Universities Card - spans 2 rows */
+        .universities-card {
+            grid-row: span 2;
+        }
+
+        .universities-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .universities-header h3 {
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .see-all {
+            color: var(--accent-blue);
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+        }
+
+        .university-item {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 16px;
+            background: var(--bg-tertiary);
+            border-radius: var(--radius-sm);
+            margin-bottom: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .university-item:hover {
+            transform: translateX(4px);
+        }
+
+        .university-logo {
+            width: 48px;
+            height: 48px;
+            border-radius: var(--radius-sm);
+            background: var(--bg-secondary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+
+        .university-info h4 {
+            font-size: 15px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .university-info p {
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+
+        .university-badge {
+            margin-left: auto;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .university-badge.dream {
+            background: rgba(139, 92, 246, 0.1);
+            color: var(--accent-purple);
+        }
+
+        .university-badge.target {
+            background: rgba(59, 130, 246, 0.1);
+            color: var(--accent-blue);
+        }
+
+        .university-badge.safe {
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--accent-green);
+        }
+
+        /* Calendar Card */
+        .calendar-card {
+            grid-column: span 2;
+        }
+
+        .calendar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .calendar-header h3 {
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .calendar-nav {
+            display: flex;
+            gap: 8px;
+        }
+
+        .calendar-nav button {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            background: var(--bg-secondary);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 8px;
+        }
+
+        .calendar-day-name {
+            text-align: center;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-muted);
+            padding: 8px;
+        }
+
+        .calendar-day {
+            text-align: center;
+            padding: 12px;
+            border-radius: 10px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .calendar-day:hover {
+            background: var(--bg-tertiary);
+        }
+
+        .calendar-day.today {
+            background: var(--accent-blue);
+            color: white;
+            font-weight: 600;
+        }
+
+        .calendar-day.has-event {
+            position: relative;
+        }
+
+        .calendar-day.has-event::after {
+            content: '';
+            position: absolute;
+            bottom: 4px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 6px;
+            height: 6px;
+            background: var(--accent-pink);
+            border-radius: 50%;
+        }
+
+        /* Tasks Card */
+        .tasks-card h3 {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        .task-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .task-item:last-child {
+            border-bottom: none;
+        }
+
+        .task-checkbox {
+            width: 22px;
+            height: 22px;
+            border-radius: 6px;
+            border: 2px solid var(--border);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+
+        .task-checkbox.checked {
+            background: var(--accent-green);
+            border-color: var(--accent-green);
+            color: white;
+        }
+
+        .task-content {
+            flex: 1;
+        }
+
+        .task-content h4 {
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 2px;
+        }
+
+        .task-content p {
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        .task-priority {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+        }
+
+        .task-priority.high { background: #ef4444; }
+        .task-priority.medium { background: var(--accent-orange); }
+        .task-priority.low { background: var(--accent-green); }
+
+        /* AI Chat Card */
+        .chat-card {
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+            color: white;
+        }
+
+        .chat-card h3 {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+
+        .chat-preview {
+            background: rgba(255,255,255,0.1);
+            border-radius: var(--radius-sm);
+            padding: 16px;
+            margin-bottom: 16px;
+        }
+
+        .chat-message {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .chat-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+        }
+
+        .chat-bubble {
+            flex: 1;
+            font-size: 13px;
+            line-height: 1.5;
+            opacity: 0.9;
+        }
+
+        .chat-btn {
+            width: 100%;
+            padding: 14px;
+            border-radius: var(--radius-sm);
+            background: var(--accent-blue);
+            color: white;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .chat-btn:hover {
+            background: #2563eb;
+        }
+    </style>
+</head>
+<body>
+    <div class="layout">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="logo">
+                <div class="logo-icon">📚</div>
+                <span class="logo-text">StudyBuddy</span>
+            </div>
+
+            <nav class="nav-section">
+                <div class="nav-label">Main Menu</div>
+                <div class="nav-item active">
+                    <span class="nav-icon">🏠</span>
+                    Dashboard
+                </div>
+                <div class="nav-item">
+                    <span class="nav-icon">💬</span>
+                    AI Counsellor
+                </div>
+                <div class="nav-item">
+                    <span class="nav-icon">🏫</span>
+                    Universities
+                </div>
+                <div class="nav-item">
+                    <span class="nav-icon">📝</span>
+                    Applications
+                </div>
+            </nav>
+
+            <nav class="nav-section">
+                <div class="nav-label">Account</div>
+                <div class="nav-item">
+                    <span class="nav-icon">👤</span>
+                    Profile
+                </div>
+                <div class="nav-item">
+                    <span class="nav-icon">⚙️</span>
+                    Settings
+                </div>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main">
+            <header class="header">
+                <div class="search-bar">
+                    <span>🔍</span>
+                    <input type="text" placeholder="Search universities, tasks...">
+                </div>
+                <div class="header-actions">
+                    <button class="theme-toggle" onclick="toggleTheme()">🌙</button>
+                    <button class="notification-btn">
+                        🔔
+                        <span class="notification-dot"></span>
+                    </button>
+                    <div class="avatar">JD</div>
+                </div>
+            </header>
+
+            <!-- Bento Grid -->
+            <div class="bento-grid">
+                <!-- Welcome Card -->
+                <div class="bento-card welcome-card">
+                    <div class="welcome-content">
+                        <h1>Welcome back, John! 👋</h1>
+                        <p>Continue your journey to find the perfect university</p>
+                        <button class="welcome-btn">Talk to AI Counsellor →</button>
+                    </div>
+                    <div class="welcome-illustration">🎓</div>
+                </div>
+
+                <!-- Stats Cards -->
+                <div class="bento-card stat-card">
+                    <div class="stat-icon blue">🎯</div>
+                    <div class="stat-value">12</div>
+                    <div class="stat-label">Shortlisted Universities</div>
+                    <span class="stat-trend up">+3 this week</span>
+                </div>
+
+                <div class="bento-card stat-card">
+                    <div class="stat-icon green">✅</div>
+                    <div class="stat-value">8</div>
+                    <div class="stat-label">Tasks Completed</div>
+                    <span class="stat-trend up">+5 today</span>
+                </div>
+
+                <!-- Progress Card -->
+                <div class="bento-card progress-card">
+                    <div class="progress-header">
+                        <h3>Application Progress</h3>
+                        <div class="progress-tabs">
+                            <button class="progress-tab active">Week</button>
+                            <button class="progress-tab">Month</button>
+                            <button class="progress-tab">Year</button>
+                        </div>
+                    </div>
+                    <div class="chart-area">
+                        <div class="chart-line"></div>
+                        <div class="chart-dots">
+                            <span class="chart-dot">Mon</span>
+                            <span class="chart-dot">Tue</span>
+                            <span class="chart-dot">Wed</span>
+                            <span class="chart-dot">Thu</span>
+                            <span class="chart-dot">Fri</span>
+                            <span class="chart-dot">Sat</span>
+                            <span class="chart-dot">Sun</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Universities Card -->
+                <div class="bento-card universities-card">
+                    <div class="universities-header">
+                        <h3>Your Universities</h3>
+                        <span class="see-all">See all →</span>
+                    </div>
+                    <div class="university-item">
+                        <div class="university-logo">🏛️</div>
+                        <div class="university-info">
+                            <h4>MIT</h4>
+                            <p>Massachusetts, USA</p>
+                        </div>
+                        <span class="university-badge dream">Dream</span>
+                    </div>
+                    <div class="university-item">
+                        <div class="university-logo">🎓</div>
+                        <div class="university-info">
+                            <h4>Stanford University</h4>
+                            <p>California, USA</p>
+                        </div>
+                        <span class="university-badge dream">Dream</span>
+                    </div>
+                    <div class="university-item">
+                        <div class="university-logo">📚</div>
+                        <div class="university-info">
+                            <h4>UC Berkeley</h4>
+                            <p>California, USA</p>
+                        </div>
+                        <span class="university-badge target">Target</span>
+                    </div>
+                    <div class="university-item">
+                        <div class="university-logo">🏫</div>
+                        <div class="university-info">
+                            <h4>Georgia Tech</h4>
+                            <p>Georgia, USA</p>
+                        </div>
+                        <span class="university-badge safe">Safe</span>
+                    </div>
+                </div>
+
+                <!-- Calendar Card -->
+                <div class="bento-card calendar-card">
+                    <div class="calendar-header">
+                        <h3>January 2026</h3>
+                        <div class="calendar-nav">
+                            <button>←</button>
+                            <button>→</button>
+                        </div>
+                    </div>
+                    <div class="calendar-grid">
+                        <div class="calendar-day-name">Sun</div>
+                        <div class="calendar-day-name">Mon</div>
+                        <div class="calendar-day-name">Tue</div>
+                        <div class="calendar-day-name">Wed</div>
+                        <div class="calendar-day-name">Thu</div>
+                        <div class="calendar-day-name">Fri</div>
+                        <div class="calendar-day-name">Sat</div>
+                        <div class="calendar-day" style="opacity: 0.3">29</div>
+                        <div class="calendar-day" style="opacity: 0.3">30</div>
+                        <div class="calendar-day" style="opacity: 0.3">31</div>
+                        <div class="calendar-day">1</div>
+                        <div class="calendar-day">2</div>
+                        <div class="calendar-day">3</div>
+                        <div class="calendar-day">4</div>
+                        <div class="calendar-day has-event">5</div>
+                        <div class="calendar-day">6</div>
+                        <div class="calendar-day">7</div>
+                        <div class="calendar-day">8</div>
+                        <div class="calendar-day">9</div>
+                        <div class="calendar-day has-event">10</div>
+                        <div class="calendar-day">11</div>
+                        <div class="calendar-day">12</div>
+                        <div class="calendar-day">13</div>
+                        <div class="calendar-day">14</div>
+                        <div class="calendar-day has-event">15</div>
+                        <div class="calendar-day">16</div>
+                        <div class="calendar-day">17</div>
+                        <div class="calendar-day">18</div>
+                        <div class="calendar-day">19</div>
+                        <div class="calendar-day">20</div>
+                        <div class="calendar-day">21</div>
+                        <div class="calendar-day">22</div>
+                        <div class="calendar-day">23</div>
+                        <div class="calendar-day">24</div>
+                        <div class="calendar-day">25</div>
+                        <div class="calendar-day">26</div>
+                        <div class="calendar-day">27</div>
+                        <div class="calendar-day today">28</div>
+                        <div class="calendar-day">29</div>
+                        <div class="calendar-day">30</div>
+                        <div class="calendar-day">31</div>
+                    </div>
+                </div>
+
+                <!-- Tasks Card -->
+                <div class="bento-card tasks-card">
+                    <h3>Upcoming Tasks</h3>
+                    <div class="task-item">
+                        <div class="task-checkbox"></div>
+                        <div class="task-content">
+                            <h4>Submit IELTS Score</h4>
+                            <p>Due in 3 days</p>
+                        </div>
+                        <div class="task-priority high"></div>
+                    </div>
+                    <div class="task-item">
+                        <div class="task-checkbox"></div>
+                        <div class="task-content">
+                            <h4>Complete MIT Essay</h4>
+                            <p>Due in 1 week</p>
+                        </div>
+                        <div class="task-priority medium"></div>
+                    </div>
+                    <div class="task-item">
+                        <div class="task-checkbox checked">✓</div>
+                        <div class="task-content">
+                            <h4>Update Resume</h4>
+                            <p>Completed</p>
+                        </div>
+                        <div class="task-priority low"></div>
+                    </div>
+                </div>
+
+                <!-- AI Chat Card -->
+                <div class="bento-card chat-card">
+                    <h3>AI Counsellor 🤖</h3>
+                    <div class="chat-preview">
+                        <div class="chat-message">
+                            <div class="chat-avatar">🤖</div>
+                            <div class="chat-bubble">
+                                Based on your profile, I recommend focusing on your SOP for MIT. Would you like help?
+                            </div>
+                        </div>
+                    </div>
+                    <button class="chat-btn">Continue Conversation →</button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        function toggleTheme() {
+            const body = document.body;
+            const currentTheme = body.getAttribute('data-theme');
+            if (currentTheme === 'dark') {
+                body.removeAttribute('data-theme');
+                document.querySelector('.theme-toggle').textContent = '🌙';
+            } else {
+                body.setAttribute('data-theme', 'dark');
+                document.querySelector('.theme-toggle').textContent = '☀️';
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,991 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StudyBuddy - Illustration-Driven Theme</title>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-cream: #fef9f3;
+            --bg-white: #ffffff;
+            --bg-peach: #fff5eb;
+            --text-dark: #2d2a26;
+            --text-medium: #5c5854;
+            --text-light: #9a958f;
+            --accent-coral: #ff6b6b;
+            --accent-teal: #4ecdc4;
+            --accent-yellow: #ffe66d;
+            --accent-purple: #a06cd5;
+            --accent-blue: #6bcfff;
+            --border: #e8e4df;
+            --shadow: 0 4px 20px rgba(45, 42, 38, 0.08);
+            --radius: 24px;
+            --radius-sm: 16px;
+        }
+
+        [data-theme="dark"] {
+            --bg-cream: #1a1918;
+            --bg-white: #252321;
+            --bg-peach: #2a2725;
+            --text-dark: #f5f3f0;
+            --text-medium: #c4c0ba;
+            --text-light: #8a857e;
+            --border: #3a3735;
+            --shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Quicksand', sans-serif;
+            background: var(--bg-cream);
+            color: var(--text-dark);
+            min-height: 100vh;
+        }
+
+        .layout {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 260px;
+            background: var(--bg-white);
+            border-right: 2px solid var(--border);
+            padding: 28px 20px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 40px;
+            padding: 0 8px;
+        }
+
+        .logo-illustration {
+            width: 56px;
+            height: 56px;
+            background: linear-gradient(135deg, var(--accent-coral) 0%, var(--accent-yellow) 100%);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            box-shadow: 0 4px 12px rgba(255, 107, 107, 0.3);
+        }
+
+        .logo-text {
+            font-weight: 700;
+            font-size: 22px;
+            color: var(--text-dark);
+        }
+
+        .nav-section {
+            margin-bottom: 32px;
+        }
+
+        .nav-label {
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--text-light);
+            margin-bottom: 14px;
+            padding-left: 12px;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 14px 16px;
+            border-radius: var(--radius-sm);
+            color: var(--text-medium);
+            cursor: pointer;
+            transition: all 0.25s ease;
+            margin-bottom: 6px;
+            border: 2px solid transparent;
+        }
+
+        .nav-item:hover {
+            background: var(--bg-peach);
+            border-color: var(--border);
+        }
+
+        .nav-item.active {
+            background: linear-gradient(135deg, var(--accent-coral), var(--accent-yellow));
+            color: white;
+            border-color: transparent;
+            box-shadow: 0 4px 12px rgba(255, 107, 107, 0.3);
+        }
+
+        .nav-icon {
+            font-size: 22px;
+        }
+
+        .nav-text {
+            font-weight: 600;
+            font-size: 15px;
+        }
+
+        /* Character illustrations */
+        .sidebar-illustration {
+            margin-top: auto;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .character {
+            font-size: 80px;
+            margin-bottom: 12px;
+        }
+
+        .character-text {
+            font-size: 13px;
+            color: var(--text-light);
+            font-weight: 600;
+        }
+
+        /* Main Content */
+        .main {
+            flex: 1;
+            padding: 28px 36px;
+            overflow-y: auto;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 32px;
+        }
+
+        .search-bar {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: var(--bg-white);
+            border: 2px solid var(--border);
+            border-radius: 50px;
+            padding: 12px 24px;
+            width: 380px;
+            transition: all 0.2s;
+        }
+
+        .search-bar:focus-within {
+            border-color: var(--accent-coral);
+            box-shadow: 0 0 0 4px rgba(255, 107, 107, 0.1);
+        }
+
+        .search-bar input {
+            border: none;
+            background: none;
+            outline: none;
+            flex: 1;
+            font-family: inherit;
+            font-size: 15px;
+            color: var(--text-dark);
+            font-weight: 500;
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .icon-btn {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: var(--bg-white);
+            border: 2px solid var(--border);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            transition: all 0.2s;
+        }
+
+        .icon-btn:hover {
+            background: var(--bg-peach);
+            transform: translateY(-2px);
+        }
+
+        .avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent-purple), var(--accent-blue));
+            border: 3px solid var(--bg-white);
+            box-shadow: var(--shadow);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            font-size: 16px;
+        }
+
+        /* Dashboard Grid */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+
+        .card {
+            background: var(--bg-white);
+            border: 2px solid var(--border);
+            border-radius: var(--radius);
+            padding: 24px;
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            box-shadow: var(--shadow);
+            transform: translateY(-4px);
+        }
+
+        /* Welcome Card */
+        .welcome-card {
+            grid-column: span 2;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: linear-gradient(135deg, #fff5eb 0%, #ffe8d6 100%);
+            border-color: #ffd4b3;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .welcome-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .welcome-badge {
+            display: inline-block;
+            background: var(--accent-coral);
+            color: white;
+            padding: 6px 14px;
+            border-radius: 50px;
+            font-size: 12px;
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+
+        .welcome-content h1 {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: var(--text-dark);
+        }
+
+        .welcome-content p {
+            font-size: 15px;
+            color: var(--text-medium);
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .welcome-btn {
+            background: var(--accent-coral);
+            border: none;
+            padding: 14px 28px;
+            border-radius: 50px;
+            color: white;
+            font-weight: 700;
+            font-size: 15px;
+            cursor: pointer;
+            transition: all 0.2s;
+            box-shadow: 0 4px 12px rgba(255, 107, 107, 0.3);
+        }
+
+        .welcome-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(255, 107, 107, 0.4);
+        }
+
+        .welcome-illustration {
+            font-size: 140px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .welcome-shapes {
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            width: 50%;
+            overflow: hidden;
+        }
+
+        .shape {
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0.5;
+        }
+
+        .shape-1 {
+            width: 100px;
+            height: 100px;
+            background: var(--accent-yellow);
+            top: -20px;
+            right: 100px;
+        }
+
+        .shape-2 {
+            width: 60px;
+            height: 60px;
+            background: var(--accent-teal);
+            bottom: 20px;
+            right: 20px;
+        }
+
+        .shape-3 {
+            width: 40px;
+            height: 40px;
+            background: var(--accent-purple);
+            top: 50%;
+            right: 180px;
+        }
+
+        /* Journey Card */
+        .journey-card h3 {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .journey-steps {
+            position: relative;
+        }
+
+        .journey-line {
+            position: absolute;
+            left: 23px;
+            top: 30px;
+            bottom: 30px;
+            width: 4px;
+            background: var(--border);
+            border-radius: 2px;
+        }
+
+        .journey-step {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .journey-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--bg-cream);
+            border: 3px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            z-index: 1;
+        }
+
+        .journey-icon.completed {
+            background: var(--accent-teal);
+            border-color: var(--accent-teal);
+        }
+
+        .journey-icon.active {
+            background: var(--accent-coral);
+            border-color: var(--accent-coral);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(255, 107, 107, 0.4); }
+            50% { box-shadow: 0 0 0 10px rgba(255, 107, 107, 0); }
+        }
+
+        .journey-info h4 {
+            font-size: 15px;
+            font-weight: 700;
+            margin-bottom: 2px;
+        }
+
+        .journey-info p {
+            font-size: 13px;
+            color: var(--text-light);
+        }
+
+        /* Stat Cards */
+        .stat-card {
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-illustration {
+            font-size: 60px;
+            margin-bottom: 16px;
+        }
+
+        .stat-value {
+            font-size: 40px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .stat-value.coral { color: var(--accent-coral); }
+        .stat-value.teal { color: var(--accent-teal); }
+        .stat-value.purple { color: var(--accent-purple); }
+
+        .stat-label {
+            font-size: 14px;
+            color: var(--text-light);
+            font-weight: 600;
+        }
+
+        .stat-bg {
+            position: absolute;
+            bottom: -20px;
+            right: -20px;
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            opacity: 0.1;
+        }
+
+        .stat-bg.coral { background: var(--accent-coral); }
+        .stat-bg.teal { background: var(--accent-teal); }
+        .stat-bg.purple { background: var(--accent-purple); }
+
+        /* Universities Card */
+        .universities-card {
+            grid-column: span 2;
+        }
+
+        .universities-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .universities-header h3 {
+            font-size: 18px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .see-all {
+            color: var(--accent-coral);
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .university-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+        }
+
+        .university-item {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 16px;
+            background: var(--bg-cream);
+            border: 2px solid var(--border);
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .university-item:hover {
+            border-color: var(--accent-coral);
+            transform: translateX(4px);
+        }
+
+        .university-emoji {
+            font-size: 36px;
+        }
+
+        .university-info h4 {
+            font-size: 15px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .university-info p {
+            font-size: 13px;
+            color: var(--text-light);
+        }
+
+        .university-badge {
+            margin-left: auto;
+            padding: 6px 12px;
+            border-radius: 50px;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .university-badge.dream {
+            background: linear-gradient(135deg, var(--accent-coral), #ff8e8e);
+            color: white;
+        }
+
+        .university-badge.target {
+            background: linear-gradient(135deg, var(--accent-purple), #b991e0);
+            color: white;
+        }
+
+        .university-badge.safe {
+            background: linear-gradient(135deg, var(--accent-teal), #7ee8e0);
+            color: white;
+        }
+
+        /* Tasks Card */
+        .tasks-card h3 {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .task-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .task-item {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 14px 16px;
+            background: var(--bg-cream);
+            border: 2px solid var(--border);
+            border-radius: var(--radius-sm);
+            transition: all 0.2s;
+        }
+
+        .task-item:hover {
+            border-color: var(--accent-teal);
+        }
+
+        .task-checkbox {
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            border: 3px solid var(--border);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+
+        .task-checkbox.checked {
+            background: var(--accent-teal);
+            border-color: var(--accent-teal);
+            color: white;
+            font-size: 14px;
+        }
+
+        .task-content {
+            flex: 1;
+        }
+
+        .task-content h4 {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 2px;
+        }
+
+        .task-content p {
+            font-size: 12px;
+            color: var(--text-light);
+        }
+
+        .task-emoji {
+            font-size: 24px;
+        }
+
+        /* AI Card */
+        .ai-card {
+            grid-column: span 2;
+            background: linear-gradient(135deg, #2d2a26, #3d3a36);
+            border-color: #4d4a46;
+            color: white;
+            display: flex;
+            align-items: center;
+            gap: 24px;
+        }
+
+        .ai-illustration {
+            font-size: 100px;
+        }
+
+        .ai-content {
+            flex: 1;
+        }
+
+        .ai-content h3 {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .ai-content p {
+            font-size: 14px;
+            opacity: 0.8;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .ai-btn {
+            background: var(--accent-yellow);
+            border: none;
+            padding: 14px 28px;
+            border-radius: 50px;
+            color: var(--text-dark);
+            font-weight: 700;
+            font-size: 15px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .ai-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(255, 230, 109, 0.4);
+        }
+
+        /* Calendar Card */
+        .calendar-card h3 {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .calendar-mini {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 6px;
+        }
+
+        .calendar-day-name {
+            text-align: center;
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--text-light);
+            padding: 8px 0;
+        }
+
+        .calendar-day {
+            text-align: center;
+            padding: 10px;
+            border-radius: 10px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .calendar-day:hover {
+            background: var(--bg-cream);
+        }
+
+        .calendar-day.today {
+            background: var(--accent-coral);
+            color: white;
+        }
+
+        .calendar-day.has-event {
+            background: var(--accent-yellow);
+            color: var(--text-dark);
+        }
+    </style>
+</head>
+<body>
+    <div class="layout">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="logo">
+                <div class="logo-illustration">📚</div>
+                <span class="logo-text">StudyBuddy</span>
+            </div>
+
+            <nav class="nav-section">
+                <div class="nav-label">Menu</div>
+                <div class="nav-item active">
+                    <span class="nav-icon">🏠</span>
+                    <span class="nav-text">Dashboard</span>
+                </div>
+                <div class="nav-item">
+                    <span class="nav-icon">🤖</span>
+                    <span class="nav-text">AI Counsellor</span>
+                </div>
+                <div class="nav-item">
+                    <span class="nav-icon">🏫</span>
+                    <span class="nav-text">Universities</span>
+                </div>
+                <div class="nav-item">
+                    <span class="nav-icon">📝</span>
+                    <span class="nav-text">Applications</span>
+                </div>
+            </nav>
+
+            <nav class="nav-section">
+                <div class="nav-label">Account</div>
+                <div class="nav-item">
+                    <span class="nav-icon">👤</span>
+                    <span class="nav-text">Profile</span>
+                </div>
+                <div class="nav-item">
+                    <span class="nav-icon">⚙️</span>
+                    <span class="nav-text">Settings</span>
+                </div>
+            </nav>
+
+            <div class="sidebar-illustration">
+                <div class="character">🧑‍🎓</div>
+                <p class="character-text">You're doing great!</p>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main">
+            <header class="header">
+                <div class="search-bar">
+                    <span>🔍</span>
+                    <input type="text" placeholder="Search for universities...">
+                </div>
+                <div class="header-actions">
+                    <button class="icon-btn" onclick="toggleTheme()">🌙</button>
+                    <button class="icon-btn">🔔</button>
+                    <div class="avatar">JD</div>
+                </div>
+            </header>
+
+            <!-- Dashboard Grid -->
+            <div class="dashboard-grid">
+                <!-- Welcome Card -->
+                <div class="card welcome-card">
+                    <div class="welcome-content">
+                        <span class="welcome-badge">✨ Stage 3 of 4</span>
+                        <h1>Hey John! Ready to finalize?</h1>
+                        <p>You've explored great options. Now it's time to commit to your top choices.</p>
+                        <button class="welcome-btn">Lock Your Universities 🔒</button>
+                    </div>
+                    <div class="welcome-illustration">🎯</div>
+                    <div class="welcome-shapes">
+                        <div class="shape shape-1"></div>
+                        <div class="shape shape-2"></div>
+                        <div class="shape shape-3"></div>
+                    </div>
+                </div>
+
+                <!-- Journey Card -->
+                <div class="card journey-card">
+                    <h3>🗺️ Your Journey</h3>
+                    <div class="journey-steps">
+                        <div class="journey-line"></div>
+                        <div class="journey-step">
+                            <div class="journey-icon completed">✓</div>
+                            <div class="journey-info">
+                                <h4>Profile</h4>
+                                <p>Complete!</p>
+                            </div>
+                        </div>
+                        <div class="journey-step">
+                            <div class="journey-icon completed">✓</div>
+                            <div class="journey-info">
+                                <h4>Discover</h4>
+                                <p>12 universities</p>
+                            </div>
+                        </div>
+                        <div class="journey-step">
+                            <div class="journey-icon active">🎯</div>
+                            <div class="journey-info">
+                                <h4>Finalize</h4>
+                                <p>Lock your picks</p>
+                            </div>
+                        </div>
+                        <div class="journey-step">
+                            <div class="journey-icon">📝</div>
+                            <div class="journey-info">
+                                <h4>Apply</h4>
+                                <p>Coming soon</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Stat Cards -->
+                <div class="card stat-card">
+                    <div class="stat-illustration">🎯</div>
+                    <div class="stat-value coral">12</div>
+                    <div class="stat-label">Shortlisted</div>
+                    <div class="stat-bg coral"></div>
+                </div>
+
+                <div class="card stat-card">
+                    <div class="stat-illustration">🔒</div>
+                    <div class="stat-value teal">3</div>
+                    <div class="stat-label">Locked</div>
+                    <div class="stat-bg teal"></div>
+                </div>
+
+                <div class="card stat-card">
+                    <div class="stat-illustration">✅</div>
+                    <div class="stat-value purple">8</div>
+                    <div class="stat-label">Tasks Done</div>
+                    <div class="stat-bg purple"></div>
+                </div>
+
+                <!-- Universities Card -->
+                <div class="card universities-card">
+                    <div class="universities-header">
+                        <h3>🏫 Your Universities</h3>
+                        <span class="see-all">See all →</span>
+                    </div>
+                    <div class="university-grid">
+                        <div class="university-item">
+                            <span class="university-emoji">🏛️</span>
+                            <div class="university-info">
+                                <h4>MIT</h4>
+                                <p>Massachusetts, USA</p>
+                            </div>
+                            <span class="university-badge dream">Dream</span>
+                        </div>
+                        <div class="university-item">
+                            <span class="university-emoji">🎓</span>
+                            <div class="university-info">
+                                <h4>Stanford</h4>
+                                <p>California, USA</p>
+                            </div>
+                            <span class="university-badge dream">Dream</span>
+                        </div>
+                        <div class="university-item">
+                            <span class="university-emoji">📚</span>
+                            <div class="university-info">
+                                <h4>UC Berkeley</h4>
+                                <p>California, USA</p>
+                            </div>
+                            <span class="university-badge target">Target</span>
+                        </div>
+                        <div class="university-item">
+                            <span class="university-emoji">🏫</span>
+                            <div class="university-info">
+                                <h4>Georgia Tech</h4>
+                                <p>Georgia, USA</p>
+                            </div>
+                            <span class="university-badge safe">Safe</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tasks Card -->
+                <div class="card tasks-card">
+                    <h3>📋 Your Tasks</h3>
+                    <div class="task-list">
+                        <div class="task-item">
+                            <div class="task-checkbox"></div>
+                            <div class="task-content">
+                                <h4>Submit IELTS Score</h4>
+                                <p>Due in 3 days</p>
+                            </div>
+                            <span class="task-emoji">📄</span>
+                        </div>
+                        <div class="task-item">
+                            <div class="task-checkbox"></div>
+                            <div class="task-content">
+                                <h4>Write MIT Essay</h4>
+                                <p>Due in 1 week</p>
+                            </div>
+                            <span class="task-emoji">✍️</span>
+                        </div>
+                        <div class="task-item">
+                            <div class="task-checkbox checked">✓</div>
+                            <div class="task-content">
+                                <h4>Update Resume</h4>
+                                <p>Completed</p>
+                            </div>
+                            <span class="task-emoji">✅</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- AI Card -->
+                <div class="card ai-card">
+                    <div class="ai-illustration">🤖</div>
+                    <div class="ai-content">
+                        <h3>Need guidance?</h3>
+                        <p>I'm your AI counsellor, ready to help you make the best decisions for your study abroad journey!</p>
+                        <button class="ai-btn">Chat with me →</button>
+                    </div>
+                </div>
+
+                <!-- Calendar Card -->
+                <div class="card calendar-card">
+                    <h3>📅 January 2026</h3>
+                    <div class="calendar-mini">
+                        <div class="calendar-day-name">S</div>
+                        <div class="calendar-day-name">M</div>
+                        <div class="calendar-day-name">T</div>
+                        <div class="calendar-day-name">W</div>
+                        <div class="calendar-day-name">T</div>
+                        <div class="calendar-day-name">F</div>
+                        <div class="calendar-day-name">S</div>
+                        <div class="calendar-day">26</div>
+                        <div class="calendar-day">27</div>
+                        <div class="calendar-day today">28</div>
+                        <div class="calendar-day">29</div>
+                        <div class="calendar-day has-event">30</div>
+                        <div class="calendar-day">31</div>
+                        <div class="calendar-day">1</div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        function toggleTheme() {
+            const body = document.body;
+            const currentTheme = body.getAttribute('data-theme');
+            if (currentTheme === 'dark') {
+                body.removeAttribute('data-theme');
+            } else {
+                body.setAttribute('data-theme', 'dark');
+            }
+        }
+    </script>
+</body>
+</html>

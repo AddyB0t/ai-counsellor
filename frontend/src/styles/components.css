@@ -1,0 +1,219 @@
+/* ============================================
+   STUDYBUDDY COMPONENTS - Reusable Styles
+   ============================================
+
+   Import after theme.css
+   Uses CSS variables from theme.css
+   ============================================ */
+
+/* ============================================
+   BACKGROUNDS
+   ============================================ */
+
+.bg-playful {
+  background: var(--gradient-bg);
+}
+
+/* ============================================
+   GLASS MORPHISM
+   ============================================ */
+
+.glass-card {
+  background: var(--color-bg-glass);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+}
+
+.dark .glass-card {
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.glass-sidebar {
+  background: var(--color-bg-glass-strong);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-right: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.dark .glass-sidebar {
+  border-right: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* ============================================
+   DECORATIVE BLOBS
+   ============================================ */
+
+.blob {
+  border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+}
+
+.blob-1 {
+  position: fixed;
+  top: -100px;
+  right: -100px;
+  width: 400px;
+  height: 400px;
+  background: var(--gradient-blob-1);
+  filter: blur(60px);
+  z-index: 0;
+  pointer-events: none;
+}
+
+.blob-2 {
+  position: fixed;
+  bottom: -100px;
+  left: -100px;
+  width: 350px;
+  height: 350px;
+  background: var(--gradient-blob-2);
+  filter: blur(60px);
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* ============================================
+   GRADIENTS
+   ============================================ */
+
+.gradient-text {
+  background: var(--gradient-primary);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.gradient-primary {
+  background: var(--gradient-primary);
+}
+
+/* ============================================
+   SHADOWS
+   ============================================ */
+
+.shadow-playful {
+  box-shadow: var(--shadow-primary);
+}
+
+/* ============================================
+   ANIMATIONS & HOVER EFFECTS
+   ============================================ */
+
+.hover-lift {
+  transition: all var(--transition-slow);
+}
+
+.hover-lift:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 40px rgba(16, 185, 129, 0.15);
+}
+
+.dark .hover-lift:hover {
+  box-shadow: 0 20px 40px rgba(16, 185, 129, 0.2);
+}
+
+/* ============================================
+   CATEGORY BADGES (University Matching)
+   ============================================ */
+
+.category-dream {
+  background: var(--color-category-dream-bg);
+  color: var(--color-category-dream);
+  border: 1px solid rgba(139, 92, 246, 0.3);
+}
+
+.category-target {
+  background: var(--color-category-target-bg);
+  color: var(--color-category-target);
+  border: 1px solid rgba(8, 145, 178, 0.3);
+}
+
+.category-safe {
+  background: var(--color-category-safe-bg);
+  color: var(--color-category-safe);
+  border: 1px solid rgba(34, 197, 94, 0.3);
+}
+
+/* ============================================
+   FORM ELEMENTS
+   ============================================ */
+
+input,
+select,
+textarea {
+  transition: all var(--transition-base);
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  outline: none;
+  border-color: var(--color-primary) !important;
+  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+}
+
+.dark input:focus,
+.dark select:focus,
+.dark textarea:focus {
+  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2);
+}
+
+/* Select dropdown options */
+select option {
+  background-color: var(--color-bg);
+  color: var(--color-text);
+}
+
+/* ============================================
+   SCROLLBAR
+   ============================================ */
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(135deg, var(--color-primary-hover), var(--color-secondary-hover));
+}
+
+/* ============================================
+   TYPOGRAPHY CLASSES
+   ============================================ */
+
+.hero-headline {
+  font-family: var(--font-display);
+  font-weight: var(--font-weight-extrabold);
+  letter-spacing: -0.01em;
+  text-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+}
+
+.hero-subtext {
+  font-family: var(--font-display);
+  font-weight: var(--font-weight-normal);
+}
+
+.font-display {
+  font-family: var(--font-display);
+}
+
+.font-body {
+  font-family: var(--font-body);
+}
+
+/* ============================================
+   UTILITY CLASSES
+   ============================================ */
+
+.text-balance {
+  text-wrap: balance;
+}

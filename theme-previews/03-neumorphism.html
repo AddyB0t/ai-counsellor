@@ -1,0 +1,927 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StudyBuddy - Neumorphism Theme</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #e0e5ec;
+            --bg-dark: #d1d9e6;
+            --text-primary: #2d3748;
+            --text-secondary: #4a5568;
+            --text-muted: #718096;
+            --accent: #667eea;
+            --accent-light: #7c8ff4;
+            --success: #48bb78;
+            --warning: #ed8936;
+            --danger: #f56565;
+            --shadow-light: #ffffff;
+            --shadow-dark: #a3b1c6;
+            --neu-flat: -6px -6px 14px var(--shadow-light), 6px 6px 14px var(--shadow-dark);
+            --neu-pressed: inset -3px -3px 7px var(--shadow-light), inset 3px 3px 7px var(--shadow-dark);
+            --neu-convex: -6px -6px 14px var(--shadow-light), 6px 6px 14px var(--shadow-dark), inset -2px -2px 4px var(--shadow-dark), inset 2px 2px 4px var(--shadow-light);
+            --radius: 20px;
+            --radius-sm: 12px;
+            --radius-lg: 30px;
+        }
+
+        [data-theme="dark"] {
+            --bg: #2d3748;
+            --bg-dark: #1a202c;
+            --text-primary: #f7fafc;
+            --text-secondary: #e2e8f0;
+            --text-muted: #a0aec0;
+            --shadow-light: #3d4a5c;
+            --shadow-dark: #1d2634;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Nunito', sans-serif;
+            background: var(--bg);
+            color: var(--text-primary);
+            min-height: 100vh;
+        }
+
+        .layout {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 280px;
+            background: var(--bg);
+            padding: 32px 24px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 48px;
+        }
+
+        .logo-icon {
+            width: 52px;
+            height: 52px;
+            background: var(--bg);
+            box-shadow: var(--neu-flat);
+            border-radius: var(--radius);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+        }
+
+        .logo-text {
+            font-weight: 800;
+            font-size: 22px;
+            color: var(--accent);
+        }
+
+        .nav-section {
+            margin-bottom: 36px;
+        }
+
+        .nav-label {
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--text-muted);
+            margin-bottom: 16px;
+            padding-left: 16px;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 14px 18px;
+            border-radius: var(--radius);
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 8px;
+            background: var(--bg);
+        }
+
+        .nav-item:hover {
+            box-shadow: var(--neu-flat);
+        }
+
+        .nav-item.active {
+            box-shadow: var(--neu-pressed);
+            color: var(--accent);
+        }
+
+        .nav-icon {
+            width: 22px;
+            text-align: center;
+            font-size: 18px;
+        }
+
+        .nav-text {
+            font-weight: 600;
+            font-size: 15px;
+        }
+
+        /* Main Content */
+        .main {
+            flex: 1;
+            padding: 32px 40px;
+            overflow-y: auto;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+        }
+
+        .search-bar {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            background: var(--bg);
+            box-shadow: var(--neu-pressed);
+            border-radius: var(--radius-lg);
+            padding: 14px 24px;
+            width: 420px;
+        }
+
+        .search-bar input {
+            border: none;
+            background: none;
+            outline: none;
+            flex: 1;
+            font-family: inherit;
+            font-size: 15px;
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+
+        .search-icon {
+            color: var(--text-muted);
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .icon-btn {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--bg);
+            box-shadow: var(--neu-flat);
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            transition: all 0.2s ease;
+        }
+
+        .icon-btn:hover {
+            box-shadow: var(--neu-convex);
+        }
+
+        .icon-btn:active {
+            box-shadow: var(--neu-pressed);
+        }
+
+        .avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent), var(--accent-light));
+            box-shadow: var(--neu-flat);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            font-size: 18px;
+        }
+
+        /* Dashboard Grid */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 28px;
+        }
+
+        .card {
+            background: var(--bg);
+            box-shadow: var(--neu-flat);
+            border-radius: var(--radius);
+            padding: 28px;
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-2px);
+        }
+
+        /* Welcome Card */
+        .welcome-card {
+            grid-column: span 2;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: linear-gradient(135deg, var(--accent), #764ba2);
+            color: white;
+        }
+
+        .welcome-content h1 {
+            font-size: 28px;
+            font-weight: 800;
+            margin-bottom: 10px;
+        }
+
+        .welcome-content p {
+            font-size: 16px;
+            opacity: 0.9;
+            margin-bottom: 24px;
+            font-weight: 500;
+        }
+
+        .welcome-btn {
+            background: rgba(255,255,255,0.2);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255,255,255,0.3);
+            padding: 14px 28px;
+            border-radius: var(--radius-lg);
+            color: white;
+            font-weight: 700;
+            font-size: 15px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .welcome-btn:hover {
+            background: rgba(255,255,255,0.3);
+            transform: translateY(-2px);
+        }
+
+        .welcome-illustration {
+            font-size: 100px;
+            opacity: 0.9;
+        }
+
+        /* Stage Progress Card */
+        .stage-card h3 {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 24px;
+            color: var(--text-primary);
+        }
+
+        .stage-progress {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .stage-item {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .stage-circle {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--bg);
+            box-shadow: var(--neu-flat);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            color: var(--text-muted);
+            font-size: 14px;
+        }
+
+        .stage-circle.active {
+            box-shadow: var(--neu-pressed);
+            color: var(--accent);
+        }
+
+        .stage-circle.completed {
+            background: var(--success);
+            color: white;
+            box-shadow: 0 4px 14px rgba(72, 187, 120, 0.4);
+        }
+
+        .stage-info h4 {
+            font-size: 15px;
+            font-weight: 700;
+            margin-bottom: 2px;
+        }
+
+        .stage-info p {
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        /* Stat Cards */
+        .stat-card {
+            text-align: center;
+            padding: 32px 24px;
+        }
+
+        .stat-icon-wrap {
+            width: 70px;
+            height: 70px;
+            margin: 0 auto 20px;
+            background: var(--bg);
+            box-shadow: var(--neu-convex);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+        }
+
+        .stat-value {
+            font-size: 36px;
+            font-weight: 800;
+            margin-bottom: 6px;
+            color: var(--accent);
+        }
+
+        .stat-label {
+            font-size: 14px;
+            color: var(--text-muted);
+            font-weight: 600;
+        }
+
+        /* Profile Strength */
+        .strength-card {
+            grid-column: span 2;
+        }
+
+        .strength-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 28px;
+        }
+
+        .strength-header h3 {
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        .strength-percentage {
+            font-size: 28px;
+            font-weight: 800;
+            color: var(--accent);
+        }
+
+        .strength-bars {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .strength-item {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .strength-item-label {
+            width: 120px;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-secondary);
+        }
+
+        .strength-bar-bg {
+            flex: 1;
+            height: 12px;
+            background: var(--bg);
+            box-shadow: var(--neu-pressed);
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        .strength-bar-fill {
+            height: 100%;
+            border-radius: 20px;
+            transition: width 0.5s ease;
+        }
+
+        .strength-bar-fill.academics { background: linear-gradient(90deg, #667eea, #764ba2); width: 85%; }
+        .strength-bar-fill.exams { background: linear-gradient(90deg, #f093fb, #f5576c); width: 70%; }
+        .strength-bar-fill.documents { background: linear-gradient(90deg, #4facfe, #00f2fe); width: 60%; }
+        .strength-bar-fill.profile { background: linear-gradient(90deg, #43e97b, #38f9d7); width: 90%; }
+
+        /* Universities */
+        .universities-card h3 {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 24px;
+        }
+
+        .university-list {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .university-item {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 16px;
+            background: var(--bg);
+            box-shadow: var(--neu-pressed);
+            border-radius: var(--radius);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .university-item:hover {
+            box-shadow: var(--neu-flat);
+        }
+
+        .university-logo {
+            width: 50px;
+            height: 50px;
+            background: var(--bg);
+            box-shadow: var(--neu-flat);
+            border-radius: var(--radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+        }
+
+        .university-info {
+            flex: 1;
+        }
+
+        .university-info h4 {
+            font-size: 15px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .university-info p {
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        .university-badge {
+            padding: 6px 14px;
+            border-radius: var(--radius-lg);
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .university-badge.dream {
+            background: linear-gradient(135deg, #f093fb, #f5576c);
+            color: white;
+        }
+
+        .university-badge.target {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+        }
+
+        .university-badge.safe {
+            background: linear-gradient(135deg, #43e97b, #38f9d7);
+            color: white;
+        }
+
+        /* Tasks */
+        .tasks-card {
+            grid-column: span 2;
+        }
+
+        .tasks-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+        }
+
+        .tasks-header h3 {
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        .add-task-btn {
+            width: 40px;
+            height: 40px;
+            background: var(--bg);
+            box-shadow: var(--neu-flat);
+            border: none;
+            border-radius: 50%;
+            font-size: 20px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .add-task-btn:hover {
+            box-shadow: var(--neu-convex);
+        }
+
+        .task-list {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .task-item {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 16px 20px;
+            background: var(--bg);
+            box-shadow: var(--neu-pressed);
+            border-radius: var(--radius);
+        }
+
+        .task-checkbox {
+            width: 26px;
+            height: 26px;
+            background: var(--bg);
+            box-shadow: var(--neu-flat);
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+
+        .task-checkbox.checked {
+            background: var(--success);
+            box-shadow: 0 4px 14px rgba(72, 187, 120, 0.4);
+            color: white;
+        }
+
+        .task-content {
+            flex: 1;
+        }
+
+        .task-content h4 {
+            font-size: 15px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .task-content p {
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        .task-due {
+            padding: 6px 14px;
+            background: var(--bg);
+            box-shadow: var(--neu-flat);
+            border-radius: var(--radius-lg);
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-secondary);
+        }
+
+        .task-due.urgent {
+            background: linear-gradient(135deg, #f093fb, #f5576c);
+            color: white;
+            box-shadow: 0 4px 14px rgba(245, 87, 108, 0.4);
+        }
+
+        /* AI Assistant */
+        .ai-card {
+            background: linear-gradient(135deg, #1a202c, #2d3748);
+            color: white;
+        }
+
+        .ai-card h3 {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        .ai-preview {
+            background: rgba(255,255,255,0.1);
+            border-radius: var(--radius);
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .ai-message {
+            display: flex;
+            gap: 14px;
+        }
+
+        .ai-avatar {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--accent), #764ba2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+        }
+
+        .ai-bubble {
+            flex: 1;
+            font-size: 14px;
+            line-height: 1.6;
+            opacity: 0.9;
+        }
+
+        .ai-btn {
+            width: 100%;
+            padding: 16px;
+            background: var(--accent);
+            border: none;
+            border-radius: var(--radius);
+            color: white;
+            font-weight: 700;
+            font-size: 15px;
+            cursor: pointer;
+            box-shadow: 0 8px 24px rgba(102, 126, 234, 0.4);
+            transition: all 0.2s;
+        }
+
+        .ai-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 28px rgba(102, 126, 234, 0.5);
+        }
+    </style>
+</head>
+<body>
+    <div class="layout">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="logo">
+                <div class="logo-icon">📚</div>
+                <span class="logo-text">StudyBuddy</span>
+            </div>
+
+            <nav class="nav-section">
+                <div class="nav-label">Navigation</div>
+                <div class="nav-item active">
+                    <span class="nav-icon">🏠</span>
+                    <span class="nav-text">Dashboard</span>
+                </div>
+                <div class="nav-item">
+                    <span class="nav-icon">💬</span>
+                    <span class="nav-text">AI Counsellor</span>
+                </div>
+                <div class="nav-item">
+                    <span class="nav-icon">🏫</span>
+                    <span class="nav-text">Universities</span>
+                </div>
+                <div class="nav-item">
+                    <span class="nav-icon">📝</span>
+                    <span class="nav-text">Applications</span>
+                </div>
+            </nav>
+
+            <nav class="nav-section">
+                <div class="nav-label">Settings</div>
+                <div class="nav-item">
+                    <span class="nav-icon">👤</span>
+                    <span class="nav-text">Profile</span>
+                </div>
+                <div class="nav-item">
+                    <span class="nav-icon">⚙️</span>
+                    <span class="nav-text">Settings</span>
+                </div>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main">
+            <header class="header">
+                <div class="search-bar">
+                    <span class="search-icon">🔍</span>
+                    <input type="text" placeholder="Search universities, tasks...">
+                </div>
+                <div class="header-actions">
+                    <button class="icon-btn" onclick="toggleTheme()">🌙</button>
+                    <button class="icon-btn">🔔</button>
+                    <div class="avatar">JD</div>
+                </div>
+            </header>
+
+            <!-- Dashboard Grid -->
+            <div class="dashboard-grid">
+                <!-- Welcome Card -->
+                <div class="card welcome-card">
+                    <div class="welcome-content">
+                        <h1>Welcome back, John! 👋</h1>
+                        <p>Your study abroad journey is 65% complete</p>
+                        <button class="welcome-btn">Continue Journey →</button>
+                    </div>
+                    <div class="welcome-illustration">🎓</div>
+                </div>
+
+                <!-- Stage Progress -->
+                <div class="card stage-card">
+                    <h3>Your Progress</h3>
+                    <div class="stage-progress">
+                        <div class="stage-item">
+                            <div class="stage-circle completed">✓</div>
+                            <div class="stage-info">
+                                <h4>Profile</h4>
+                                <p>Completed</p>
+                            </div>
+                        </div>
+                        <div class="stage-item">
+                            <div class="stage-circle completed">✓</div>
+                            <div class="stage-info">
+                                <h4>Discover</h4>
+                                <p>Completed</p>
+                            </div>
+                        </div>
+                        <div class="stage-item">
+                            <div class="stage-circle active">3</div>
+                            <div class="stage-info">
+                                <h4>Finalize</h4>
+                                <p>In progress</p>
+                            </div>
+                        </div>
+                        <div class="stage-item">
+                            <div class="stage-circle">4</div>
+                            <div class="stage-info">
+                                <h4>Apply</h4>
+                                <p>Upcoming</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Stat Cards -->
+                <div class="card stat-card">
+                    <div class="stat-icon-wrap">🎯</div>
+                    <div class="stat-value">12</div>
+                    <div class="stat-label">Shortlisted</div>
+                </div>
+
+                <div class="card stat-card">
+                    <div class="stat-icon-wrap">🔒</div>
+                    <div class="stat-value">3</div>
+                    <div class="stat-label">Locked</div>
+                </div>
+
+                <div class="card stat-card">
+                    <div class="stat-icon-wrap">✅</div>
+                    <div class="stat-value">8</div>
+                    <div class="stat-label">Tasks Done</div>
+                </div>
+
+                <!-- Profile Strength -->
+                <div class="card strength-card">
+                    <div class="strength-header">
+                        <h3>Profile Strength</h3>
+                        <div class="strength-percentage">76%</div>
+                    </div>
+                    <div class="strength-bars">
+                        <div class="strength-item">
+                            <span class="strength-item-label">Academics</span>
+                            <div class="strength-bar-bg">
+                                <div class="strength-bar-fill academics"></div>
+                            </div>
+                        </div>
+                        <div class="strength-item">
+                            <span class="strength-item-label">Exams</span>
+                            <div class="strength-bar-bg">
+                                <div class="strength-bar-fill exams"></div>
+                            </div>
+                        </div>
+                        <div class="strength-item">
+                            <span class="strength-item-label">Documents</span>
+                            <div class="strength-bar-bg">
+                                <div class="strength-bar-fill documents"></div>
+                            </div>
+                        </div>
+                        <div class="strength-item">
+                            <span class="strength-item-label">Profile</span>
+                            <div class="strength-bar-bg">
+                                <div class="strength-bar-fill profile"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Universities -->
+                <div class="card universities-card">
+                    <h3>Your Universities</h3>
+                    <div class="university-list">
+                        <div class="university-item">
+                            <div class="university-logo">🏛️</div>
+                            <div class="university-info">
+                                <h4>MIT</h4>
+                                <p>Massachusetts, USA</p>
+                            </div>
+                            <span class="university-badge dream">Dream</span>
+                        </div>
+                        <div class="university-item">
+                            <div class="university-logo">🎓</div>
+                            <div class="university-info">
+                                <h4>Stanford</h4>
+                                <p>California, USA</p>
+                            </div>
+                            <span class="university-badge target">Target</span>
+                        </div>
+                        <div class="university-item">
+                            <div class="university-logo">📚</div>
+                            <div class="university-info">
+                                <h4>Georgia Tech</h4>
+                                <p>Georgia, USA</p>
+                            </div>
+                            <span class="university-badge safe">Safe</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tasks -->
+                <div class="card tasks-card">
+                    <div class="tasks-header">
+                        <h3>Upcoming Tasks</h3>
+                        <button class="add-task-btn">+</button>
+                    </div>
+                    <div class="task-list">
+                        <div class="task-item">
+                            <div class="task-checkbox"></div>
+                            <div class="task-content">
+                                <h4>Submit IELTS Score to MIT</h4>
+                                <p>Required for application</p>
+                            </div>
+                            <span class="task-due urgent">3 days</span>
+                        </div>
+                        <div class="task-item">
+                            <div class="task-checkbox"></div>
+                            <div class="task-content">
+                                <h4>Complete Stanford Essay</h4>
+                                <p>500 words required</p>
+                            </div>
+                            <span class="task-due">1 week</span>
+                        </div>
+                        <div class="task-item">
+                            <div class="task-checkbox checked">✓</div>
+                            <div class="task-content">
+                                <h4>Update Resume</h4>
+                                <p>Completed yesterday</p>
+                            </div>
+                            <span class="task-due">Done</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- AI Assistant -->
+                <div class="card ai-card">
+                    <h3>AI Counsellor 🤖</h3>
+                    <div class="ai-preview">
+                        <div class="ai-message">
+                            <div class="ai-avatar">🤖</div>
+                            <div class="ai-bubble">
+                                I noticed you haven't submitted your IELTS score yet. This is critical for your MIT application. Would you like help with the submission process?
+                            </div>
+                        </div>
+                    </div>
+                    <button class="ai-btn">Talk to AI →</button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        function toggleTheme() {
+            const body = document.body;
+            const currentTheme = body.getAttribute('data-theme');
+            if (currentTheme === 'dark') {
+                body.removeAttribute('data-theme');
+            } else {
+                body.setAttribute('data-theme', 'dark');
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>StudyBuddy Theme Previews</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(135deg, #0f0f1a 0%, #1a1a2e 100%);
+      min-height: 100vh;
+      color: white;
+      padding: 40px;
+    }
+    h1 {
+      text-align: center;
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      background: linear-gradient(135deg, #60a5fa, #a78bfa, #f472b6);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .subtitle {
+      text-align: center;
+      color: #94a3b8;
+      margin-bottom: 3rem;
+      font-size: 1.1rem;
+    }
+    .themes-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 24px;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+    .theme-card {
+      background: rgba(255,255,255,0.05);
+      border-radius: 20px;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.1);
+      transition: all 0.3s ease;
+      cursor: pointer;
+      text-decoration: none;
+      color: white;
+    }
+    .theme-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+      border-color: rgba(255,255,255,0.2);
+    }
+    .theme-preview {
+      height: 200px;
+      position: relative;
+      overflow: hidden;
+    }
+    .theme-info {
+      padding: 20px;
+    }
+    .theme-name {
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+    .theme-desc {
+      color: #94a3b8;
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+    .theme-tags {
+      display: flex;
+      gap: 8px;
+      margin-top: 12px;
+      flex-wrap: wrap;
+    }
+    .tag {
+      background: rgba(255,255,255,0.1);
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      color: #cbd5e1;
+    }
+
+    /* Theme Preview Styles */
+    .preview-calm-tech {
+      background: linear-gradient(135deg, #e0f2fe 0%, #f0f9ff 100%);
+    }
+    .preview-bento {
+      background: linear-gradient(135deg, #fafafa 0%, #f5f5f5 100%);
+    }
+    .preview-neumorphism {
+      background: #e0e5ec;
+    }
+    .preview-neo-brutalism {
+      background: #fffef0;
+    }
+    .preview-illustration {
+      background: linear-gradient(135deg, #fef3e2 0%, #fce7f3 100%);
+    }
+    .preview-glassmorphism {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    }
+    .preview-scandinavian {
+      background: #fafaf9;
+    }
+    .preview-dark-premium {
+      background: linear-gradient(135deg, #0f0f0f 0%, #1a1a1a 100%);
+    }
+    .preview-duotone {
+      background: linear-gradient(135deg, #1e3a5f 0%, #0d1b2a 100%);
+    }
+    .preview-playful {
+      background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 50%, #fecfef 100%);
+    }
+
+    /* Mini Dashboard Previews */
+    .mini-dashboard {
+      display: flex;
+      height: 100%;
+      padding: 12px;
+      gap: 8px;
+    }
+    .mini-sidebar {
+      width: 40px;
+      border-radius: 8px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      padding: 8px 6px;
+    }
+    .mini-icon {
+      width: 100%;
+      aspect-ratio: 1;
+      border-radius: 6px;
+    }
+    .mini-content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .mini-header {
+      height: 24px;
+      border-radius: 6px;
+    }
+    .mini-cards {
+      flex: 1;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6px;
+    }
+    .mini-card {
+      border-radius: 8px;
+    }
+  </style>
+</head>
+<body>
+  <h1>StudyBuddy Theme Collection</h1>
+  <p class="subtitle">Click any theme to see the full dashboard preview</p>
+
+  <div class="themes-grid">
+    <!-- Theme 1: Calm Tech -->
+    <a href="01-calm-tech.html" class="theme-card">
+      <div class="theme-preview preview-calm-tech">
+        <div class="mini-dashboard">
+          <div class="mini-sidebar" style="background: white; box-shadow: 0 2px 8px rgba(0,0,0,0.08);">
+            <div class="mini-icon" style="background: linear-gradient(135deg, #3b82f6, #60a5fa);"></div>
+            <div class="mini-icon" style="background: #f1f5f9;"></div>
+            <div class="mini-icon" style="background: #f1f5f9;"></div>
+          </div>
+          <div class="mini-content">
+            <div class="mini-header" style="background: white; box-shadow: 0 2px 8px rgba(0,0,0,0.05);"></div>
+            <div class="mini-cards">
+              <div class="mini-card" style="background: linear-gradient(135deg, #dbeafe, #eff6ff); grid-column: span 2;"></div>
+              <div class="mini-card" style="background: white; box-shadow: 0 2px 8px rgba(0,0,0,0.05);"></div>
+              <div class="mini-card" style="background: white; box-shadow: 0 2px 8px rgba(0,0,0,0.05);"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="theme-info">
+        <h3 class="theme-name">Calm Tech (Educational)</h3>
+        <p class="theme-desc">Clean, friendly, and trustworthy. Soft shadows, pastel blues, and rounded corners create a calm learning environment.</p>
+        <div class="theme-tags">
+          <span class="tag">Soft UI</span>
+          <span class="tag">Pastel Blue</span>
+          <span class="tag">Student-Friendly</span>
+        </div>
+      </div>
+    </a>
+
+    <!-- Theme 2: Bento UI -->
+    <a href="02-bento-ui.html" class="theme-card">
+      <div class="theme-preview preview-bento">
+        <div class="mini-dashboard">
+          <div class="mini-sidebar" style="background: #18181b; border-radius: 12px;">
+            <div class="mini-icon" style="background: #fafafa;"></div>
+            <div class="mini-icon" style="background: #3f3f46;"></div>
+            <div class="mini-icon" style="background: #3f3f46;"></div>
+          </div>
+          <div class="mini-content">
+            <div class="mini-header" style="background: white; border: 1px solid #e4e4e7;"></div>
+            <div class="mini-cards">
+              <div class="mini-card" style="background: #18181b; border-radius: 12px;"></div>
+              <div class="mini-card" style="background: white; border: 1px solid #e4e4e7; border-radius: 12px;"></div>
+              <div class="mini-card" style="background: #fef3c7; border-radius: 12px;"></div>
+              <div class="mini-card" style="background: #dcfce7; border-radius: 12px;"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="theme-info">
+        <h3 class="theme-name">Bento UI</h3>
+        <p class="theme-desc">Grid-based card layouts with bold contrasts. Inspired by Japanese bento boxes - organized, modular, and visually striking.</p>
+        <div class="theme-tags">
+          <span class="tag">Card Grid</span>
+          <span class="tag">Modular</span>
+          <span class="tag">Bold</span>
+        </div>
+      </div>
+    </a>
+
+    <!-- Theme 3: Neumorphism -->
+    <a href="03-neumorphism.html" class="theme-card">
+      <div class="theme-preview preview-neumorphism">
+        <div class="mini-dashboard">
+          <div class="mini-sidebar" style="background: #e0e5ec; box-shadow: 8px 8px 16px #b8bec5, -8px -8px 16px #ffffff; border-radius: 16px;">
+            <div class="mini-icon" style="background: linear-gradient(145deg, #6366f1, #8b5cf6); border-radius: 10px;"></div>
+            <div class="mini-icon" style="background: #e0e5ec; box-shadow: inset 4px 4px 8px #b8bec5, inset -4px -4px 8px #ffffff; border-radius: 10px;"></div>
+          </div>
+          <div class="mini-content">
+            <div class="mini-header" style="background: #e0e5ec; box-shadow: 6px 6px 12px #b8bec5, -6px -6px 12px #ffffff;"></div>
+            <div class="mini-cards">
+              <div class="mini-card" style="background: #e0e5ec; box-shadow: 8px 8px 16px #b8bec5, -8px -8px 16px #ffffff; grid-column: span 2;"></div>
+              <div class="mini-card" style="background: #e0e5ec; box-shadow: 6px 6px 12px #b8bec5, -6px -6px 12px #ffffff;"></div>
+              <div class="mini-card" style="background: #e0e5ec; box-shadow: 6px 6px 12px #b8bec5, -6px -6px 12px #ffffff;"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="theme-info">
+        <h3 class="theme-name">Neumorphism (Soft UI)</h3>
+        <p class="theme-desc">Elements appear to extrude from or press into the background. Soft, tactile, and futuristic with subtle depth.</p>
+        <div class="theme-tags">
+          <span class="tag">Soft Shadows</span>
+          <span class="tag">3D Effect</span>
+          <span class="tag">Tactile</span>
+        </div>
+      </div>
+    </a>
+
+    <!-- Theme 4: Neo-Brutalism -->
+    <a href="04-neo-brutalism.html" class="theme-card">
+      <div class="theme-preview preview-neo-brutalism">
+        <div class="mini-dashboard">
+          <div class="mini-sidebar" style="background: #000; border: 3px solid #000;">
+            <div class="mini-icon" style="background: #fde047;"></div>
+            <div class="mini-icon" style="background: #fff; border: 2px solid #000;"></div>
+          </div>
+          <div class="mini-content">
+            <div class="mini-header" style="background: #fff; border: 3px solid #000;"></div>
+            <div class="mini-cards">
+              <div class="mini-card" style="background: #a3e635; border: 3px solid #000; box-shadow: 4px 4px 0 #000;"></div>
+              <div class="mini-card" style="background: #f472b6; border: 3px solid #000; box-shadow: 4px 4px 0 #000;"></div>
+              <div class="mini-card" style="background: #60a5fa; border: 3px solid #000; box-shadow: 4px 4px 0 #000;"></div>
+              <div class="mini-card" style="background: #fde047; border: 3px solid #000; box-shadow: 4px 4px 0 #000;"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="theme-info">
+        <h3 class="theme-name">Neo-Brutalism</h3>
+        <p class="theme-desc">Bold borders, harsh shadows, and vibrant colors. Raw, unapologetic, and attention-grabbing design language.</p>
+        <div class="theme-tags">
+          <span class="tag">Bold</span>
+          <span class="tag">High Contrast</span>
+          <span class="tag">Playful</span>
+        </div>
+      </div>
+    </a>
+
+    <!-- Theme 5: Illustration-Driven -->
+    <a href="05-illustration.html" class="theme-card">
+      <div class="theme-preview preview-illustration">
+        <div class="mini-dashboard">
+          <div class="mini-sidebar" style="background: white; border-radius: 20px; box-shadow: 0 4px 20px rgba(0,0,0,0.08);">
+            <div class="mini-icon" style="background: linear-gradient(135deg, #f97316, #fb923c); border-radius: 12px;"></div>
+            <div class="mini-icon" style="background: #fef3e2; border-radius: 12px;"></div>
+          </div>
+          <div class="mini-content">
+            <div class="mini-header" style="background: white; border-radius: 16px; box-shadow: 0 4px 12px rgba(0,0,0,0.06);"></div>
+            <div class="mini-cards">
+              <div class="mini-card" style="background: linear-gradient(135deg, #fef3e2, #fff7ed); border-radius: 16px; grid-column: span 2;"></div>
+              <div class="mini-card" style="background: white; border-radius: 16px; box-shadow: 0 4px 12px rgba(0,0,0,0.06);"></div>
+              <div class="mini-card" style="background: #fce7f3; border-radius: 16px;"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="theme-info">
+        <h3 class="theme-name">Illustration-Driven</h3>
+        <p class="theme-desc">Warm, human touch with organic shapes and friendly illustrations. Makes technology feel approachable and personal.</p>
+        <div class="theme-tags">
+          <span class="tag">Warm</span>
+          <span class="tag">Friendly</span>
+          <span class="tag">Organic</span>
+        </div>
+      </div>
+    </a>
+
+    <!-- Theme 6: Glassmorphism -->
+    <a href="06-glassmorphism.html" class="theme-card">
+      <div class="theme-preview preview-glassmorphism">
+        <div class="mini-dashboard">
+          <div class="mini-sidebar" style="background: rgba(255,255,255,0.15); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.2); border-radius: 16px;">
+            <div class="mini-icon" style="background: rgba(255,255,255,0.3); border-radius: 8px;"></div>
+            <div class="mini-icon" style="background: rgba(255,255,255,0.1); border-radius: 8px;"></div>
+          </div>
+          <div class="mini-content">
+            <div class="mini-header" style="background: rgba(255,255,255,0.1); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.15);"></div>
+            <div class="mini-cards">
+              <div class="mini-card" style="background: rgba(255,255,255,0.15); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.2);"></div>
+              <div class="mini-card" style="background: rgba(255,255,255,0.1); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.15);"></div>
+              <div class="mini-card" style="background: rgba(255,255,255,0.15); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.2); grid-column: span 2;"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="theme-info">
+        <h3 class="theme-name">Glassmorphism</h3>
+        <p class="theme-desc">Frosted glass effect with translucent layers. Creates depth and elegance with blur and transparency.</p>
+        <div class="theme-tags">
+          <span class="tag">Translucent</span>
+          <span class="tag">Modern</span>
+          <span class="tag">Elegant</span>
+        </div>
+      </div>
+    </a>
+
+    <!-- Theme 7: Scandinavian Minimal -->
+    <a href="07-scandinavian.html" class="theme-card">
+      <div class="theme-preview preview-scandinavian">
+        <div class="mini-dashboard">
+          <div class="mini-sidebar" style="background: #fafaf9; border-right: 1px solid #e7e5e4;">
+            <div class="mini-icon" style="background: #292524; border-radius: 4px;"></div>
+            <div class="mini-icon" style="background: #f5f5f4; border-radius: 4px;"></div>
+          </div>
+          <div class="mini-content">
+            <div class="mini-header" style="background: transparent; border-bottom: 1px solid #e7e5e4;"></div>
+            <div class="mini-cards">
+              <div class="mini-card" style="background: #fafaf9; border: 1px solid #e7e5e4; border-radius: 4px; grid-column: span 2;"></div>
+              <div class="mini-card" style="background: #fafaf9; border: 1px solid #e7e5e4; border-radius: 4px;"></div>
+              <div class="mini-card" style="background: #fafaf9; border: 1px solid #e7e5e4; border-radius: 4px;"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="theme-info">
+        <h3 class="theme-name">Scandinavian Minimal</h3>
+        <p class="theme-desc">Clean lines, muted colors, and maximum whitespace. Functional beauty inspired by Nordic design principles.</p>
+        <div class="theme-tags">
+          <span class="tag">Minimal</span>
+          <span class="tag">Clean</span>
+          <span class="tag">Functional</span>
+        </div>
+      </div>
+    </a>
+
+    <!-- Theme 8: Dark Premium -->
+    <a href="08-dark-premium.html" class="theme-card">
+      <div class="theme-preview preview-dark-premium">
+        <div class="mini-dashboard">
+          <div class="mini-sidebar" style="background: #0a0a0a; border-right: 1px solid #262626;">
+            <div class="mini-icon" style="background: linear-gradient(135deg, #fbbf24, #f59e0b); border-radius: 8px;"></div>
+            <div class="mini-icon" style="background: #171717; border-radius: 8px;"></div>
+          </div>
+          <div class="mini-content">
+            <div class="mini-header" style="background: #0a0a0a; border-bottom: 1px solid #262626;"></div>
+            <div class="mini-cards">
+              <div class="mini-card" style="background: linear-gradient(135deg, #171717, #262626); border: 1px solid #333;"></div>
+              <div class="mini-card" style="background: #171717; border: 1px solid #262626;"></div>
+              <div class="mini-card" style="background: #171717; border: 1px solid #262626;"></div>
+              <div class="mini-card" style="background: linear-gradient(135deg, #fbbf24, #f59e0b);"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="theme-info">
+        <h3 class="theme-name">Dark Premium</h3>
+        <p class="theme-desc">Sophisticated dark theme with gold accents. Professional, luxurious feel for focused productivity.</p>
+        <div class="theme-tags">
+          <span class="tag">Dark Mode</span>
+          <span class="tag">Luxury</span>
+          <span class="tag">Professional</span>
+        </div>
+      </div>
+    </a>
+
+    <!-- Theme 9: Duotone Modern -->
+    <a href="09-duotone.html" class="theme-card">
+      <div class="theme-preview preview-duotone">
+        <div class="mini-dashboard">
+          <div class="mini-sidebar" style="background: #0d1b2a;">
+            <div class="mini-icon" style="background: #00d9ff; border-radius: 6px;"></div>
+            <div class="mini-icon" style="background: #1b3a57; border-radius: 6px;"></div>
+          </div>
+          <div class="mini-content">
+            <div class="mini-header" style="background: #1b3a57;"></div>
+            <div class="mini-cards">
+              <div class="mini-card" style="background: linear-gradient(135deg, #00d9ff, #00b4d8); grid-column: span 2;"></div>
+              <div class="mini-card" style="background: #1b3a57;"></div>
+              <div class="mini-card" style="background: #1b3a57;"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="theme-info">
+        <h3 class="theme-name">Duotone Modern</h3>
+        <p class="theme-desc">Two-color harmony with cyan and navy. Tech-forward aesthetic with strong visual identity.</p>
+        <div class="theme-tags">
+          <span class="tag">Two-Tone</span>
+          <span class="tag">Tech</span>
+          <span class="tag">Modern</span>
+        </div>
+      </div>
+    </a>
+
+    <!-- Theme 10: Playful Gradient -->
+    <a href="10-playful-gradient.html" class="theme-card">
+      <div class="theme-preview preview-playful">
+        <div class="mini-dashboard">
+          <div class="mini-sidebar" style="background: rgba(255,255,255,0.9); border-radius: 20px; box-shadow: 0 8px 32px rgba(0,0,0,0.1);">
+            <div class="mini-icon" style="background: linear-gradient(135deg, #f472b6, #c084fc); border-radius: 10px;"></div>
+            <div class="mini-icon" style="background: #fce7f3; border-radius: 10px;"></div>
+          </div>
+          <div class="mini-content">
+            <div class="mini-header" style="background: rgba(255,255,255,0.8); border-radius: 16px;"></div>
+            <div class="mini-cards">
+              <div class="mini-card" style="background: rgba(255,255,255,0.9); border-radius: 16px;"></div>
+              <div class="mini-card" style="background: linear-gradient(135deg, #a78bfa, #c084fc); border-radius: 16px;"></div>
+              <div class="mini-card" style="background: linear-gradient(135deg, #fbbf24, #f472b6); border-radius: 16px;"></div>
+              <div class="mini-card" style="background: rgba(255,255,255,0.9); border-radius: 16px;"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="theme-info">
+        <h3 class="theme-name">Playful Gradient</h3>
+        <p class="theme-desc">Vibrant gradients and rounded shapes. Energetic and youthful, perfect for engaging younger audiences.</p>
+        <div class="theme-tags">
+          <span class="tag">Colorful</span>
+          <span class="tag">Energetic</span>
+          <span class="tag">Youthful</span>
+        </div>
+      </div>
+    </a>
+  </div>
+
+  <p style="text-align: center; margin-top: 3rem; color: #64748b;">
+    Click any theme card to view the full dashboard preview
+  </p>
+</body>
+</html>
