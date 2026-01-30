@@ -5,6 +5,21 @@ import { createClient } from '@/lib/supabase'
 import { cn, formatCurrency } from '@/lib/utils'
 import type { University, ShortlistedUniversity } from '@/types'
 
+// Tab options
+type TabType = 'curated' | 'search-all'
+
+// External university from Hipo API
+interface ExternalUniversity {
+  id: null
+  name: string
+  country: string
+  alpha_two_code?: string
+  website?: string
+  domains?: string[]
+  state_province?: string
+  is_external: true
+}
+
 const COUNTRIES = ['All', 'USA', 'UK', 'Canada', 'Australia', 'Germany', 'India', 'Singapore', 'Japan', 'South Korea', 'Switzerland', 'Netherlands']
 
 const CATEGORY_CONFIG = {
@@ -175,7 +190,9 @@ const UNIVERSITY_IMAGES: Record<string, string> = {
 // Country background images (fallback when university image not found) for cards without specific images
 const COUNTRY_BACKGROUNDS: Record<string, string> = {
   'USA': 'https://images.unsplash.com/photo-1485738422979-f5c462d49f74?w=800&h=600&fit=crop',
+  'United States': 'https://images.unsplash.com/photo-1485738422979-f5c462d49f74?w=800&h=600&fit=crop',
   'UK': 'https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?w=800&h=600&fit=crop',
+  'United Kingdom': 'https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?w=800&h=600&fit=crop',
   'Canada': 'https://images.unsplash.com/photo-1517935706615-2717063c2225?w=800&h=600&fit=crop',
   'Australia': 'https://images.unsplash.com/photo-1523482580672-f109ba8cb9be?w=800&h=600&fit=crop',
   'Germany': 'https://images.unsplash.com/photo-1560969184-10fe8719e047?w=800&h=600&fit=crop',
@@ -185,6 +202,115 @@ const COUNTRY_BACKGROUNDS: Record<string, string> = {
   'South Korea': 'https://images.unsplash.com/photo-1517154421773-0529f29ea451?w=800&h=600&fit=crop',
   'Switzerland': 'https://images.unsplash.com/photo-1530122037265-a5f1f91d3b99?w=800&h=600&fit=crop',
   'Netherlands': 'https://images.unsplash.com/photo-1534351590666-13e3e96b5017?w=800&h=600&fit=crop',
+  'Sweden': 'https://images.unsplash.com/photo-1509356843151-3e7d96241e11?w=800&h=600&fit=crop',
+  'France': 'https://images.unsplash.com/photo-1502602898657-3e91760cbb34?w=800&h=600&fit=crop',
+  'Italy': 'https://images.unsplash.com/photo-1515542622106-78bda8ba0e5b?w=800&h=600&fit=crop',
+  'Spain': 'https://images.unsplash.com/photo-1543783207-ec64e4d95325?w=800&h=600&fit=crop',
+  'China': 'https://images.unsplash.com/photo-1508804185872-d7badad00f7d?w=800&h=600&fit=crop',
+  'Brazil': 'https://images.unsplash.com/photo-1483729558449-99ef09a8c325?w=800&h=600&fit=crop',
+  'Mexico': 'https://images.unsplash.com/photo-1518105779142-d975f22f1b0a?w=800&h=600&fit=crop',
+  'New Zealand': 'https://images.unsplash.com/photo-1507699622108-4be3abd695ad?w=800&h=600&fit=crop',
+  'Ireland': 'https://images.unsplash.com/photo-1590089415225-401ed6f9db8e?w=800&h=600&fit=crop',
+  'Norway': 'https://images.unsplash.com/photo-1520769945061-0a448c463865?w=800&h=600&fit=crop',
+  'Denmark': 'https://images.unsplash.com/photo-1513622470522-26c3c8a854bc?w=800&h=600&fit=crop',
+  'Finland': 'https://images.unsplash.com/photo-1538332576228-eb5b4c4de6f5?w=800&h=600&fit=crop',
+  'Austria': 'https://images.unsplash.com/photo-1516550893923-42d28e5677af?w=800&h=600&fit=crop',
+  'Belgium': 'https://images.unsplash.com/photo-1559113513-d5e09c78b9dd?w=800&h=600&fit=crop',
+  'Poland': 'https://images.unsplash.com/photo-1519197924294-4ba991a11128?w=800&h=600&fit=crop',
+  'Russia': 'https://images.unsplash.com/photo-1513326738677-b964603b136d?w=800&h=600&fit=crop',
+  'Turkey': 'https://images.unsplash.com/photo-1524231757912-21f4fe3a7200?w=800&h=600&fit=crop',
+  'Malaysia': 'https://images.unsplash.com/photo-1596422846543-75c6fc197f07?w=800&h=600&fit=crop',
+  'Thailand': 'https://images.unsplash.com/photo-1528181304800-259b08848526?w=800&h=600&fit=crop',
+  'Indonesia': 'https://images.unsplash.com/photo-1555899434-94d1368aa7af?w=800&h=600&fit=crop',
+  'Philippines': 'https://images.unsplash.com/photo-1518509562904-e7ef99cdcc86?w=800&h=600&fit=crop',
+  'Vietnam': 'https://images.unsplash.com/photo-1557750255-c76072a7aad1?w=800&h=600&fit=crop',
+  'South Africa': 'https://images.unsplash.com/photo-1580060839134-75a5edca2e99?w=800&h=600&fit=crop',
+  'Egypt': 'https://images.unsplash.com/photo-1539768942893-daf53e448371?w=800&h=600&fit=crop',
+  'United Arab Emirates': 'https://images.unsplash.com/photo-1512453979798-5ea266f8880c?w=800&h=600&fit=crop',
+  'Saudi Arabia': 'https://images.unsplash.com/photo-1586724237569-f3d0c1dee8c6?w=800&h=600&fit=crop',
+  'Israel': 'https://images.unsplash.com/photo-1544967082-d9d25d867d66?w=800&h=600&fit=crop',
+  'Argentina': 'https://images.unsplash.com/photo-1612294037637-ec328d0e075e?w=800&h=600&fit=crop',
+  'Chile': 'https://images.unsplash.com/photo-1478827536114-da961b7f86d2?w=800&h=600&fit=crop',
+  'Colombia': 'https://images.unsplash.com/photo-1568632234157-ce7aecd03d0d?w=800&h=600&fit=crop',
+  'Peru': 'https://images.unsplash.com/photo-1526392060635-9d6019884377?w=800&h=600&fit=crop',
+  'Portugal': 'https://images.unsplash.com/photo-1555881400-74d7acaacd8b?w=800&h=600&fit=crop',
+  'Greece': 'https://images.unsplash.com/photo-1533105079780-92b9be482077?w=800&h=600&fit=crop',
+  'Czech Republic': 'https://images.unsplash.com/photo-1519677100203-a0e668c92439?w=800&h=600&fit=crop',
+  'Hungary': 'https://images.unsplash.com/photo-1551867633-194f125bddfa?w=800&h=600&fit=crop',
+  'Romania': 'https://images.unsplash.com/photo-1584646098378-0874589d76b1?w=800&h=600&fit=crop',
+  'Pakistan': 'https://images.unsplash.com/photo-1567157577867-05ccb1388e66?w=800&h=600&fit=crop',
+  'Bangladesh': 'https://images.unsplash.com/photo-1617634000143-87dc4d746fd8?w=800&h=600&fit=crop',
+  'Sri Lanka': 'https://images.unsplash.com/photo-1586613835341-21daee8ba01e?w=800&h=600&fit=crop',
+  'Nepal': 'https://images.unsplash.com/photo-1544735716-392fe2489ffa?w=800&h=600&fit=crop',
+  'Hong Kong': 'https://images.unsplash.com/photo-1536599018102-9f803c979e65?w=800&h=600&fit=crop',
+  'Taiwan': 'https://images.unsplash.com/photo-1470004914212-05527e49370b?w=800&h=600&fit=crop',
+}
+
+// Helper to get country background with fallback
+const getCountryBackground = (country: string): string => {
+  return COUNTRY_BACKGROUNDS[country] || 'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=800&h=600&fit=crop'
+}
+
+// Helper to get flag emoji from country name or alpha code
+const getCountryFlag = (country: string, alphaCode?: string): string => {
+  const flagMap: Record<string, string> = {
+    'US': '🇺🇸', 'USA': '🇺🇸', 'United States': '🇺🇸',
+    'GB': '🇬🇧', 'UK': '🇬🇧', 'United Kingdom': '🇬🇧',
+    'CA': '🇨🇦', 'Canada': '🇨🇦',
+    'AU': '🇦🇺', 'Australia': '🇦🇺',
+    'DE': '🇩🇪', 'Germany': '🇩🇪',
+    'IN': '🇮🇳', 'India': '🇮🇳',
+    'JP': '🇯🇵', 'Japan': '🇯🇵',
+    'SG': '🇸🇬', 'Singapore': '🇸🇬',
+    'FR': '🇫🇷', 'France': '🇫🇷',
+    'NL': '🇳🇱', 'Netherlands': '🇳🇱',
+    'CH': '🇨🇭', 'Switzerland': '🇨🇭',
+    'KR': '🇰🇷', 'South Korea': '🇰🇷',
+    'CN': '🇨🇳', 'China': '🇨🇳',
+    'IT': '🇮🇹', 'Italy': '🇮🇹',
+    'ES': '🇪🇸', 'Spain': '🇪🇸',
+    'BR': '🇧🇷', 'Brazil': '🇧🇷',
+    'MX': '🇲🇽', 'Mexico': '🇲🇽',
+    'NZ': '🇳🇿', 'New Zealand': '🇳🇿',
+    'IE': '🇮🇪', 'Ireland': '🇮🇪',
+    'SE': '🇸🇪', 'Sweden': '🇸🇪',
+    'NO': '🇳🇴', 'Norway': '🇳🇴',
+    'DK': '🇩🇰', 'Denmark': '🇩🇰',
+    'FI': '🇫🇮', 'Finland': '🇫🇮',
+    'AT': '🇦🇹', 'Austria': '🇦🇹',
+    'BE': '🇧🇪', 'Belgium': '🇧🇪',
+    'PL': '🇵🇱', 'Poland': '🇵🇱',
+    'RU': '🇷🇺', 'Russia': '🇷🇺',
+    'TR': '🇹🇷', 'Turkey': '🇹🇷',
+    'MY': '🇲🇾', 'Malaysia': '🇲🇾',
+    'TH': '🇹🇭', 'Thailand': '🇹🇭',
+    'ID': '🇮🇩', 'Indonesia': '🇮🇩',
+    'PH': '🇵🇭', 'Philippines': '🇵🇭',
+    'VN': '🇻🇳', 'Vietnam': '🇻🇳',
+    'ZA': '🇿🇦', 'South Africa': '🇿🇦',
+    'EG': '🇪🇬', 'Egypt': '🇪🇬',
+    'AE': '🇦🇪', 'United Arab Emirates': '🇦🇪',
+    'SA': '🇸🇦', 'Saudi Arabia': '🇸🇦',
+    'IL': '🇮🇱', 'Israel': '🇮🇱',
+    'AR': '🇦🇷', 'Argentina': '🇦🇷',
+    'CL': '🇨🇱', 'Chile': '🇨🇱',
+    'CO': '🇨🇴', 'Colombia': '🇨🇴',
+    'PE': '🇵🇪', 'Peru': '🇵🇪',
+    'PT': '🇵🇹', 'Portugal': '🇵🇹',
+    'GR': '🇬🇷', 'Greece': '🇬🇷',
+    'CZ': '🇨🇿', 'Czech Republic': '🇨🇿',
+    'HU': '🇭🇺', 'Hungary': '🇭🇺',
+    'RO': '🇷🇴', 'Romania': '🇷🇴',
+    'PK': '🇵🇰', 'Pakistan': '🇵🇰',
+    'BD': '🇧🇩', 'Bangladesh': '🇧🇩',
+    'LK': '🇱🇰', 'Sri Lanka': '🇱🇰',
+    'NP': '🇳🇵', 'Nepal': '🇳🇵',
+    'HK': '🇭🇰', 'Hong Kong': '🇭🇰',
+    'TW': '🇹🇼', 'Taiwan': '🇹🇼',
+  }
+  if (alphaCode && flagMap[alphaCode]) return flagMap[alphaCode]
+  if (flagMap[country]) return flagMap[country]
+  return '🎓'
 }
 
 // Lucide SVG Icons
@@ -297,6 +423,17 @@ export default function UniversitiesPage() {
   const [selectedUni, setSelectedUni] = useState<University | null>(null)
   const [showFilters, setShowFilters] = useState(false)
 
+  // Tab state
+  const [activeTab, setActiveTab] = useState<TabType>('curated')
+
+  // External search state
+  const [externalSearchQuery, setExternalSearchQuery] = useState('')
+  const [externalCountry, setExternalCountry] = useState('')
+  const [externalResults, setExternalResults] = useState<ExternalUniversity[]>([])
+  const [searchingExternal, setSearchingExternal] = useState(false)
+  const [selectedExternalUni, setSelectedExternalUni] = useState<ExternalUniversity | null>(null)
+  const [shortlistingExternal, setShortlistingExternal] = useState(false)
+
   useEffect(() => {
     loadData()
   }, [])
@@ -307,9 +444,11 @@ export default function UniversitiesPage() {
 
     if (!user) return
 
+    // Only load curated universities (is_external = false or null)
     const { data: uniData } = await supabase
       .from('universities')
       .select('*')
+      .or('is_external.is.null,is_external.eq.false')
       .order('ranking', { ascending: true })
 
     if (uniData) setUniversities(uniData)
@@ -410,6 +549,84 @@ export default function UniversitiesPage() {
       .eq('id', user.id)
   }
 
+  // External university search
+  const searchExternalUniversities = async () => {
+    if (!externalSearchQuery && !externalCountry) return
+
+    setSearchingExternal(true)
+    try {
+      const supabase = createClient()
+      const { data: { session } } = await supabase.auth.getSession()
+      if (!session?.access_token) return
+
+      const params: { name?: string; country?: string; limit?: number } = { limit: 30 }
+      if (externalSearchQuery) params.name = externalSearchQuery
+      if (externalCountry) params.country = externalCountry
+
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/api/universities/search-external?${new URLSearchParams(params as Record<string, string>)}`,
+        { headers: { Authorization: `Bearer ${session.access_token}` } }
+      )
+
+      if (response.ok) {
+        const data = await response.json()
+        setExternalResults(data)
+      }
+    } catch (error) {
+      console.error('Error searching external universities:', error)
+    } finally {
+      setSearchingExternal(false)
+    }
+  }
+
+  // Shortlist external university
+  const handleShortlistExternal = async (uni: ExternalUniversity, category: 'dream' | 'target' | 'safe') => {
+    setShortlistingExternal(true)
+    try {
+      const supabase = createClient()
+      const { data: { session } } = await supabase.auth.getSession()
+      if (!session?.access_token) return
+
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/api/universities/shortlist-external`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${session.access_token}`,
+          },
+          body: JSON.stringify({
+            name: uni.name,
+            country: uni.country,
+            category,
+            website: uni.website,
+          }),
+        }
+      )
+
+      if (response.ok) {
+        const result = await response.json()
+        if (result.data) {
+          setShortlist((prev) => [...prev, result.data])
+        }
+        setSelectedExternalUni(null)
+        // Reload data to get updated university list
+        loadData()
+      }
+    } catch (error) {
+      console.error('Error shortlisting external university:', error)
+    } finally {
+      setShortlistingExternal(false)
+    }
+  }
+
+  // Check if external university is already shortlisted
+  const isExternalShortlisted = (uniName: string, uniCountry: string) => {
+    return shortlist.some(
+      (s) => s.university.name === uniName && s.university.country === uniCountry
+    )
+  }
+
   const filteredUniversities = universities.filter((uni) => {
     const matchesCountry = selectedCountry === 'All' || uni.country === selectedCountry
     const matchesSearch = uni.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -488,33 +705,106 @@ export default function UniversitiesPage() {
               </div>
             </div>
 
-            {/* Filters Button */}
-            <button
-              onClick={() => setShowFilters(!showFilters)}
-              className={cn(
-                "flex items-center gap-2 px-4 py-2.5 rounded-full font-medium transition-all",
-                showFilters
-                  ? "bg-emerald-500 text-white"
-                  : "bg-emerald-100 dark:bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 hover:bg-emerald-200"
-              )}
-            >
-              {Icons.filter}
-              Filters
-            </button>
-
-            {/* Search */}
-            <div className="flex-1 max-w-md relative">
-              <div className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400">
-                {Icons.search}
-              </div>
-              <input
-                type="text"
-                placeholder="Search or filter..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-12 pr-4 py-2.5 border-2 border-gray-200 dark:border-white/10 rounded-full bg-white dark:bg-white/5 text-gray-900 dark:text-white focus:border-emerald-400 focus:outline-none transition-colors"
-              />
+            {/* Tab Switcher */}
+            <div className="flex bg-gray-100 dark:bg-white/10 rounded-full p-1">
+              <button
+                onClick={() => setActiveTab('curated')}
+                className={cn(
+                  "px-4 py-2 rounded-full text-sm font-medium transition-all flex items-center gap-2",
+                  activeTab === 'curated'
+                    ? "bg-white dark:bg-emerald-500 text-emerald-600 dark:text-white shadow-sm"
+                    : "text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white"
+                )}
+              >
+                <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+                </svg>
+                <span className="hidden sm:inline">AI Curated</span>
+                <span className="sm:hidden">AI</span>
+                <span className="bg-emerald-100 dark:bg-emerald-500/30 text-emerald-600 dark:text-emerald-300 text-xs px-1.5 py-0.5 rounded-full">{universities.length}</span>
+              </button>
+              <button
+                onClick={() => setActiveTab('search-all')}
+                className={cn(
+                  "px-4 py-2 rounded-full text-sm font-medium transition-all flex items-center gap-2",
+                  activeTab === 'search-all'
+                    ? "bg-white dark:bg-emerald-500 text-emerald-600 dark:text-white shadow-sm"
+                    : "text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white"
+                )}
+              >
+                {Icons.globe}
+                <span className="hidden sm:inline">Search All</span>
+                <span className="sm:hidden">All</span>
+              </button>
             </div>
+
+            {/* Filters Button - Only show for curated tab */}
+            {activeTab === 'curated' && (
+              <button
+                onClick={() => setShowFilters(!showFilters)}
+                className={cn(
+                  "flex items-center gap-2 px-4 py-2.5 rounded-full font-medium transition-all",
+                  showFilters
+                    ? "bg-emerald-500 text-white"
+                    : "bg-emerald-100 dark:bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 hover:bg-emerald-200"
+                )}
+              >
+                {Icons.filter}
+                Filters
+              </button>
+            )}
+
+            {/* Search - Different for each tab */}
+            {activeTab === 'curated' ? (
+              <div className="flex-1 max-w-md relative">
+                <div className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400">
+                  {Icons.search}
+                </div>
+                <input
+                  type="text"
+                  placeholder="Search curated universities..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="w-full pl-12 pr-4 py-2.5 border-2 border-gray-200 dark:border-white/10 rounded-full bg-white dark:bg-white/5 text-gray-900 dark:text-white focus:border-emerald-400 focus:outline-none transition-colors"
+                />
+              </div>
+            ) : (
+              <div className="flex-1 flex gap-2 max-w-2xl">
+                <div className="flex-1 relative">
+                  <div className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400">
+                    {Icons.search}
+                  </div>
+                  <input
+                    type="text"
+                    placeholder="Search university name..."
+                    value={externalSearchQuery}
+                    onChange={(e) => setExternalSearchQuery(e.target.value)}
+                    onKeyDown={(e) => e.key === 'Enter' && searchExternalUniversities()}
+                    className="w-full pl-12 pr-4 py-2.5 border-2 border-gray-200 dark:border-white/10 rounded-full bg-white dark:bg-white/5 text-gray-900 dark:text-white focus:border-emerald-400 focus:outline-none transition-colors"
+                  />
+                </div>
+                <input
+                  type="text"
+                  placeholder="Country (optional)"
+                  value={externalCountry}
+                  onChange={(e) => setExternalCountry(e.target.value)}
+                  onKeyDown={(e) => e.key === 'Enter' && searchExternalUniversities()}
+                  className="w-44 px-4 py-2.5 border-2 border-gray-200 dark:border-white/10 rounded-full bg-white dark:bg-white/5 text-gray-900 dark:text-white focus:border-emerald-400 focus:outline-none transition-colors"
+                />
+                <button
+                  onClick={searchExternalUniversities}
+                  disabled={searchingExternal || (!externalSearchQuery && !externalCountry)}
+                  className="px-6 py-2.5 bg-emerald-500 text-white rounded-full font-medium hover:bg-emerald-600 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+                >
+                  {searchingExternal ? (
+                    <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                  ) : (
+                    Icons.search
+                  )}
+                  <span className="hidden sm:inline">Search</span>
+                </button>
+              </div>
+            )}
 
             {/* Stats */}
             <div className="hidden md:flex items-center gap-4 ml-auto">
@@ -538,7 +828,8 @@ export default function UniversitiesPage() {
           </div>
 
           {/* Country Filters */}
-          {showFilters && (
+          {/* Country Filters - Only show for curated tab */}
+          {activeTab === 'curated' && showFilters && (
             <div className="flex gap-2 flex-wrap mt-4 pt-4 border-t border-gray-200 dark:border-white/10">
               {COUNTRIES.map((country) => (
                 <button
@@ -574,8 +865,191 @@ export default function UniversitiesPage() {
       {/* Main Content Area - Grid with Sidebar */}
       <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="flex gap-6">
-          {/* Left Side - Universities Grid */}
+          {/* Left Side - Content based on tab */}
           <div className="flex-1 min-w-0">
+
+            {/* SEARCH ALL TAB - External Universities */}
+            {activeTab === 'search-all' && (
+              <div>
+                {/* Search prompt */}
+                {externalResults.length === 0 && !searchingExternal && (
+                  <div className="text-center py-20">
+                    <div className="w-20 h-20 bg-gradient-to-br from-emerald-100 to-green-100 dark:from-emerald-500/20 dark:to-green-500/20 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                      <div className="text-emerald-500 w-10 h-10">{Icons.globe}</div>
+                    </div>
+                    <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">Search 10,000+ Universities Worldwide</h3>
+                    <p className="text-gray-500 dark:text-gray-400 max-w-md mx-auto">
+                      Enter a university name or country above to search our global database.
+                      You can shortlist any university you find!
+                    </p>
+                  </div>
+                )}
+
+                {/* Search Results */}
+                {externalResults.length > 0 && (
+                  <div>
+                    <div className="mb-4 flex items-center justify-between">
+                      <p className="text-sm text-gray-500 dark:text-gray-400">
+                        Found <span className="font-bold text-gray-900 dark:text-white">{externalResults.length}</span> universities
+                      </p>
+                      <button
+                        onClick={() => setExternalResults([])}
+                        className="text-sm text-gray-500 hover:text-gray-700 dark:hover:text-gray-300"
+                      >
+                        Clear results
+                      </button>
+                    </div>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-5">
+                      {externalResults.map((uni, index) => {
+                        const alreadyShortlisted = isExternalShortlisted(uni.name, uni.country)
+                        const countryBg = getCountryBackground(uni.country)
+                        const flag = getCountryFlag(uni.country, uni.alpha_two_code)
+                        return (
+                          <div
+                            key={`${uni.name}-${uni.country}-${index}`}
+                            onClick={() => !alreadyShortlisted && setSelectedExternalUni(uni)}
+                            className={cn(
+                              "relative rounded-2xl overflow-hidden cursor-pointer transition-all duration-300 group hover:scale-[1.02] hover:shadow-2xl",
+                              alreadyShortlisted && "ring-4 ring-emerald-500"
+                            )}
+                            style={{ aspectRatio: '1/1.2' }}
+                          >
+                            {/* Background Image */}
+                            <img
+                              src={countryBg}
+                              alt={uni.country}
+                              loading="lazy"
+                              className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                            />
+
+                            {/* Gradient Overlay */}
+                            <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-black/20" />
+
+                            {/* External Badge */}
+                            <div className="absolute top-4 left-4 px-3 py-1.5 bg-blue-500/90 backdrop-blur-sm rounded-full text-xs font-bold text-white flex items-center gap-1.5">
+                              {Icons.globe}
+                              Global Database
+                            </div>
+
+                            {/* Flag Badge */}
+                            <div className="absolute top-4 right-4 w-10 h-10 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center text-xl">
+                              {flag}
+                            </div>
+
+                            {/* Shortlisted Badge */}
+                            {alreadyShortlisted && (
+                              <div className="absolute top-16 right-4 bg-emerald-500 text-white px-3 py-1 rounded-full text-xs font-bold flex items-center gap-1">
+                                {Icons.heart(true)}
+                                Shortlisted
+                              </div>
+                            )}
+
+                            {/* Content */}
+                            <div className="absolute bottom-0 left-0 right-0 p-5">
+                              {/* University Name */}
+                              <h3 className="text-xl font-bold text-white leading-tight line-clamp-2 drop-shadow-lg mb-2">
+                                {uni.name}
+                              </h3>
+
+                              {/* Location */}
+                              <p className="text-white/80 text-sm flex items-center gap-1.5 mb-3">
+                                {Icons.location}
+                                {uni.state_province ? `${uni.state_province}, ` : ''}{uni.country}
+                              </p>
+
+                              {/* Bottom Row */}
+                              <div className="flex items-center justify-between">
+                                {/* Website Link */}
+                                {uni.website ? (
+                                  <a
+                                    href={uni.website}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    onClick={(e) => e.stopPropagation()}
+                                    className="text-emerald-400 text-sm font-medium flex items-center gap-1.5 hover:text-emerald-300 transition-colors"
+                                  >
+                                    {Icons.globe}
+                                    Visit website
+                                  </a>
+                                ) : (
+                                  <span className="text-gray-400 text-sm">No website available</span>
+                                )}
+
+                                {/* Add Button */}
+                                {!alreadyShortlisted && (
+                                  <button
+                                    onClick={(e) => {
+                                      e.stopPropagation()
+                                      setSelectedExternalUni(uni)
+                                    }}
+                                    className="bg-emerald-500 hover:bg-emerald-600 text-white px-4 py-2 rounded-xl font-semibold text-sm flex items-center gap-2 transition-colors shadow-lg"
+                                  >
+                                    <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+                                      <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4" />
+                                    </svg>
+                                    Shortlist
+                                  </button>
+                                )}
+                              </div>
+                            </div>
+
+                            {/* Hover Overlay with more info */}
+                            <div className="absolute inset-0 bg-black/80 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-center items-center p-6">
+                              <div className="text-4xl mb-3">{flag}</div>
+                              <h3 className="text-lg font-bold text-white text-center leading-tight mb-2">
+                                {uni.name}
+                              </h3>
+                              <p className="text-gray-300 text-sm text-center mb-4">
+                                {uni.state_province ? `${uni.state_province}, ` : ''}{uni.country}
+                              </p>
+
+                              {/* Info badges */}
+                              <div className="flex flex-wrap gap-2 justify-center mb-4">
+                                <span className="px-3 py-1 bg-blue-500/30 text-blue-300 rounded-full text-xs font-medium">
+                                  Global University
+                                </span>
+                                {uni.domains && uni.domains[0] && (
+                                  <span className="px-3 py-1 bg-gray-500/30 text-gray-300 rounded-full text-xs font-medium">
+                                    {uni.domains[0]}
+                                  </span>
+                                )}
+                              </div>
+
+                              {!alreadyShortlisted && (
+                                <button
+                                  onClick={(e) => {
+                                    e.stopPropagation()
+                                    setSelectedExternalUni(uni)
+                                  }}
+                                  className="bg-emerald-500 hover:bg-emerald-600 text-white px-6 py-3 rounded-xl font-bold flex items-center gap-2 transition-colors"
+                                >
+                                  <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4" />
+                                  </svg>
+                                  Add to Shortlist
+                                </button>
+                              )}
+                            </div>
+                          </div>
+                        )
+                      })}
+                    </div>
+                  </div>
+                )}
+
+                {/* Loading state */}
+                {searchingExternal && (
+                  <div className="text-center py-20">
+                    <div className="w-12 h-12 border-4 border-emerald-500 border-t-transparent rounded-full animate-spin mx-auto mb-4" />
+                    <p className="text-gray-500 dark:text-gray-400">Searching universities worldwide...</p>
+                  </div>
+                )}
+              </div>
+            )}
+
+            {/* AI CURATED TAB - Original Grid */}
+            {activeTab === 'curated' && (
+            <>
             <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-5">
           {filteredUniversities.map((university, index) => {
             const shortlistItem = getShortlistItem(university.id)
@@ -807,6 +1281,8 @@ export default function UniversitiesPage() {
                 <p className="text-gray-600 dark:text-gray-400 text-lg">No universities found matching your criteria.</p>
                 <p className="text-gray-500 mt-2">Try adjusting your filters!</p>
               </div>
+            )}
+            </>
             )}
           </div>
 
@@ -1241,6 +1717,91 @@ export default function UniversitiesPage() {
                   </p>
                 )}
               </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* External University Shortlist Modal */}
+      {selectedExternalUni && (
+        <div
+          className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+          onClick={() => setSelectedExternalUni(null)}
+        >
+          <div
+            className="bg-white dark:bg-gray-900 rounded-3xl max-w-md w-full overflow-hidden shadow-2xl"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Modal Header */}
+            <div className="p-6 border-b border-gray-200 dark:border-white/10">
+              <div className="flex items-start gap-4">
+                <div className="w-14 h-14 bg-gradient-to-br from-emerald-100 to-green-100 dark:from-emerald-500/20 dark:to-green-500/20 rounded-2xl flex items-center justify-center flex-shrink-0">
+                  <span className="text-3xl">{selectedExternalUni.alpha_two_code === 'US' ? '🇺🇸' : selectedExternalUni.alpha_two_code === 'GB' ? '🇬🇧' : selectedExternalUni.alpha_two_code === 'CA' ? '🇨🇦' : selectedExternalUni.alpha_two_code === 'AU' ? '🇦🇺' : selectedExternalUni.alpha_two_code === 'DE' ? '🇩🇪' : selectedExternalUni.alpha_two_code === 'IN' ? '🇮🇳' : '🎓'}</span>
+                </div>
+                <div className="flex-1 min-w-0">
+                  <h2 className="text-xl font-bold text-gray-900 dark:text-white leading-tight">
+                    {selectedExternalUni.name}
+                  </h2>
+                  <p className="text-gray-500 dark:text-gray-400 text-sm mt-1 flex items-center gap-1">
+                    {Icons.location}
+                    {selectedExternalUni.state_province ? `${selectedExternalUni.state_province}, ` : ''}{selectedExternalUni.country}
+                  </p>
+                </div>
+                <button
+                  onClick={() => setSelectedExternalUni(null)}
+                  className="w-8 h-8 flex items-center justify-center text-gray-400 hover:text-gray-600 dark:hover:text-gray-200"
+                >
+                  {Icons.close}
+                </button>
+              </div>
+              {selectedExternalUni.website && (
+                <a
+                  href={selectedExternalUni.website}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mt-3 text-emerald-500 dark:text-emerald-400 text-sm inline-flex items-center gap-1 hover:underline"
+                >
+                  {Icons.globe}
+                  Visit website
+                </a>
+              )}
+            </div>
+
+            {/* Category Selection */}
+            <div className="p-6">
+              <h3 className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-4">
+                Add to your shortlist as:
+              </h3>
+              <div className="space-y-3">
+                {(['dream', 'target', 'safe'] as const).map((category) => {
+                  const config = CATEGORY_CONFIG[category]
+                  return (
+                    <button
+                      key={category}
+                      onClick={() => handleShortlistExternal(selectedExternalUni, category)}
+                      disabled={shortlistingExternal}
+                      className={cn(
+                        "w-full p-4 rounded-2xl border-2 transition-all text-left flex items-center justify-between",
+                        "bg-white dark:bg-gray-800/50 border-gray-200 dark:border-gray-700 hover:border-emerald-400 dark:hover:border-emerald-500"
+                      )}
+                    >
+                      <div>
+                        <div className="font-bold text-gray-900 dark:text-white">{config.label}</div>
+                        <div className="text-sm text-gray-500 dark:text-gray-400">
+                          {config.description}
+                        </div>
+                      </div>
+                      <div className={cn("w-4 h-4 rounded-full", config.color)} />
+                    </button>
+                  )
+                })}
+              </div>
+              {shortlistingExternal && (
+                <div className="mt-4 flex items-center justify-center gap-2 text-emerald-500">
+                  <div className="w-4 h-4 border-2 border-emerald-500 border-t-transparent rounded-full animate-spin" />
+                  <span className="text-sm">Adding to shortlist...</span>
+                </div>
+              )}
             </div>
           </div>
         </div>

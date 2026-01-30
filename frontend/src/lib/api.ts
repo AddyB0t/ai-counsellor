@@ -60,6 +60,18 @@ export const api = {
       headers: { Authorization: `Bearer ${token}` },
     }),
 
+  searchExternalUniversities: (token: string, params: { name?: string; country?: string; limit?: number }) =>
+    fetchAPI(`/api/universities/search-external?${new URLSearchParams(params as Record<string, string>)}`, {
+      headers: { Authorization: `Bearer ${token}` },
+    }),
+
+  shortlistExternalUniversity: (token: string, data: { name: string; country: string; category: string; website?: string; reasoning?: string }) =>
+    fetchAPI('/api/universities/shortlist-external', {
+      method: 'POST',
+      headers: { Authorization: `Bearer ${token}` },
+      body: JSON.stringify(data),
+    }),
+
   // Tasks
   getTasks: (token: string) =>
     fetchAPI('/api/tasks', { headers: { Authorization: `Bearer ${token}` } }),
