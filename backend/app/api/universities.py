@@ -1,13 +1,18 @@
 from fastapi import APIRouter, Depends, HTTPException, Query
 from typing import Optional, List
+import httpx
+import uuid
 from ..core.security import get_current_user
 from ..core.database import get_supabase
 from ..core.guards import guard_shortlist, guard_lock
 from ..core.logging import get_logger
-from ..schemas import ShortlistRequest
+from ..schemas import ShortlistRequest, ExternalShortlistRequest
 
 router = APIRouter(prefix="/api/universities", tags=["universities"])
 logger = get_logger("api.universities")
+
+# External API for searching universities worldwide
+HIPO_API_URL = "http://universities.hipolabs.com/search"
 
 
 @router.get("")
@@ -181,3 +186,137 @@ async def unlock_university(university_id: str, user_id: str = Depends(get_curre
     except Exception as e:
         logger.error(f"Error unlocking university: {str(e)}")
         raise
+
+
+@router.get("/search-external")
+async def search_external_universities(
+    name: Optional[str] = None,
+    country: Optional[str] = None,
+    limit: int = Query(default=20, le=100),
+    user_id: str = Depends(get_current_user)
+):
+    """Search universities from external Hipo API (large global dataset)."""
+    logger.info(f"Searching external universities - name={name}, country={country}")
+
+    if not name and not country:
+        raise HTTPException(
+            status_code=400,
+            detail="Please provide at least a name or country to search"
+        )
+
+    try:
+        params = {}
+        if name:
+            params["name"] = name
+        if country:
+            params["country"] = country
+        params["limit"] = limit
+
+        async with httpx.AsyncClient(timeout=10.0) as client:
+            response = await client.get(HIPO_API_URL, params=params)
+            response.raise_for_status()
+            universities = response.json()
+
+        # Transform to consistent format
+        results = []
+        for uni in universities[:limit]:
+            results.append({
+                "id": None,  # External universities don't have DB ID
+                "name": uni.get("name"),
+                "country": uni.get("country"),
+                "alpha_two_code": uni.get("alpha_two_code"),
+                "website": uni.get("web_pages", [None])[0],
+                "domains": uni.get("domains", []),
+                "state_province": uni.get("state-province"),
+                "is_external": True,  # Flag to indicate this is from external API
+            })
+
+        logger.info(f"Found {len(results)} external universities")
+        return results
+
+    except httpx.TimeoutException:
+        logger.error("External API timeout")
+        raise HTTPException(status_code=504, detail="External university search timed out")
+    except httpx.HTTPError as e:
+        logger.error(f"External API error: {str(e)}")
+        raise HTTPException(status_code=502, detail="External university search failed")
+    except Exception as e:
+        logger.error(f"Error searching external universities: {str(e)}")
+        raise
+
+
+@router.post("/shortlist-external")
+async def shortlist_external_university(
+    data: ExternalShortlistRequest,
+    user_id: str = Depends(get_current_user)
+):
+    """
+    Shortlist an external university.
+    This creates the university in our DB first (if not exists), then shortlists it.
+    """
+    logger.info(f"Shortlisting external university: {data.name} for user {user_id[:8]}...")
+
+    try:
+        supabase = get_supabase()
+
+        # Check if this external university already exists in our DB
+        existing_uni = supabase.table("universities").select("*").eq(
+            "name", data.name
+        ).eq("country", data.country).execute()
+
+        if existing_uni.data:
+            university_id = existing_uni.data[0]["id"]
+            logger.info(f"External university already exists in DB: {university_id}")
+        else:
+            # Create the external university in our DB
+            new_uni = supabase.table("universities").insert({
+                "name": data.name,
+                "country": data.country,
+                "website": data.website,
+                "is_external": True,  # Flag to distinguish from curated ones
+                "ranking": None,
+                "tuition_min": None,
+                "tuition_max": None,
+                "acceptance_rate": None,
+            }).execute()
+
+            if not new_uni.data:
+                raise HTTPException(status_code=500, detail="Failed to create university")
+
+            university_id = new_uni.data[0]["id"]
+            logger.info(f"Created external university in DB: {university_id}")
+
+        # Now shortlist it
+        existing_shortlist = supabase.table("shortlisted_universities").select("*").eq(
+            "user_id", user_id
+        ).eq("university_id", university_id).execute()
+
+        if existing_shortlist.data:
+            # Update category
+            result = supabase.table("shortlisted_universities").update({
+                "category": data.category,
+                "ai_reasoning": data.reasoning
+            }).eq("id", existing_shortlist.data[0]["id"]).execute()
+            logger.info(f"Updated shortlist for external university {university_id}")
+        else:
+            # Insert new shortlist
+            result = supabase.table("shortlisted_universities").insert({
+                "user_id": user_id,
+                "university_id": university_id,
+                "category": data.category,
+                "ai_reasoning": data.reasoning
+            }).execute()
+            logger.info(f"Added external university {university_id} to shortlist")
+
+        # Return with full university data
+        final_result = supabase.table("shortlisted_universities").select(
+            "*, university:universities(*)"
+        ).eq("user_id", user_id).eq("university_id", university_id).single().execute()
+
+        return {"message": "External university added to shortlist", "data": final_result.data}
+
+    except HTTPException:
+        raise
+    except Exception as e:
+        logger.error(f"Error shortlisting external university: {str(e)}")
+        raise HTTPException(status_code=500, detail=str(e))

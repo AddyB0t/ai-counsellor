@@ -55,3 +55,22 @@ class ChatRequest(BaseModel):
 class ChatResponse(BaseModel):
     response: str
     actions: Optional[List[dict]] = None
+
+
+class ExternalUniversity(BaseModel):
+    """University from external Hipo API"""
+    name: str
+    country: str
+    alpha_two_code: Optional[str] = None
+    domains: Optional[List[str]] = None
+    web_pages: Optional[List[str]] = None
+    state_province: Optional[str] = None
+
+
+class ExternalShortlistRequest(BaseModel):
+    """Request to shortlist an external university"""
+    name: str
+    country: str
+    category: str
+    website: Optional[str] = None
+    reasoning: Optional[str] = None
